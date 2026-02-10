@@ -1,0 +1,122 @@
+{
+  "Navbar": {
+    "menu1": "Individu"
+  },
+  "OurProduct": {
+    "title": "Produk Kami",
+    "description": "Kami menyediakan berbagai layanan pembiayaan di Woori Finance Indonesia.<br>Kami berkomitmen untuk memberikan layanan keuangan terbaik.</br>",
+    "detail": "Lihat Detail"
+  },
+  "Simulator": {
+    "trigger": {
+      "newCar": "Mobil Baru",
+      "usedCar": "Mobil Lama"
+    }
+  },
+  "Promo": {
+    "title": "Promosi",
+    "seeAll": "Lihat Semua Promosi",
+    "validUntil": "Valid sampai",
+    "learnMore": "Pelajari Lebih Lanjut"
+  },
+  "Faq": {
+    "title": "Pertanyaan yang Sering Diajukan",
+    "cantFind": "Tidak menemukan jawaban yang dicari?",
+    "seeOtherFaqs": "Lihat FAQ",
+    "contactUs": "atau Hubungi Kami"
+  },
+  "Corporate": {
+    "hero": {
+      "title": "Ketahui Lebih Lanjut"
+    },
+    "profile": "Profil Perusahaan",
+    "milestone": "Perjalanan Kami"
+  },
+  "VisiMisi": {
+    "title": "Lihat Semua Laporan Terbaru",
+    "description": "Akses laporan tahunan kami untuk wawasan mendalam tentang kinerja, strategi, dan pencapaian.",
+    "seeAnnualReport": "Lihat Laporan Terbaru"
+  },
+  "Procurement": {
+    "uspSection": {
+      "title": "Pengadaan Barang & Jasa",
+      "description": "Temukan lowongan pengadaan terkini dan bergabunglah bersama kami untuk berkontribusi untuk dunia keuangan."
+    },
+    "search": "Cari Lowongan",
+    "table": {
+      "head1": "No",
+      "head2": "Ketersediaan",
+      "head3": "kategori",
+      "head4": "Tanggal Tenggat Waktu",
+      "head5": "Detail",
+      "head5-text": "Lihat"
+    }
+  },
+  "OurBranch": {
+    "uspSection": {
+      "title": "Temukan Kantor Cabang Kami",
+      "description": "Kami memiliki 75 cabang tersebar di seluruh Indonesia. Temukan lokasi dan detail kontak cabang kami di sini."
+    },
+    "dataCabangSection": {
+      "title": "Temukan Kantor Cabang Kami di Seluruh Indonesia",
+      "searchPlaceholder": "Cari Kantor Cabang...",
+      "filter": "Filter",
+      "viewAllBranches": "Lihat Semua Cabang",
+      "clear": "Bersihkan",
+      "search": "Cari",
+      "noCategoriesFound": "Tidak ada kategori ditemukan"
+    },
+    "detail": "Lihat Foto Cabang"
+  },
+  "CustomerSupport": {
+    "uspLayananPelanggan": {
+      "title": "Punya Pertanyaan Lebih Lanjut?",
+      "subtitle": "Kami Siap Membantu Anda Kapanpun",
+      "button": "Kirim Email",
+      "email": {
+        "subject": "Complaint",
+        "body": "Halo,\n\nSaya harap email ini menemukan Anda dalam keadaan baik.\n\nSaya ingin menanyakan tentang layanan Anda. Bisakah Anda memberikan detail lebih lanjut?\n\nSalam hormat,\nNama Anda"
+      }
+    },
+    "complaint": {
+      "title": "Pengajuan Komplain",
+      "description": "Jika Anda memiliki keluhan atau masukan terhadap kami, beri tau kami melalui formulir berikut",
+      "form": {
+        "name": {
+          "label": "Nama",
+          "placeholder": "Masukan Nama Anda"
+        },
+        "email": {
+          "label": "Email",
+          "placeholder": "Masukan Email Anda"
+        },
+        "type": {
+          "label": "Jenis Komplain",
+          "placeholder": "Pilih Jenis Komplain"
+        },
+        "message": {
+          "label": "Pesan",
+          "placeholder": "Jelaskan Komplain Anda"
+        }
+      },
+      "disclaimer": "Sesuai dengan peraturan OJK NOMOR 18/POJK.07/2018 MTF, WFI Indonesia berhak menolak penanganan pengaduan apabila Nasabah dan/atau Perwakilan Nasabah tidak melengkapi persyaratan dokumen pengaduan.Untuk Dokumen Pengaduan dapat dikirimkan melalui email:cs@woorifinance.co.id",
+      "submitButton": "Kirimkan Komplain"
+    }
+  },
+  "Footer": {
+    "mainOffice": "KANTOR PUSAT",
+    "seeOtherBranches": "Lihat lokasi cabang lainnya",
+    "contactUs": "HUBUNGI KAMI",
+    "socialMedia": "MEDIA SOSIAL",
+    "partOf": "BAGIAN DARI",
+    "downloadApp": "DOWNLOAD APLIKASI",
+    "scanBarcode": "atau scan kode barcode",
+    "privacyPolicy": "Kebijakan Privasi",
+    "termsCondition": "Syarat dan Ketentuan",
+    "isoText": "PT Woori Finance Indonesia Tbk berizin dan diawasi oleh Otoritas Jasa Keuangan dan Bank Indonesia (BI).",
+    "applyHeavyEquipment": "Ajukan Pembiayaan Alat Berat Sekarang",
+    "applyNow": "Ajukan Sekarang",
+    "applyCarFinancing": "Ajukan Pembiayaan Mobil Sekarang",
+    "startLoanSimulation": "Mulai Simulasi Pinjaman"
+  }
+}

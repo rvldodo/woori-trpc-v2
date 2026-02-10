@@ -1,0 +1,122 @@
+{
+  "Navbar": {
+    "menu1": "Customer"
+  },
+  "OurProduct": {
+    "title": "Our Product",
+    "description": "We provide various financing services at Woori Finance Indonesia.<br>We are committed to providing the best financial services.</br>",
+    "detail": "See Detail"
+  },
+  "Simulator": {
+    "trigger": {
+      "newCar": "New Car",
+      "usedCar": "Used Car"
+    }
+  },
+  "Promo": {
+    "title": "Promotions",
+    "seeAll": "See All Promotions",
+    "validUntil": "Valid until",
+    "learnMore": "Learn More"
+  },
+  "Faq": {
+    "title": "Frequently Asked Questions",
+    "cantFind": "Can't find the answers you need?",
+    "seeOtherFaqs": "See Other FAQs",
+    "contactUs": "or Contact Us"
+  },
+  "Corporate": {
+    "hero": {
+      "title": "Discover More"
+    },
+    "profile": "Company Profile",
+    "milestone": "Our Journey"
+  },
+  "VisiMisi": {
+    "title": "See All of Our Latest Reports",
+    "description": "Access our comprehensive reports to gain in-depth insights into our financial performance, strategic initiatives, and key achievements",
+    "seeAnnualReport": "See Annual Report"
+  },
+  "Procurement": {
+    "uspSection": {
+      "title": "Procurement of goods and services",
+      "description": "Find the latest procurement vacancies and join us to contribute to the world of finance."
+    },
+    "search": "Search for Vacancies",
+    "table": {
+      "head1": "No",
+      "head2": "Availability",
+      "head3": "Category",
+      "head4": "Deadline Date",
+      "head5": "Detail",
+      "head5-text": "See Detail"
+    }
+  },
+  "OurBranch": {
+    "uspSection": {
+      "title": "Find our Branch Offices",
+      "description": "We have 75 branches across Indonesia. Find the location and contact details of our branches here."
+    },
+    "dataCabangSection": {
+      "title": "See Our Branches Across Indonesia",
+      "searchPlaceholder": "Search Branch Offices...",
+      "filter": "Filter",
+      "viewAllBranches": "View All Branches",
+      "clear": "Clear",
+      "search": "Search",
+      "noCategoriesFound": "No categories found"
+    },
+    "detail": "See branch Photo"
+  },
+  "CustomerSupport": {
+    "uspLayananPelanggan": {
+      "title": "Have Any Questions?",
+      "subtitle": "We're ready to help you anytime.",
+      "button": "Reach Our Email",
+      "email": {
+        "subject": "Complaint",
+        "body": "Hello,\n\nI hope this email finds you well.\n\nI am reaching out to inquire about your services. Could you please provide more details?\n\nBest regards,\nYour Name"
+      }
+    },
+    "complaint": {
+      "title": "Complaint Submission",
+      "description": "If you get any complaints or feedbacks toward us, let us know through this form",
+      "form": {
+        "name": {
+          "label": "Name",
+          "placeholder": "Enter Your Name"
+        },
+        "email": {
+          "label": "Email",
+          "placeholder": "Enter Your Email"
+        },
+        "type": {
+          "label": "Complaint Type",
+          "placeholder": "Choose Complaint Type"
+        },
+        "message": {
+          "label": "Message",
+          "placeholder": "Type Your Complaint"
+        }
+      },
+      "disclaimer": "According to peraturan OJK NOMOR 18/POJK.07/2018 MTF, WFI Indonesia has the rights to reject handling complaints if Customer and/or Customer Representative does not  complete the complaint document requirements. For Complaint Document can be sent through email: cs@woorifinance.co.id",
+      "submitButton": "Submit Complaint"
+    }
+  },
+  "Footer": {
+    "mainOffice": "MAIN OFFICE",
+    "seeOtherBranches": "See other Branches Location",
+    "contactUs": "CONTACT US",
+    "socialMedia": "SOCIAL MEDIA",
+    "partOf": "PART OF",
+    "downloadApp": "DOWNLOAD OUR APP",
+    "scanBarcode": "or scan the barcode",
+    "privacyPolicy": "Privacy Policy",
+    "termsCondition": "Terms and Condition",
+    "isoText": "PT Woori Finance Indonesia Tbk is registered and supervised by Financial Service Authority (OJK)",
+    "applyHeavyEquipment": "Apply for Heavy Equipment Financing Now",
+    "applyNow": "Apply Now",
+    "applyCarFinancing": "Apply for Car Financing Now",
+    "startLoanSimulation": "Start Loan Simulation"
+  }
+}

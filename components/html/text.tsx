@@ -1,0 +1,133 @@
+import * as React from "react";
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/lib/utils";
+
+const textVariant = cva("", {
+  variants: {
+    variant: {
+      // Caption variants (10px)
+      "caption-xs-regular":
+        "text-[10px] leading-[12px] font-normal tracking-[0.05em]",
+      "caption-xs-medium":
+        "text-[10px] leading-[12px] font-medium tracking-[0.05em]",
+
+      // Caption variants (12px)
+      "caption-sm-regular":
+        "text-[12px] leading-[16px] font-normal tracking-[0.05em]",
+      "caption-sm-medium":
+        "text-[12px] leading-[16px] font-medium tracking-[0.05em]",
+
+      // Caption variants (14px)
+      "caption-md-regular": "text-[14px] leading-[20px] font-normal",
+      "caption-md-medium": "text-[14px] leading-[20px] font-medium",
+      "caption-md-semi": "text-[14px] leading-[20px] font-semibold",
+
+      // Body variants (14px)
+      "body-sm-regular": "text-[14px] leading-[20px] font-normal",
+      "body-sm-medium": "text-[14px] leading-[20px] font-medium",
+      "body-sm-semi": "text-[14px] leading-[20px] font-semibold",
+
+      // Body variants (16px)
+      "body-md-regular": "text-[16px] leading-[24px] font-normal",
+      "body-md-medium": "text-[16px] leading-[24px] font-medium",
+      "body-md-semi": "text-[16px] leading-[24px] font-semibold",
+
+      // Body variants (18px)
+      "body-lg-regular": "text-[18px] leading-[24px] font-normal",
+      "body-lg-medium": "text-[18px] leading-[24px] font-medium",
+      "body-lg-semi": "text-[18px] leading-[24px] font-semibold",
+
+      // Title variants (14px)
+      "title-sm-regular": "text-[14px] leading-[20px] font-normal",
+      "title-sm-medium": "text-[14px] leading-[20px] font-medium",
+      "title-sm-semi": "text-[14px] leading-[20px] font-semibold",
+
+      // Title variants (16px)
+      "title-md-regular": "text-[16px] leading-[24px] font-normal",
+      "title-md-medium": "text-[16px] leading-[24px] font-medium",
+      "title-md-semi": "text-[16px] leading-[24px] font-semibold",
+
+      // Title variants (20px)
+      "title-lg-regular": "text-[20px] leading-[28px] font-normal",
+      "title-lg-medium": "text-[20px] leading-[28px] font-medium",
+      "title-lg-semi": "text-[20px] leading-[28px] font-semibold",
+
+      // Title Extra Large variants (22px)
+      "title-xl-regular": "text-[22px] leading-[32px] font-normal",
+      "title-xl-medium": "text-[22px] leading-[32px] font-medium",
+      "title-xl-semi": "text-[22px] leading-[32px] font-semibold",
+
+      // Display variants (24px)
+      "display-sm": "text-[24px] leading-[36px] font-medium",
+
+      // Display variants (27px)
+      "display-md": "text-[27px] leading-[40px] font-semibold",
+
+      // Display variants (32px)
+      "display-lg": "text-[32px] leading-[44px] font-semibold",
+
+      // Display variants (35px)
+      "display-xl": "text-[35px] leading-[48px] font-semibold",
+
+      // Legacy variants for backward compatibility
+      default: "text-[10px] font-normal",
+    },
+    color: {
+      default: "text-foreground",
+      primary: "text-[#007BC7]",
+      secondary: "text-[#5E6ED4]",
+      tertiary: "text-[#E7E7E7]",
+      heading: "text-[#161616]",
+      title: "text-[#2D2D2D]",
+      body: "text-[#434343]",
+      caption: "text-[#787878]",
+      inactive: "text-[#CFCFCF]",
+      white: "text-white",
+      error: "text-[#E54141]",
+      success: "text-[#149D47]",
+      warning: "text-[#EA980B]",
+      muted: "text-muted-foreground",
+    },
+  },
+  defaultVariants: {
+    variant: "default",
+    color: "default",
+  },
+});
+
+export interface TextProps
+  extends Omit<React.HTMLAttributes<HTMLElement>, "color">,
+    VariantProps<typeof textVariant> {
+  asChild?: boolean;
+  html?: string;
+  as?: "p" | "span" | "div" | "label" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+}
+
+const Text = React.forwardRef<HTMLElement, TextProps>(
+  ({ className, variant, color, children, html, as = "p", ...props }, ref) => {
+    const Component = as;
+
+    if (html) {
+      return React.createElement(Component, {
+        className: cn(textVariant({ variant, color }), className),
+        ref,
+        dangerouslySetInnerHTML: { __html: html },
+        ...props,
+      });
+    }
+
+    return React.createElement(
+      Component,
+      {
+        className: cn(textVariant({ variant, color }), className),
+        ref,
+        ...props,
+      },
+      children,
+    );
+  },
+);
+
+Text.displayName = "Text";
+
+export { Text, textVariant };
