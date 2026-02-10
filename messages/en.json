@@ -100,7 +100,23 @@
         }
       },
       "disclaimer": "According to peraturan OJK NOMOR 18/POJK.07/2018 MTF, WFI Indonesia has the rights to reject handling complaints if Customer and/or Customer Representative does not  complete the complaint document requirements. For Complaint Document can be sent through email: cs@woorifinance.co.id",
-      "submitButton": "Submit Complaint"
+      "submitButton": "Submit Complaint",
+      "modal": {
+        "title": "Your Request was Successfully Submitted!",
+        "subtitle": "Our team will contact you shortly. <br> You will soon receive a message through your submitted email.</br>",
+        "button": "Back to Homepage"
+      }
+    }
+  },
+  "Partnership": {
+    "uspSection": {
+      "title": "Partnership",
+      "description": "Our trusted partnerships from all around Indonesia, aiming to create a better financing services."
+    },
+    "logos": {
+      "showroom": "Showroom",
+      "insurance": "Insurance",
+      "bank": "Bank"
     }
   },
   "Footer": {
@@ -118,5 +134,10 @@
     "applyNow": "Apply Now",
     "applyCarFinancing": "Apply for Car Financing Now",
     "startLoanSimulation": "Start Loan Simulation"
+  },
+  "NotFound": {
+    "title": "Page Not Found",
+    "subtitle": "Looks like the page you’re searching for is out of sight.<br>It might have been moved or deleted.</br>",
+    "button": "Go Back to Homepage"
   }
 }

@@ -100,7 +100,23 @@
         }
       },
       "disclaimer": "Sesuai dengan peraturan OJK NOMOR 18/POJK.07/2018 MTF, WFI Indonesia berhak menolak penanganan pengaduan apabila Nasabah dan/atau Perwakilan Nasabah tidak melengkapi persyaratan dokumen pengaduan.Untuk Dokumen Pengaduan dapat dikirimkan melalui email:cs@woorifinance.co.id",
-      "submitButton": "Kirimkan Komplain"
+      "submitButton": "Kirimkan Komplain",
+      "modal": {
+        "title": "Permintaan Anda Berhasil Dikirimkan!",
+        "subtitle": "Tim kami akan segera menghubungi Anda. <br> Anda Akan segera menerima pesan melalui email yang Anda kirimkan.</br>",
+        "button": "Kembali ke Halaman Utama"
+      }
+    }
+  },
+  "Partnership": {
+    "uspSection": {
+      "title": "Kemitraan",
+      "description": "Kemitraan tepercaya kami dari seluruh Indonesia, bertujuan untuk menciptakan layanan pembiayaan yang lebih baik."
+    },
+    "logos": {
+      "showroom": "Showroom",
+      "insurance": "Insurance",
+      "bank": "Bank"
     }
   },
   "Footer": {
@@ -118,5 +134,10 @@
     "applyNow": "Ajukan Sekarang",
     "applyCarFinancing": "Ajukan Pembiayaan Mobil Sekarang",
     "startLoanSimulation": "Mulai Simulasi Pinjaman"
+  },
+  "NotFound": {
+    "title": "Halaman Tidak Ditemukan",
+    "subtitle": "Sepertinya halaman yang Anda cari tidak terlihat.<br>Halaman tersebut mungkin telah dipindahkan atau dihapus.</br>",
+    "button": "Kembali ke Halaman Utama"
   }
 }

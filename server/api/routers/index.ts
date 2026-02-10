@@ -1,5 +1,6 @@
 import { branchesRouter } from "./branches_router";
 import { complainTypeRouter } from "./complaint-type_router";
+import { complaintsRouter } from "./complaints_router";
 import { faqRouter } from "./faqs_router";
 import { globalParamsRouter } from "./global-params_router";
 import { heroRouter } from "./hero_router";
@@ -26,4 +27,5 @@ export const main = {
   procurements: procurementRouter,
   branches: branchesRouter,
   complaintType: complainTypeRouter,
+  complaints: complaintsRouter,
 };

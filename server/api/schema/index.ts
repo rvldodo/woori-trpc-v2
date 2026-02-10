@@ -27,10 +27,13 @@ export class schema {
 
   static complaint = {
     complaint_form: z.object({
-      name: z.string(),
-      email: z.string(),
-      type: z.string(),
-      message: z.string(),
+      name: z.string().min(1, "Name is required"),
+      email: z
+        .string()
+        .min(1, "Email is required")
+        .email("Invalid email format"),
+      type: z.string().min(1, "Complaint type is required"),
+      message: z.string().min(1, "Message is required"),
     }),
   };
 }

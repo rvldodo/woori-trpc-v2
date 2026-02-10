@@ -2,6 +2,8 @@ import { getMetadata } from "@/app/metadata";
 import { PATHS } from "@/app/urls";
 import type { Metadata } from "next";
 import { Locale } from "next-intl";
+import KemitraanUSPSection from "./_sections/kemitraan-usp";
+import KemitraanLogos from "./_sections/kemitraan-logos";
 
 export const generateMetadata = async (
   props: PageProps<"/[locale]">,
@@ -22,5 +24,10 @@ export default async function KemitraanPage({
 }) {
   const { locale } = await params;
 
-  return <article className="flex flex-col gap-3"></article>;
+  return (
+    <article className="flex flex-col gap-3">
+      <KemitraanUSPSection />
+      <KemitraanLogos />
+    </article>
+  );
 }

@@ -31,17 +31,20 @@ export const faqRouter = createTRPCRouter({
     }),
 
   list: publicProcedure.query(async ({ ctx }) => {
-    const categories = await ctx.db.select({ category: faqs.type }).from(faqs);
-
-    if (!categories)
-      throw new TRPCError({ message: ERROR_FETCH, code: "BAD_REQUEST" });
-
     const data = await ctx.db.select().from(faqs);
 
     if (!data)
       throw new TRPCError({ message: ERROR_FETCH, code: "BAD_REQUEST" });
 
-    return { data, categories };
+    return { data };
+  }),
+  category: publicProcedure.query(async ({ ctx }) => {
+    const categories = await ctx.db.select({ category: faqs.type }).from(faqs);
+
+    if (!categories)
+      throw new TRPCError({ message: ERROR_FETCH, code: "BAD_REQUEST" });
+
+    return { data: categories };
   }),
 
   main: publicProcedure.query(async ({ ctx }) => {
