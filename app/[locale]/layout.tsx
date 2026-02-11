@@ -51,10 +51,12 @@ export default async function LocaleLayout(props: LayoutProps<"/[locale]">) {
         <NextIntlClientProvider locale={locale}>
           <TRPCReactProvider>
             <NuqsAdapter>
-              <Navbar />
-              <ScrollToTop />
-              <Suspense>{props.children}</Suspense>
-              <Footer />
+              <article className="min-h-screen min-w-screen">
+                <Navbar />
+                <ScrollToTop />
+                <Suspense>{props.children}</Suspense>
+                <Footer className="w-full md:mb-0 mb-32" />
+              </article>
             </NuqsAdapter>
           </TRPCReactProvider>
         </NextIntlClientProvider>

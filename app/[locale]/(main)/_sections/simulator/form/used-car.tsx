@@ -72,7 +72,7 @@ export default function UsedCarForm() {
         )}
       />
 
-      <div className="flex items-center gap-3">
+      <div className="flex md:flex-row flex-col items-center gap-3">
         <Controller
           name="cabang"
           control={control}
@@ -120,7 +120,7 @@ export default function UsedCarForm() {
         />
       </div>
 
-      <div className="flex items-center gap-3">
+      <div className="flex md:flex-row flex-col items-center gap-3">
         <Controller
           name="cabang"
           control={control}
@@ -196,7 +196,7 @@ export default function UsedCarForm() {
         <Input placeholder="Contoh" className="w-full" />
       </div>
 
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid md:grid-cols-3 grid-cols-1 gap-3">
         <Controller
           name="cabang"
           control={control}

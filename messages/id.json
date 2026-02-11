@@ -119,6 +119,34 @@
       "bank": "Bank"
     }
   },
+  "FAQ": {
+    "title": "Pertanyaan yang Sering Diajukan",
+    "placeholder": "Cari informasi yang Anda butuhkan...",
+    "contact": {
+      "haveOtherQuestions": "Punya Pertanyaan Lain?",
+      "contactUs": "Hubungi Kami",
+      "needToComplain": "Butuh Komplain?",
+      "submitComplaint": "Ajukan Komplain Di Sini",
+      "email": {
+        "subject": "Komplain",
+        "body": "Halo,\n\nSemoga email ini menemukan Anda dalam keadaan baik.\n\nSaya ingin menanyakan tentang layanan Anda. Bisakah Anda memberikan informasi lebih detail?\n\nSalam hormat,\nNama Anda"
+      }
+    },
+    "notFound": "Tidak Ada FAQ"
+  },
+  "Publication": {
+    "uspSection": {
+      "title": "Publikasi Penanganan Pengaduan",
+      "description": "Publikasi pengaduan adalah bagian dari komitmen kami terhadap layanan yang lebih baik."
+    },
+    "table": {
+      "head1": "No",
+      "head2": "Nama Publikasi",
+      "head3": "Tanggal Publikasi",
+      "head4": "Detail",
+      "head4-button": "Unduh"
+    }
+  },
   "Footer": {
     "mainOffice": "KANTOR PUSAT",
     "seeOtherBranches": "Lihat lokasi cabang lainnya",

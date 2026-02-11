@@ -1,4 +1,5 @@
 import { Text } from "@/components/html/text";
+import { TextHTML } from "@/components/html/text-html";
 import {
   AccordionContent,
   AccordionItem,
@@ -17,12 +18,12 @@ export function AccordionTabs(props: AccordionTabsType) {
   return (
     <AccordionItem value={`item-${id}`}>
       <AccordionTrigger>
-        <Text variant="display-sm" className="text-start">
+        <Text variant="body-lg-medium" className="text-start">
           {question}
         </Text>
       </AccordionTrigger>
-      <AccordionContent>
-        <Text
+      <AccordionContent className="h-auto">
+        <TextHTML
           variant="body-md-regular"
           html={DOMPurify.sanitize(answer, {
             ALLOWED_TAGS: [

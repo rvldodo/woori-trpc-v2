@@ -104,7 +104,7 @@ export default function DataCabangSection({ l }: Props) {
         <div className="relative w-full h-auto">
           <CabangKamiMap
             locations={displayedLocations}
-            zoom={selectedBranchId ? 15 : 4.5}
+            zoom={selectedBranchId ? 15 : 4}
           />
           {selectedBranchId && (
             <Button

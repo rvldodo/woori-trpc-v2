@@ -51,10 +51,10 @@ export default function SimulatorSection({ l }: Props) {
   return (
     <section className="main-padding-x flex flex-col gap-3 py-8 relative overflow-hidden">
       <Tabs defaultValue="used-car">
-        <div className="grid grid-cols-2 gap-5 px-30">
+        <div className="grid md:grid-cols-2 grid-cols-1 gap-5 md:px-20">
           <TabsContent
             value="used-car"
-            className="w-xl h-full flex justify-start items-center"
+            className="md:w-xl h-full flex md:justify-start justify-center items-center"
           >
             {isLoading || !data || !mobilBekasUsp ? (
               <Skeleton className="w-full h-15" />
@@ -77,7 +77,7 @@ export default function SimulatorSection({ l }: Props) {
                   {mobilBekasUsp.description![l]}
                 </TextEffect>
 
-                <div className="flex gap-3 items-center">
+                <div className="flex md:flex-row flex-col gap-3 items-center">
                   {mobilBekasUsp.cards!.map((e: USPCards, idx: number) => (
                     <AnimatedGroup
                       key={idx.toString()}
@@ -124,7 +124,7 @@ export default function SimulatorSection({ l }: Props) {
           </TabsContent>
           <TabsContent
             value="new-car"
-            className="w-xl h-full flex justify-start items-center"
+            className="md:w-xl h-full flex md:justify-start justify-center items-center"
           >
             {isLoading || !data || !mobilBaruUsp ? (
               <Skeleton className="w-full h-15" />
@@ -147,7 +147,7 @@ export default function SimulatorSection({ l }: Props) {
                   {mobilBaruUsp.description![l]}
                 </TextEffect>
 
-                <div className="flex gap-3 items-center">
+                <div className="flex md:flex-row flex-col gap-3 items-center">
                   {mobilBaruUsp.cards!.map((e: USPCards, idx: number) => (
                     <AnimatedGroup
                       key={idx.toString()}

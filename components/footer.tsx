@@ -40,7 +40,7 @@ const Footer = (props: FooterProps) => {
     <Fragment>
       <section
         className={cn(
-          `main-padding-x mt-10 py-5 w-full flex-col bg-[#F7F7F7] ${path.split("/")[2] === "user-verifikasi" ? "hidden" : "flex"}`,
+          `main-padding-x min-h-full py-5 w-full flex-col bg-[#F7F7F7] ${path.split("/")[2] === "user-verifikasi" ? "hidden" : "flex"}`,
           className,
         )}
       >

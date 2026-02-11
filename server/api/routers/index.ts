@@ -10,6 +10,7 @@ import { procurementRouter } from "./procurement_router";
 import { productsRouter } from "./products_router";
 import { profileCompanyRouter } from "./profile_router";
 import { promosRouter } from "./promos_router";
+import { publikasiRouter } from "./publications_router";
 import { uspRouter } from "./usp_router";
 import { visiMisiRouter } from "./visi-misi_router";
 
@@ -28,4 +29,5 @@ export const main = {
   branches: branchesRouter,
   complaintType: complainTypeRouter,
   complaints: complaintsRouter,
+  publications: publikasiRouter,
 };

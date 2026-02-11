@@ -217,8 +217,8 @@ export function DataTable<TData, TValue>({
       </div>
 
       {/* Enhanced Pagination */}
-      <div className="flex items-center justify-between px-2">
-        <div className="flex items-center space-x-6 lg:space-x-8">
+      <div className="flex md:flex-row flex-col items-center justify-between px-2">
+        <div className="flex md:flex-row flex-col md:gap-0 gap-4 items-center space-x-6 lg:space-x-8">
           <div className="flex items-center space-x-2">
             <p className="text-sm font-medium">Rows per page</p>
             <Select

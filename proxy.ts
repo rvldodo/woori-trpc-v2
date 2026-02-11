@@ -48,9 +48,9 @@ export default function middleware(req: NextRequest) {
   response.headers.set(HEADERS.path, path);
 
   // Add security headers
-  Object.entries(SECURITY_HEADERS).forEach(([key, value]) => {
-    response.headers.set(key, value);
-  });
+  // Object.entries(SECURITY_HEADERS).forEach(([key, value]) => {
+  //   response.headers.set(key, value);
+  // });
 
   return response;
 }

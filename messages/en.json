@@ -119,6 +119,34 @@
       "bank": "Bank"
     }
   },
+  "FAQ": {
+    "title": "Frequently Asked Questions",
+    "placeholder": "Find what information you're looking for...",
+    "contact": {
+      "haveOtherQuestions": "Have Other Questions?",
+      "contactUs": "Contact Us",
+      "needToComplain": "Need to Complain?",
+      "submitComplaint": "Submit a Complaint Here",
+      "email": {
+        "subject": "Complaint",
+        "body": "Hello,\n\nI hope this email finds you well.\n\nI am reaching out to inquire about your services. Could you please provide more details?\n\nBest regards,\nYour Name"
+      }
+    },
+    "notFound": "No FAQ Found"
+  },
+  "Publication": {
+    "uspSection": {
+      "title": "Complaint Handling Publication",
+      "description": "Complaint publication is part of our commitment towards providing better service."
+    },
+    "table": {
+      "head1": "No",
+      "head2": "Publication Name",
+      "head3": "Publication Date",
+      "head4": "Detail",
+      "head4-button": "Download"
+    }
+  },
   "Footer": {
     "mainOffice": "MAIN OFFICE",
     "seeOtherBranches": "See other Branches Location",

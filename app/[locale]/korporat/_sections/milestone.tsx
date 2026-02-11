@@ -30,7 +30,9 @@ export default function MilestoneSection({ l }: Props) {
 
   return (
     <section className="main-padding-x px-52 py-8 flex flex-col justify-start items-center gap-3">
-      <Text variant="display-lg">{t("milestone")}</Text>
+      <Text variant="display-lg" className="text-center">
+        {t("milestone")}
+      </Text>
       <Timeline
         data={milestones}
         className="flex justify-center items-center"

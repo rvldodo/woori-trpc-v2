@@ -55,3 +55,10 @@ export interface MapMarkerProps {
   lng: number;
   lat: number;
 }
+
+export type Publication = {
+  id: number;
+  name: LocaleContentOptional | null;
+  publication_date: Date;
+  file_url: string;
+};

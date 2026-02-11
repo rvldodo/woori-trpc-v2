@@ -25,7 +25,7 @@ export default async function PengadaanPage({
   const { locale } = await params;
 
   return (
-    <article className="flex flex-col gap-3">
+    <article className="flex flex-col gap-3 overflow-hidden">
       <USPSection />
       <TableSection l={locale} />
     </article>

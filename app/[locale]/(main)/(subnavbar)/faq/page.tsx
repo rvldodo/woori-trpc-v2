@@ -3,6 +3,7 @@ import { PATHS } from "@/app/urls";
 import type { Metadata } from "next";
 import { Locale } from "next-intl";
 import FAQSection from "./_sections/faq-section";
+import FAQContactSection from "./_sections/contact-section";
 
 export const generateMetadata = async (
   props: PageProps<"/[locale]">,
@@ -27,6 +28,7 @@ export default async function FAQPage({
   return (
     <article className="flex flex-col gap-3">
       <FAQSection l={locale} />
+      <FAQContactSection />
     </article>
   );
 }

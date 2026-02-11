@@ -40,7 +40,7 @@ export default function Navbar() {
   return (
     <nav
       className={cn(
-        "main-padding-x py-0 w-full flex justify-between items-center sticky top-0 border-b bg-white z-50 shadow-md",
+        "main-padding-x py-0 w-full md:flex justify-between items-center sticky top-0 border-b bg-white z-50 shadow-md",
       )}
     >
       <header className="items-center w-full h-full px-5 gap-5 flex">
@@ -48,7 +48,7 @@ export default function Navbar() {
           src={logo}
           alt="logo"
           onClick={handleClickImage}
-          className="cursor-pointer"
+          className="cursor-pointer md:flex hidden"
         />
         {isLoading || !data ? (
           <div className="flex items-center gap-3">
@@ -67,7 +67,7 @@ export default function Navbar() {
                 <Link
                   key={e.id}
                   href={NEW_PATHS[e.header!["id"]] || "/"}
-                  className="flex text-[#434343] text-center cursor-pointer h-full"
+                  className="md:flex hidden text-[#434343] text-center cursor-pointer h-full"
                   onClick={() => setActiveTab(e.header!["id"])}
                 >
                   <div

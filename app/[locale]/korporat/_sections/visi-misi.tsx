@@ -20,7 +20,7 @@ export default function VisiMisiSection({ l }: Props) {
     api.main.visiMisi.list.useQuery();
 
   return (
-    <section className="main-padding-x px-30 py-8 flex flex-col gap-3 items-center justify-center">
+    <section className="main-padding-x md:px-30 py-8 flex flex-col gap-3 items-center justify-center">
       {loadingVisiMisi || !visiMisi ? (
         <div className="w-full h-full flex justify-center items-center">
           <Spinner />
@@ -43,7 +43,7 @@ export default function VisiMisiSection({ l }: Props) {
           </Button>
           <Tabs
             defaultValue={visiMisi.data[0].type![l].toLowerCase()}
-            className="w-full pt-10 px-30"
+            className="w-full pt-10 md:px-30"
           >
             <TabsList className="w-full bg-transparent bg-none px-10 flex justify-between border-b-[1.5px] h-[55px] rounded-none">
               {visiMisi.data.map((e) => (

@@ -7,6 +7,7 @@ const ALLOWED_DOMAINS = [
   "apps.woorifinance.co.id",
   "www.woorifinance.co.id",
   "172.16.10.45",
+  "172.16.80.40",
   "localhost",
   "127.0.0.1",
 ];

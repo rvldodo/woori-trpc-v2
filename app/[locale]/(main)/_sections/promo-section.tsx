@@ -45,14 +45,14 @@ export default function PromoSection({ l }: Props) {
   const { data: promo, isLoading } = api.main.promos.main.useQuery();
 
   return (
-    <section className="main-padding-x flex flex-col gap-3 py-8 relative overflow-hidden">
+    <section className="md:main-padding-x flex flex-col gap-3 py-8 relative overflow-hidden">
       {isLoading || !promo ? (
         <div className="flex gap-3">
           <Skeleton className="w-20 h-15 rounded-lg" />
         </div>
       ) : (
         <Fragment>
-          <div className="flex justify-between items-center">
+          <div className="main-padding-x flex justify-between items-center">
             <Text variant="display-lg">{t("title")}</Text>
             {promo?.data && promo.data.length > 0 && (
               <Link href={PATHS.home.promo || "/"} className="md:flex hidden">
@@ -81,8 +81,8 @@ export default function PromoSection({ l }: Props) {
                     );
                   })}
                 </CarouselContent>
-                <CarouselPrevious className="bg-[#2D2D2D66] md:flex hidden" />
-                <CarouselNext className="bg-[#2D2D2D66] md:flex hidden" />
+                <CarouselPrevious className="bg-[#2D2D2D66] md:flex mx-5 hidden" />
+                <CarouselNext className="bg-[#2D2D2D66] md:flex mx-5 md hidden" />
               </Carousel>
 
               <Link

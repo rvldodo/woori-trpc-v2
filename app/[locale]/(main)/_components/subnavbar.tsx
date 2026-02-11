@@ -15,7 +15,7 @@ export default async function Subnavbar({ l }: Props) {
   }
 
   return (
-    <div className="main-padding-x py-1 w-full flex items-center sticky top-[65px] border-b bg-white z-50 shadow-md gap-4">
+    <div className="main-padding-x py-1 w-full md:flex hidden items-center sticky top-[65px] border-b bg-white z-50 shadow-md gap-2">
       {temp.map((e: SubnavbarProps, idx: number) => {
         if (e.subNavbarTabs.length === 0) {
           return (
@@ -24,7 +24,7 @@ export default async function Subnavbar({ l }: Props) {
               href={
                 NEW_PATHS[e.subnavbar["id" as Lang].split(" ").join("")] || "/"
               }
-              className="flex items-center px-4 hover:bg-gray-100 rounded-lg"
+              className="flex items-center px-2 hover:bg-gray-100 rounded-lg"
             >
               <Text
                 variant="body-lg-regular"
