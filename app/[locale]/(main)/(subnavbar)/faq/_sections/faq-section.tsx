@@ -35,14 +35,14 @@ export default function FAQSection({ l }: Props) {
   return (
     <section className="main-padding-x py-8 flex flex-col justify-start items-center gap-3">
       <section className="flex flex-col justify-center items-center w-full gap-3">
-        <Text variant="display-lg">{t("title")}</Text>
-        <div className="flex items-center px-3 w-[700px] border py-1 rounded-lg bg-white">
+        <Text variant="display-md">{t("title")}</Text>
+        <div className="flex items-center px-3 w-[600px] border py-1 rounded-lg bg-white">
           <Search className="w-5 h-5 text-gray-500" />
           <Input
             value={filter.key}
             onChange={(e) => setFilter({ key: e.target.value })}
             placeholder={t("placeholder")}
-            className="w-full border-none placeholder:text-[18px]"
+            className="w-full border-none placeholder:text-[14px]"
           />
         </div>
       </section>
@@ -60,7 +60,7 @@ export default function FAQSection({ l }: Props) {
               className="flex justify-start hover:bg-[#C2E8FF] hover:border hover:border-primary"
               onClick={() => setFilter({ category: "" })}
             >
-              <Text variant="body-lg-regular">All</Text>
+              <Text variant="body-md-regular">All</Text>
             </Button>
             {category?.data.map((e, idx: number) => (
               <Button
@@ -71,7 +71,7 @@ export default function FAQSection({ l }: Props) {
                 className="flex justify-start hover:bg-[#C2E8FF] hover:border hover:border-primary"
                 onClick={() => setFilter({ category: e.category![l] })}
               >
-                <Text variant="body-lg-regular">{e.category![l]}</Text>
+                <Text variant="body-md-regular">{e.category![l]}</Text>
               </Button>
             ))}
           </div>

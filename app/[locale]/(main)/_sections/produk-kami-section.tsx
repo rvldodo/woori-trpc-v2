@@ -20,9 +20,9 @@ export default function ProductKamiSection({ l }: Props) {
   return (
     <section className="main-padding-x flex flex-col gap-3 py-8 relative overflow-hidden">
       <div className="absolute left-[70rem] lg:w-[30vw] md:w-[20vw] aspect-square rounded-full bg-[rgba(10,156,237,0.2)] lg:filter lg:blur-[100px]" />
-      <Text variant="display-lg">{t("OurProduct.title")}</Text>
+      <Text variant="display-lg">{t("OurProductHome.title")}</Text>
       <Text variant="body-lg-medium">
-        {t.rich("OurProduct.description", {
+        {t.rich("OurProductHome.description", {
           br: (chunks) => (
             <Fragment>
               <br />

@@ -9,6 +9,8 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* Shadcn/UI Colors */
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -38,6 +40,131 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+
+  /* Custom Typography Colors */
+  --color-primary-blue: var(--primary);
+  --color-secondary-purple: var(--secondary);
+  --color-tertiary-grey: var(--tertiary);
+  --color-hover-blue: var(--hover);
+
+  /* Custom Text Colors */
+  --color-heading: var(--heading);
+  --color-title: var(--title);
+  --color-body: var(--body);
+  --color-caption: var(--caption);
+  --color-inactive: var(--inactive);
+  --color-static-white: var(--static-white);
+
+  /* Custom State Colors */
+  --color-error: var(--error);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+
+  /* Custom Background Colors - Primary */
+  --color-background-primary: var(--background-primary);
+  --color-background-secondary: var(--background-secondary);
+  --color-background-tertiary: var(--background-tertiary);
+  --color-background-soft: var(--background-soft);
+  --color-background-focused: var(--background-focused);
+  --color-background-mute: var(--background-mute);
+  --color-background-static-black: var(--background-static-black);
+  --color-background-hover: var(--background-hover);
+
+  /* Custom Background Colors - Active States */
+  --color-background-active-primary: var(--background-active-primary);
+  --color-background-active-secondary: var(--background-active-secondary);
+  --color-background-active-tertiary: var(--background-active-tertiary);
+
+  /* Custom Background Colors - Inactive States */
+  --color-background-inactive-primary: var(--background-inactive-primary);
+  --color-background-inactive-secondary: var(--background-inactive-secondary);
+
+  /* Custom Background Colors - Warning States */
+  --color-background-warning-primary: var(--background-warning-primary);
+  --color-background-warning-secondary: var(--background-warning-secondary);
+
+  /* Custom Background Colors - Success States */
+  --color-background-success-primary: var(--background-success-primary);
+  --color-background-success-secondary: var(--background-success-secondary);
+
+  /* Custom Background Colors - Error States */
+  --color-background-error-primary: var(--background-error-primary);
+  --color-background-error-secondary: var(--background-error-secondary);
+
+  /* Custom Border Colors */
+  --color-border-active-primary: var(--border-active-primary);
+  --color-border-active-grey: var(--border-active-grey);
+  --color-border-active-secondary: var(--border-active-secondary);
+  --color-border-inactive: var(--border-inactive);
+  --color-border-mute: var(--border-mute);
+  --color-border-error: var(--border-error);
+  --color-border-error-soft: var(--border-error-soft);
+  --color-border-static-white: var(--border-static-white);
+
+  /* Custom Icon Colors - Primary Blue */
+  --color-icon-primary-active: var(--icon-primary-active);
+  --color-icon-primary-hovered: var(--icon-primary-hovered);
+  --color-icon-primary-focused: var(--icon-primary-focused);
+  --color-icon-primary-inactive: var(--icon-primary-inactive);
+  --color-icon-primary-static-white: var(--icon-primary-static-white);
+
+  /* Custom Icon Colors - Primary Grey */
+  --color-icon-grey-active: var(--icon-grey-active);
+  --color-icon-grey-inactive: var(--icon-grey-inactive);
+  --color-icon-grey-static-white: var(--icon-grey-static-white);
+
+  /* Custom Icon Colors - Form */
+  --color-icon-form-active: var(--icon-form-active);
+  --color-icon-form-inactive: var(--icon-form-inactive);
+
+  /* Custom Icon Colors - States */
+  --color-icon-error: var(--icon-error);
+  --color-icon-success: var(--icon-success);
+  --color-icon-warning: var(--icon-warning);
+
+  /* Custom Divider Colors */
+  --color-divider-primary: var(--divider-primary);
+  --color-divider-secondary: var(--divider-secondary);
+  --color-divider-tertiary: var(--divider-tertiary);
+
+  /* Custom Button Colors - Primary Background */
+  --color-button-primary-bg-enable: var(--button-primary-bg-enable);
+  --color-button-primary-bg-hovered: var(--button-primary-bg-hovered);
+  --color-button-primary-bg-focused: var(--button-primary-bg-focused);
+  --color-button-primary-bg-disabled: var(--button-primary-bg-disabled);
+  --color-button-primary-bg-static-white: var(--button-primary-bg-static-white);
+
+  /* Custom Button Colors - Primary Text */
+  --color-button-primary-text-enable: var(--button-primary-text-enable);
+  --color-button-primary-text-hovered: var(--button-primary-text-hovered);
+  --color-button-primary-text-focused: var(--button-primary-text-focused);
+  --color-button-primary-text-disabled: var(--button-primary-text-disabled);
+  --color-button-primary-text-static-white: var(
+    --button-primary-text-static-white
+  );
+
+  /* Custom Button Colors - Secondary Border */
+  --color-button-secondary-border-enable: var(--button-secondary-border-enable);
+  --color-button-secondary-border-hovered: var(
+    --button-secondary-border-hovered
+  );
+  --color-button-secondary-border-focused: var(
+    --button-secondary-border-focused
+  );
+  --color-button-secondary-border-disabled: var(
+    --button-secondary-border-disabled
+  );
+  --color-button-secondary-border-static-white: var(
+    --button-secondary-border-static-white
+  );
+
+  /* Custom Button Colors - Secondary Text */
+  --color-button-secondary-text-enable: var(--button-secondary-text-enable);
+  --color-button-secondary-text-hovered: var(--button-secondary-text-hovered);
+  --color-button-secondary-text-focused: var(--button-secondary-text-focused);
+  --color-button-secondary-text-disabled: var(--button-secondary-text-disabled);
+
+  /* Border Radius Utilities */
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -54,6 +181,7 @@
   --primary: #007bc7;
   --secondary: #5e6ed4;
   --tertiary: #e7e7e7;
+  --hover: #c2e8ff;
 
   /* Text Colors */
   --heading: #161616;
@@ -76,6 +204,7 @@
   --background-focused: #dbf1ff;
   --background-mute: #e7e7e7;
   --background-static-black: #161616;
+  --background-hover: #c2e8ff;
 
   /* Active State Backgrounds */
   --background-active-primary: #007bc7;
@@ -232,7 +361,7 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-[#f7f7f7] text-foreground;
+    @apply bg-background-primary text-foreground;
   }
   html {
     scroll-behavior: smooth;
@@ -314,3 +443,4 @@
     @apply left-1/2 -translate-x-1/2;
   }
 }
+

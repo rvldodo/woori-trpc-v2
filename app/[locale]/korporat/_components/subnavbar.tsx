@@ -27,7 +27,7 @@ export default async function Subnavbar({ l }: Props) {
               className="flex items-center px-2 hover:bg-gray-100 rounded-lg"
             >
               <Text
-                variant="body-lg-medium"
+                variant="body-md-medium"
                 className="cursor-pointer p-2 flex text-[#434343]"
               >
                 {e.subnavbar[l]}

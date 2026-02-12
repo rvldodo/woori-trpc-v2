@@ -75,7 +75,7 @@ export default function Navbar() {
                       isActive ? "border-[#007BC7]" : "border-transparent"
                     } transition-all duration-100 ease-in-out`}
                   >
-                    <Text variant="body-lg-medium">{e.header![locale]}</Text>
+                    <Text variant="body-md-medium">{e.header![locale]}</Text>
                   </div>
                 </Link>
               );

@@ -25,7 +25,7 @@ export const ProductCard = ({ icon, title, description, path = "" }: Props) => {
       </div>
       <Link href={path || "/"} className="flex gap-3 items-center">
         <Text variant="caption-md-regular" className="text-blue">
-          {t("OurProduct.detail")}
+          {t("OurProductHome.detail")}
         </Text>
         <ArrowRight className="h-4 w-4" />
       </Link>

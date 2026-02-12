@@ -24,18 +24,11 @@ interface TimelineProps {
 export default function TimelineSection({ className, data, l }: TimelineProps) {
   return (
     <Timeline
-      position="right"
       className={cn(className)}
       sx={{
-        // Remove default padding on mobile
+        // Mobile: right-aligned
         [`@media (max-width: 768px)`]: {
           padding: 0,
-        },
-        // Alternate position on desktop
-        [`@media (min-width: 769px)`]: {
-          "& .MuiTimeline-root": {
-            flexDirection: "row",
-          },
         },
       }}
     >
@@ -52,13 +45,19 @@ export default function TimelineSection({ className, data, l }: TimelineProps) {
             },
             // Desktop: alternate positions
             [`@media (min-width: 769px)`]: {
-              ...(idx % 2 === 0 ? {} : { flexDirection: "row-reverse" }),
+              // Even items: content on right (default)
+              // Odd items: content on left (reversed)
+              ...(idx % 2 !== 0 && {
+                flexDirection: "row-reverse",
+              }),
+              "&::before": {
+                flex: 1,
+              },
             },
           }}
         >
           <TimelineOppositeContent
             sx={{
-              // Mobile: smaller width for dates
               [`@media (max-width: 768px)`]: {
                 flex: "0 0 auto",
                 minWidth: "60px",
@@ -66,37 +65,28 @@ export default function TimelineSection({ className, data, l }: TimelineProps) {
                 paddingLeft: "8px",
                 paddingRight: "8px",
               },
-              // Desktop: default behavior
               [`@media (min-width: 769px)`]: {
                 flex: 1,
+                textAlign: idx % 2 === 0 ? "right" : "left", // Align text based on position
               },
             }}
           >
             <Text variant="body-lg-semi">{e.date}</Text>
           </TimelineOppositeContent>
-
-          {idx === data.length - 1 ? (
-            <TimelineSeparator>
-              <TimelineDot sx={{ bgcolor: "#007bc7" }} />
-            </TimelineSeparator>
-          ) : (
-            <TimelineSeparator>
-              <TimelineDot sx={{ bgcolor: "#007bc7" }} />
-              <TimelineConnector />
-            </TimelineSeparator>
-          )}
-
+          <TimelineSeparator>
+            <TimelineDot sx={{ bgcolor: "#007bc7" }} />
+            {idx !== data.length - 1 && <TimelineConnector />}
+          </TimelineSeparator>
           <TimelineContent
             sx={{
-              // Mobile: take remaining space
               [`@media (max-width: 768px)`]: {
                 flex: 1,
                 paddingLeft: "12px",
                 paddingRight: "8px",
               },
-              // Desktop: default behavior
               [`@media (min-width: 769px)`]: {
                 flex: 1,
+                textAlign: idx % 2 === 0 ? "left" : "right", // Align text based on position
               },
             }}
           >

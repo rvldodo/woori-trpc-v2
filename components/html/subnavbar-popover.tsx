@@ -25,7 +25,7 @@ export function SubnavbarPopover({ item, locale }: Props) {
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger className="cursor-pointer flex gap-3 justify-center items-center hover:bg-gray-100 p-2 rounded-lg">
         <Text
-          variant="body-lg-regular"
+          variant="body-md-regular"
           className="text-[#434343] flex gap-3 items-center"
         >
           {item.subnavbar[locale]}
@@ -45,7 +45,7 @@ export function SubnavbarPopover({ item, locale }: Props) {
               onClick={() => setOpen(false)}
             >
               <Text
-                variant="body-lg-regular"
+                variant="body-md-regular"
                 className="cursor-pointer hover:bg-[#dbf1ff] p-2 flex items-center rounded-lg"
               >
                 {t.tabs[locale]}

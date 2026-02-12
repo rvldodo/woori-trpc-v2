@@ -1,5 +1,6 @@
 import type { LANGS } from "@/i18n/lang";
 import type { useLocale, useTranslations } from "next-intl";
+import React from "react";
 
 export type SeachParams = Promise<{
   [key: string]: string | string[] | undefined;
@@ -61,4 +62,10 @@ export type Publication = {
   name: LocaleContentOptional | null;
   publication_date: Date;
   file_url: string;
+};
+
+export type ProdukTabsTrigger = {
+  value: string;
+  label: LocaleContentOptional;
+  content?: React.ReactNode | string;
 };

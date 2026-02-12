@@ -6,6 +6,7 @@ import { globalParamsRouter } from "./global-params_router";
 import { heroRouter } from "./hero_router";
 import { menusRouter } from "./menus_router";
 import { milestonesRouter } from "./milestone_router";
+import { paymentMethodRouter } from "./payment-method_router";
 import { procurementRouter } from "./procurement_router";
 import { productsRouter } from "./products_router";
 import { profileCompanyRouter } from "./profile_router";
@@ -30,4 +31,5 @@ export const main = {
   complaintType: complainTypeRouter,
   complaints: complaintsRouter,
   publications: publikasiRouter,
+  paymentMethods: paymentMethodRouter,
 };

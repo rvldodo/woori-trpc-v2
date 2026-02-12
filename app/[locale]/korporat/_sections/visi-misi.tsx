@@ -31,7 +31,7 @@ export default function VisiMisiSection({ l }: Props) {
             {t("title")}
           </Text>
           <Text
-            variant="body-lg-medium"
+            variant="body-lg-regular"
             className="md:w-[40vw] w-full text-center"
           >
             {t("description")}
@@ -59,10 +59,10 @@ export default function VisiMisiSection({ l }: Props) {
             <div className="p-2 w-full">
               {visiMisi?.data.map((e) => (
                 <TabsContent value={e.type![l].toLowerCase()} key={e.id}>
-                  <div className="flex md:flex-row flex-col items-center justify-center w-full md:gap-6 gap-3">
-                    <Text variant="display-xl">{e.type![l]}</Text>
+                  <div className="flex md:flex-row flex-col items-center justify-center w-full gap-3">
+                    <Text variant="display-md">{e.type![l]}</Text>
                     <Text
-                      variant="body-lg-medium"
+                      variant="body-md-medium"
                       className="md:text-start text-center"
                     >
                       {e.content![l]}

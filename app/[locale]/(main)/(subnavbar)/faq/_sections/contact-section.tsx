@@ -23,7 +23,7 @@ export default function FAQContactSection() {
     <section className="bg-[#F8FAFF]">
       <div className="md:wrapper px-[24px] flex flex-col md:flex-row justify-center items-center py-8">
         <div className="w-full md:w-1/2 px-8 py-5 flex flex-col justify-center items-center gap-4">
-          <Text variant="display-lg">{t("haveOtherQuestions")}</Text>
+          <Text variant="display-md">{t("haveOtherQuestions")}</Text>
           <button
             type="button"
             className="flex gap-3 items-center hover:opacity-80 transition-opacity text-primary cursor-pointer"
@@ -31,7 +31,7 @@ export default function FAQContactSection() {
           >
             <MessageSquare className="w-5 h-5 text-primary" />
             <Text
-              variant="body-lg-medium"
+              variant="body-md-medium"
               className="text-blue underline"
               color="primary"
             >
@@ -43,13 +43,13 @@ export default function FAQContactSection() {
         <Separator orientation="vertical" className="h-auto" />
 
         <div className="w-full md:w-1/2 px-8 py-5 flex flex-col justify-center items-center gap-4">
-          <Text variant="display-lg">{t("needToComplain")}</Text>
+          <Text variant="display-md">{t("needToComplain")}</Text>
           <Link
             href={PATHS.home.layananCustomer}
             className="flex gap-3 items-center hover:opacity-80 transition-opacity text-primary"
           >
             <Text
-              variant="body-lg-medium"
+              variant="body-md-medium"
               className="text-blue underline"
               color="primary"
             >

@@ -2,7 +2,7 @@
   "Navbar": {
     "menu1": "Individu"
   },
-  "OurProduct": {
+  "OurProductHome": {
     "title": "Produk Kami",
     "description": "Kami menyediakan berbagai layanan pembiayaan di Woori Finance Indonesia.<br>Kami berkomitmen untuk memberikan layanan keuangan terbaik.</br>",
     "detail": "Lihat Detail"
@@ -145,6 +145,77 @@
       "head3": "Tanggal Publikasi",
       "head4": "Detail",
       "head4-button": "Unduh"
+    }
+  },
+  "OurProduct": {
+    "stockFinancing": {
+      "informasiProduk": {
+        "hero": {
+          "title": "Solusi Tepat untuk Kebutuhan Showroom Anda",
+          "description": "Dapatkan akses dana dengan mudah untuk mendukung pertumbuhan persediaan, perluasan showroom, dan meningkatkan profitabilitas Anda."
+        },
+        "products": {
+          "title": "Produk Stock Financing Yang Tersedia",
+          "items": {
+            "stockFinancing": {
+              "title": "Tingkatkan Bisnis Anda dengan Stock Financing",
+              "content": "Proses pengajuan Stock Financing kami dirancang dengan sesederhana mungkin, sehingga Anda dapat fokus pada hal yang lebih penting seperti mengembangkan bisnis Showroom Anda. <br>Dengan Persyaratan yang mudah dipenuhi dan proses persetujuan yang cepat, Anda dapat segera mendapatkan dana yang Anda butuhkan.</br>"
+            }
+          }
+        }
+      },
+      "kriteriaShowroom": {
+        "title": "Kriteria Showroom",
+        "items": [
+          {
+            "kriteria": "Pengaju",
+            "detail": "Professional/Self-Employed/Corporate"
+          },
+          {
+            "kriteria": "Umur Bisnis",
+            "detail": "Minimal 3 Tahun"
+          },
+          {
+            "kriteria": "Unit Stok",
+            "detail": "Minimal 6 Unit"
+          },
+          {
+            "kriteria": "Tipe Kendaraan",
+            "detail": "Mobil penumpang (bukan taksi bekas) yang memiliki faktur dari Agen Tunggal Pemegang Merek (ATPM)"
+          }
+        ]
+      },
+      "persyaratan": {
+        "title": "Persyaratan Dokumen",
+        "subtitle": "Dokumen yang diperlukan untuk pengajuan Stock Financing",
+        "items": [
+          {
+            "image": "/assets/image/our-products/persyaratan/ktp.png",
+            "title": "KTP",
+            "description": "Kartu Tanda Penduduk (KTP) pengurus sesuai dengan yang tercantum dalam akta perusahaan terakhir"
+          },
+          {
+            "image": "/assets/image/our-products/persyaratan/buku-tabungan.png",
+            "title": "Buku Tabungan",
+            "description": "Buku tabungan atau rekening koran 3 bulan terakhir"
+          },
+          {
+            "image": "/assets/image/our-products/persyaratan/surat-pernyataan.png",
+            "title": "Surat Pernyataan Domisili Bisnis",
+            "description": "Untuk bisnis korporat"
+          },
+          {
+            "image": "/assets/image/our-products/persyaratan/npwp-kk.png",
+            "title": "NPWP",
+            "description": "Sebagai bukti tanggung jawab keuangan dan pajak nasabah"
+          },
+          {
+            "image": "/assets/image/our-products/persyaratan/bukti-domisili.png",
+            "title": "Bukti Sewa Gedung Kantor",
+            "description": "Jika gedung kantor masih ditempati"
+          }
+        ]
+      }
     }
   },
   "Footer": {

@@ -33,7 +33,7 @@ export function LangSwitcher() {
         return (
           <div key={e.lang} className="flex items-center gap-3">
             <Text
-              variant="body-md-medium"
+              variant="body-sm-medium"
               className={cn(
                 "text-center rounded-sm cursor-pointer hover:bg-[#dbf1ff] hover:text-primary p-2 transition-all",
                 {

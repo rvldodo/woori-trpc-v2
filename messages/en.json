@@ -2,7 +2,7 @@
   "Navbar": {
     "menu1": "Customer"
   },
-  "OurProduct": {
+  "OurProductHome": {
     "title": "Our Product",
     "description": "We provide various financing services at Woori Finance Indonesia.<br>We are committed to providing the best financial services.</br>",
     "detail": "See Detail"
@@ -145,6 +145,77 @@
       "head3": "Publication Date",
       "head4": "Detail",
       "head4-button": "Download"
+    }
+  },
+  "OurProduct": {
+    "stockFinancing": {
+      "informasiProduk": {
+        "hero": {
+          "title": "The Right Solution for Your Showroom Needs",
+          "description": "Get easy access to funds to support inventory growth, showroom expansion, and increase your profitability."
+        },
+        "products": {
+          "title": "Available Stock Financing Products",
+          "items": {
+            "stockFinancing": {
+              "title": "Grow Your Business with Stock Financing",
+              "content": "Our Stock Financing application process is designed to be as simple as possible, so you can focus on more important things like developing your Showroom business. <br>With easy-to-meet requirements and a fast approval process, you can quickly get the funds you need.</br>"
+            }
+          }
+        }
+      },
+      "kriteriaShowroom": {
+        "title": "Showroom Criteria",
+        "items": [
+          {
+            "kriteria": "Applicant",
+            "detail": "Professional/Self-Employed/Corporate"
+          },
+          {
+            "kriteria": "Business Age",
+            "detail": "Minimum 3 Years"
+          },
+          {
+            "kriteria": "Stock Units",
+            "detail": "Minimum 6 Units"
+          },
+          {
+            "kriteria": "Vehicle Type",
+            "detail": "Passenger cars (not ex-taxi) that have an invoice from the Sole Agent Brand Holder (ATPM)"
+          }
+        ]
+      },
+      "persyaratan": {
+        "title": "Document Requirements",
+        "subtitle": "Required documents for Stock Financing application",
+        "items": [
+          {
+            "image": "/assets/image/our-products/persyaratan/ktp.png",
+            "title": "ID Card (KTP)",
+            "description": "National Identity Card (KTP) of the management as stated in the latest company deed"
+          },
+          {
+            "image": "/assets/image/our-products/persyaratan/buku-tabungan.png",
+            "title": "Bank Statement",
+            "description": "Savings book or bank statement for the last 3 months"
+          },
+          {
+            "image": "/assets/image/our-products/persyaratan/surat-pernyataan.png",
+            "title": "Business Domicile Statement",
+            "description": "For corporate businesses"
+          },
+          {
+            "image": "/assets/image/our-products/persyaratan/npwp-kk.png",
+            "title": "Tax ID Number (NPWP)",
+            "description": "As proof of customer's financial and tax responsibility"
+          },
+          {
+            "image": "/assets/image/our-products/persyaratan/bukti-domisili.png",
+            "title": "Office Building Lease Proof",
+            "description": "If the office building is still occupied"
+          }
+        ]
+      }
     }
   },
   "Footer": {

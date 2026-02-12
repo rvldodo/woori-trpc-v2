@@ -146,36 +146,32 @@ const Footer = (props: FooterProps) => {
 
       {isSimulasiPath[isSimulasiPath.length - 1] ===
         "pembiayaan-alat-berat" && (
-        <div className="bg-blue w-full flex justify-center items-center sticky bottom-0 p-3 gap-5 z-10">
-          <Text variant="body-lg-medium" className="text-[#ffffff]">
+        <div className="bg-blue w-full flex justify-center items-center sticky bottom-0 py-2 gap-5 z-10 bg-primary">
+          <Text variant="body-md-medium" className="text-[#ffffff]">
             Ajukan Pembiayaan Alat Berat Sekarang
           </Text>
           <Link href={PATHS.home.pinjaman.alatBerat.base}>
             <Button
               variant="woori_white"
-              className="p-6 rounded-[16px] border-none"
+              className="p-3 rounded-lg border-none"
             >
-              <Text variant="body-lg-medium" className="text-[#007bc7]">
-                Ajukan Sekarang
-              </Text>
+              Ajukan Sekarang
             </Button>
           </Link>
         </div>
       )}
 
       {isSimulasiPath[isSimulasiPath.length - 1] === "pembiayaan-mobil" && (
-        <div className="bg-blue w-full flex justify-center items-center sticky bottom-0 p-3 gap-5 z-10">
-          <Text variant="body-lg-medium" className="text-[#ffffff]">
+        <div className="bg-blue w-full flex justify-center items-center sticky bottom-0 py-2 gap-5 z-10 bg-primary">
+          <Text variant="body-md-medium" className="text-[#ffffff]">
             Ajukan Pembiayaan Mobil Sekarang
           </Text>
           <Link href={PATHS.home.pinjaman.mobilBekas}>
             <Button
               variant="woori_white"
-              className="p-6 rounded-[16px] border-none"
+              className="p-3 rounded-lg border-none"
             >
-              <Text variant="body-lg-medium" className="text-[#007bc7]">
-                Mulai Simulasi Pinjaman
-              </Text>
+              Mulai Simulasi Pinjaman
             </Button>
           </Link>
         </div>

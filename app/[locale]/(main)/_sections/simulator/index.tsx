@@ -61,7 +61,7 @@ export default function SimulatorSection({ l }: Props) {
             ) : (
               <div className="flex flex-col gap-3">
                 <TextEffect
-                  variant="display-xl"
+                  variant="display-lg"
                   preset="fade-in-blur"
                   speedSegment={0.3}
                   as="p"
@@ -69,7 +69,7 @@ export default function SimulatorSection({ l }: Props) {
                   {mobilBekasUsp.title![l]}
                 </TextEffect>
                 <TextEffect
-                  variant="body-lg-regular"
+                  variant="body-md-regular"
                   preset="fade-in-blur"
                   speedSegment={0.3}
                   as="p"
@@ -77,7 +77,7 @@ export default function SimulatorSection({ l }: Props) {
                   {mobilBekasUsp.description![l]}
                 </TextEffect>
 
-                <div className="flex md:flex-row flex-col gap-3 items-center">
+                <div className="flex flex-col gap-3 md:items-start items-center">
                   {mobilBekasUsp.cards!.map((e: USPCards, idx: number) => (
                     <AnimatedGroup
                       key={idx.toString()}
@@ -131,7 +131,7 @@ export default function SimulatorSection({ l }: Props) {
             ) : (
               <div className="flex flex-col gap-3">
                 <TextEffect
-                  variant="display-xl"
+                  variant="display-lg"
                   preset="fade-in-blur"
                   speedSegment={0.3}
                   as="p"
@@ -139,7 +139,7 @@ export default function SimulatorSection({ l }: Props) {
                   {mobilBaruUsp.title![l]}
                 </TextEffect>
                 <TextEffect
-                  variant="body-lg-regular"
+                  variant="body-md-regular"
                   preset="fade-in-blur"
                   speedSegment={0.3}
                   as="p"
@@ -147,7 +147,7 @@ export default function SimulatorSection({ l }: Props) {
                   {mobilBaruUsp.description![l]}
                 </TextEffect>
 
-                <div className="flex md:flex-row flex-col gap-3 items-center">
+                <div className="flex flex-col gap-3 md:items-start items-center">
                   {mobilBaruUsp.cards!.map((e: USPCards, idx: number) => (
                     <AnimatedGroup
                       key={idx.toString()}
@@ -195,7 +195,7 @@ export default function SimulatorSection({ l }: Props) {
 
           <Card className="h-auto md:px-[24px] px-[12px] shadow-xl w-full bg-[#ffffff] pt-12">
             <CardContent className="">
-              <TabsList className="flex justify-evenly h-[12vh] bg-transparent w-max min-w-full">
+              <TabsList className="flex gap-3 justify-evenly h-[12vh] bg-transparent w-max min-w-full">
                 <TabsTrigger
                   value="used-car"
                   className="w-full flex flex-col data-[state=active]:shadow-md data-[state=active]:hover:shadow-lg data-[state=active]:transition-shadow data-[state=active]:border-[1px] data-[state=active]:border-[#007BC7] data-[state=active]:rounded-md h-auto"
