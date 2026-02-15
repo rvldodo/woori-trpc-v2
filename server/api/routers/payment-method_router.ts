@@ -23,15 +23,22 @@ export const paymentMethodRouter = createTRPCRouter({
       if (key) {
         conditions.push(
           or(
-            sql`LOWER(${paymentMethods.type}->>'en') LIKE LOWER('%' || ${key} || '%')`,
-            sql`LOWER(${paymentMethods.type}->>'id') LIKE LOWER('%' || ${key} || '%')`,
+            sql`LOWER(${paymentMethods.type}->>'en') ILIKE LOWER('%' || ${key} || '%')`,
+            sql`LOWER(${paymentMethods.type}->>'id') ILIKE LOWER('%' || ${key} || '%')`,
           ),
         );
       }
 
       const data = await ctx.db
         .select({
-          paymentMethod: paymentMethods, // Select all payment method fields
+          category: paymentMethods.category,
+          description: paymentMethods.description,
+          id: paymentMethods.id,
+          isActive: paymentMethods.isActive,
+          type: paymentMethods.type,
+          createdTime: paymentMethods.createdTime,
+          updatedTime: paymentMethods.updatedTime,
+          deletedTime: paymentMethods.deletedTime,
         })
         .from(productPaymentMethods)
         .innerJoin(
@@ -43,26 +50,6 @@ export const paymentMethodRouter = createTRPCRouter({
       if (!data) {
         throw new TRPCError({ message: ERROR_FETCH, code: "BAD_REQUEST" });
       }
-
-      if (data.length === 0) {
-        return { data: {} }; // Return empty object if no payment methods found
-      }
-
-      const groupedData = data.reduce<
-        Record<string, (typeof paymentMethods.$inferSelect)[]>
-      >((acc, item) => {
-        // Ensure category exists with a fallback
-        const category = item.paymentMethod.category ?? "BANK TRANSFER";
-
-        // Initialize array if category doesn't exist
-        if (!acc[category]) {
-          acc[category] = [];
-        }
-
-        // Safely push payment method
-        acc[category]?.push(item.paymentMethod);
-        return acc;
-      }, {});
 
       return { data: data };
     }),
