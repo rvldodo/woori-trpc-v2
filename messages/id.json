@@ -149,6 +149,7 @@
   },
   "OurProduct": {
     "stockFinancing": {
+      "title": "Stock Financing",
       "informasiProduk": {
         "hero": {
           "title": "Solusi Tepat untuk Kebutuhan Showroom Anda",
@@ -215,6 +216,158 @@
             "description": "Jika gedung kantor masih ditempati"
           }
         ]
+      }
+    },
+    "heLoan": {
+      "informasiProduk": {
+        "hero": {
+          "title": "Investasikan pada Peralatan, Kembangkan Bisnis Anda",
+          "description": "Pembiayaan Alat Berat kami memungkinkan Anda untuk berinvestasi pada peralatan dan mesin berkualitas tinggi guna menjaga efisiensi operasional dan mendukung pertumbuhan bisnis Anda."
+        },
+        "products": {
+          "title": "Produk Pembiayaan Alat Berat yang Kami Sediakan",
+          "items": {
+            "new": {
+              "title": "Pembiayaan Alat Berat Baru",
+              "content": "Solusi ideal untuk mendukung kebutuhan alat berat baru Anda! Dengan pembiayaan yang fleksibel, dan bunga kompetitif, kami membantu Anda mendapatkan alat berat terkini untuk meningkatkan produktivitas dan efisiensi bisnis Anda. Miliki alat berat terbaik tanpa menunda rencana ekspansi Anda."
+            },
+            "used": {
+              "title": "Pembiayaan Alat Berat Bekas",
+              "content": "Dapatkan alat berat bekas berkualitas yang sesuai dengan kebutuhan bisnis Anda, melalui skema pembiayaan yang mudah dan fleksibel. Kami memahami kebutuhan bisnis Anda akan efisiensi biaya tanpa mengorbankan performa. Dengan pembiayaan alat berat bekas kami, Anda bisa mengoptimalkan modal kerja sambil tetap memastikan operasional berjalan lancar."
+            }
+          }
+        }
+      },
+      "prosesPengajuan": {
+        "title": "Proses Pengajuan",
+        "items": {
+          "step1": {
+            "title": "Nasabah Menemui CMO",
+            "description": "Temui CMO untuk menyerahkan dokumen yang diperlukan"
+          },
+          "step2": {
+            "title": "Survey Proyek Nasabah oleh CMO",
+            "description": "Proyek yang membutuhkan Pembiayaan Alat Berat akan menjalani pemeriksaan kualitas oleh CMO"
+          },
+          "step3": {
+            "title": "Proses Persetujuan Pengajuan Kredit",
+            "description": "Setelah persetujuan kredit, surat penawaran kredit akan dikirim ke pelanggan"
+          },
+          "step4": {
+            "title": "Tandatangan Surat Penawaran Kredit",
+            "description": "Menandatangani perjanjian kredit sebelum pembayaran pertama ke WFI"
+          },
+          "step5": {
+            "title": "Pengiriman dan Pembayaran",
+            "description": "Pengiriman Alat Berat, Verifikasi, Hingga Pembayaran dan Pengiriman Kontrak"
+          }
+        },
+        "warning": {
+          "text": "Untuk detail lebih lanjut, silahkan menghubungi",
+          "link": "Cabang kami"
+        }
+      },
+      "persyaratan": {
+        "title": "Persyaratan dan Dokumen",
+        "items": [
+          {
+            "image": "/assets/image/our-products/persyaratan/ktp.png",
+            "title": "KTP",
+            "description": "Kartu Tanda Penduduk (KTP) pengurus sesuai dengan yang tercantum dalam akta perusahaan terakhir"
+          },
+          {
+            "image": "/assets/image/our-products/persyaratan/buku-tabungan.png",
+            "title": "Buku Tabungan",
+            "description": "Buku tabungan atau rekening koran 3 bulan terakhir"
+          },
+          {
+            "image": "/assets/image/our-products/persyaratan/npwp-kk.png",
+            "title": "NPWP",
+            "description": "Sebagai bukti tanggung jawab keuangan dan pajak nasabah"
+          }
+        ],
+        "warning": {
+          "text": "Untuk detail lebih lanjut, silahkan menghubungi",
+          "link": "Cabang kami"
+        }
+      },
+      "cabangPenyedia": {
+        "title": "Cabang Penyedia Layanan Pembiayaan Alat Berat",
+        "viewAllBranches": "Lihat Semua Cabang"
+      },
+      "riplay": {
+        "title": "RIPLAY",
+        "description": "Download Ringkasan Informasi Produk dan Layanan (RIPLAY) sebagai informasi kepada seluruh debitur Woori Finance"
+      }
+    },
+    "carLoan": {
+      "informasiProduk": {
+        "hero": {
+          "title": "Sekilas tentang Pembiayaan Mobil Kami",
+          "description": "Opsi pembiayaan kendaraan mobil kami menawarkan suku bunga yang kompetitif, proses cepat, dan syarat yang mudah. Baik pembelian mobil baru maupun bekas, dapatkan pra-persetujuan hari ini dan berkendaralah dengan percaya diri!"
+        },
+        "products": {
+          "title": "Produk Pembiayaan Mobil Kami",
+          "items": {
+            "used": {
+              "title": "Mobil Bekas",
+              "content": "Pembiayaan Mobil Bekas kami menawarkan cara yang mudah dan cepat untuk membeli kendaraan bekas. Membeli mobil bekas lebih mudah dan cepat dengan persyaratan yang mudah dan suku bunga yang kompetitif. Anda dapat mengajukan pembiayaan dengan opsi pembayaran yang disesuaikan dengan anggaran Anda.",
+              "features": {
+                "tenure": {
+                  "label": "Jangka waktu pembiayaan",
+                  "value": "Pilihan jangka waktu pembiayaan mulai dari 12 hingga 60 bulan"
+                },
+                "interest": {
+                  "label": "Suku Bunga Kompetitif",
+                  "value": "Nikmati suku bunga yang membuat pembayaran bulanan Anda menjadi lebih ringan."
+                }
+              }
+            },
+            "new": {
+              "title": "Mobil Baru",
+              "content": "Memperlancar keputusan Anda untuk membawa pulang mobil baru dengan layanan Pembiayaan mobil kami. Membeli mobil baru lebih mudah dan cepat dengan persyaratan yang mudah dan suku bunga yang kompetitif.",
+              "features": {
+                "tenure": {
+                  "label": "Jangka waktu pembiayaan",
+                  "value": "Pilihan jangka waktu pembiayaan mulai dari 12 hingga 60 bulan"
+                },
+                "interest": {
+                  "label": "Suku Bunga Kompetitif",
+                  "value": "Nikmati suku bunga yang membuat pembayaran bulanan Anda menjadi lebih ringan."
+                }
+              }
+            }
+          }
+        }
+      },
+      "prosesPengajuan": {
+        "title": "Proses Pengajuan",
+        "items": {
+          "step1": {
+            "title": "Calon Nasabah Memilih Mobil",
+            "description": "Calon nasabah mengunjungi showroom dan memilih mobil yang diinginkan terlebih dahulu."
+          },
+          "step2": {
+            "title": "Perhitungan Simulasi dan Pengecekan Data",
+            "description": "CMO akan memberikan perhitungan simulasi kredit kepada nasabah, jika nasabah menyetujui, maka akan dilakukan pengecekan data nasabah."
+          },
+          "step3": {
+            "title": "CMO Melakukan Pemeriksaan Kelengkapan Dokumen",
+            "description": "CMO akan melakukan survey untuk mengumpulkan dan memeriksa kesesuaian dokumen yang diperlukan."
+          },
+          "step4": {
+            "title": "Persetujuan Pengajuan Pembiayaan Nasabah",
+            "description": "Jika nasabah memenuhi syarat untuk mengajukan Pembiayaan, data kelengkapan nasabah akan diberikan ke cabang atau kantor pusat untuk melalui tahap persetujuan."
+          },
+          "step5": {
+            "title": "Pengiriman dan Pembayaran",
+            "description": "Setelah persetujuan dan pembayaran, mobil akan dikirimkan ke pihak nasabah."
+          }
+        },
+        "warning": {
+          "text": "Untuk detail lebih lanjut, silahkan menghubungi",
+          "link": "Cabang kami"
+        }
       }
     }
   },

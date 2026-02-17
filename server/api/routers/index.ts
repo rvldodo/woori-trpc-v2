@@ -12,6 +12,7 @@ import { productsRouter } from "./products_router";
 import { profileCompanyRouter } from "./profile_router";
 import { promosRouter } from "./promos_router";
 import { publikasiRouter } from "./publications_router";
+import { riplayRouter } from "./riplay_router";
 import { uspRouter } from "./usp_router";
 import { visiMisiRouter } from "./visi-misi_router";
 
@@ -32,4 +33,5 @@ export const main = {
   complaints: complaintsRouter,
   publications: publikasiRouter,
   paymentMethods: paymentMethodRouter,
+  riplay: riplayRouter,
 };

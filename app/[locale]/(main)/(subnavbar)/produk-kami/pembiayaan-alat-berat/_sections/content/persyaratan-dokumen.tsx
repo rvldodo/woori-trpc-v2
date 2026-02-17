@@ -10,14 +10,14 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { MailWarning } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Locale, useTranslations } from "next-intl";
 import { PersyaratanCard } from "../../../_components/persyaratan-card";
+import { Volume2 } from "lucide-react";
 
-export default function DokumenLegalitas() {
-  const t = useTranslations("OurProduct.stockFinancing");
+export default function PersyaratanDokumenTabs() {
+  const t = useTranslations("OurProduct.heLoan");
   const [api, setApi] = useState<CarouselApi>();
 
   const [current, setCurrent] = useState(0);
@@ -41,7 +41,7 @@ export default function DokumenLegalitas() {
 
   return (
     <section className="wrapper-sm flex flex-col w-full gap-6 h-auto py-3 relative overflow-hidden z-10">
-      <Text variant="display-md">Persyaratan dan Dokumen</Text>
+      <Text variant="display-md">{t("persyaratan.title")}</Text>
       <Carousel className="w-full" setApi={setApi}>
         <CarouselContent>
           {items.map((e, idx: number) => {
@@ -66,7 +66,7 @@ export default function DokumenLegalitas() {
         />
 
         <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-          {slides.slice(0, 3).map((_, index) => (
+          {slides.slice(0, 1).map((_, index) => (
             <div
               key={index.toString()}
               className={`h-2 w-2 rounded-full transition-all duration-300 ease-linear cursor-default ${
@@ -77,12 +77,12 @@ export default function DokumenLegalitas() {
         </div>
       </Carousel>
 
-      <div className="flex w-full items-center bg-light_yellow p-3 gap-3 mt-5">
-        <MailWarning className="h-4 w-4" />
+      <div className="flex w-full items-center bg-background-warning-secondary gap-3 p-3">
+        <Volume2 className="w-4 h-4" />
         <Text variant="caption-md-regular">
-          Untuk detail lebih lanjut, silahkan menghubungi{" "}
+          {t("persyaratan.warning.text")}{" "}
           <Link href={PATHS.home.cabangKami} className="text-primary underline">
-            Cabang kami
+            {t("persyaratan.warning.link")}
           </Link>
         </Text>
       </div>

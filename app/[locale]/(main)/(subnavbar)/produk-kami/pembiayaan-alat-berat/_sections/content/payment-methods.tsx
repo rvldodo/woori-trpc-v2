@@ -1,13 +1,12 @@
 "use client";
 
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Text } from "@/components/html/text";
 import { Locale } from "next-intl";
 import { parseAsString, useQueryStates } from "nuqs";
 import { api } from "@/trpc/react";
 import { Spinner } from "@/components/ui/spinner";
-import { Button } from "@/components/ui/button";
 import { TextHTML } from "@/components/html/text-html";
 import { useEffect } from "react";
 
@@ -27,7 +26,7 @@ export default function PaymentMethods({ l }: Props) {
   });
 
   const { data: type, isLoading: typeLoading } =
-    api.main.paymentMethods.typeByProductID.useQuery({ productId: 4 });
+    api.main.paymentMethods.typeByProductID.useQuery({ productId: 2 });
 
   // Auto-select first method when data changes
   useEffect(() => {
@@ -58,7 +57,7 @@ export default function PaymentMethods({ l }: Props) {
               onValueChange={(e) => setFilter({ payment_methods: e })}
               className="w-full"
             >
-              <TabsList className="grid rounded-none border-b-2 border-b-muted w-full bg-transparent gap-3 grid-cols-2">
+              <TabsList className="grid rounded-none border-b-2 border-b-muted w-full bg-transparent gap-3 grid-cols-1">
                 {type?.data.map((e, idx: number) => (
                   <TabsTrigger
                     value={e.category!.toLowerCase()}

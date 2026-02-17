@@ -15,6 +15,7 @@ export const generateMetadata = async (
     locale,
     title: "Stock Financing",
     description: "Tingkatkan Bisnis Showroom Anda dengan Stock Financing",
+    imageUrl: "/assets/image/our-products/stock-financing.png",
   });
 };
 

@@ -4,19 +4,16 @@ import { Text } from "@/components/html/text";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import type { ProdukTabsTrigger } from "@/types";
-import { useTranslations, type Locale } from "next-intl";
+import type { Locale } from "next-intl";
 import { parseAsString, useQueryStates } from "nuqs";
-import InfoProdukTabs from "./content/info-produk";
-import KriteriaProduk from "./content/kriteria-showroom";
-import DokumenLegalitas from "./content/dokumen-legalitas";
-import PaymentMethods from "./content/payment-methods";
+import InfoProdukTabs from "./content/info-product";
+import ProsesPengajuanTabs from "./content/proses-pengajuan";
 
 type Props = {
   l: Locale;
 };
 
 export default function TabsSection({ l }: Props) {
-  const t = useTranslations("OurProduct.stockFinancing");
   const sidebarContent: Array<ProdukTabsTrigger> = [
     {
       value: "informasi-produk",
@@ -27,20 +24,19 @@ export default function TabsSection({ l }: Props) {
       content: <InfoProdukTabs />,
     },
     {
-      value: "kriteria-showroom",
+      value: "proses-pengajuan",
       label: {
-        en: "Showroom Criteria",
-        id: "Kriteria Showroom",
+        en: "Submission Process",
+        id: "Proses Pengajuan",
       },
-      content: <KriteriaProduk l={l} />,
+      content: <ProsesPengajuanTabs />,
     },
     {
-      value: "dokumen-legalitas",
+      value: "persyaratan-dan-dokumen",
       label: {
-        en: "Legal Documents",
-        id: "Dokumen Legalitas",
+        en: "Requirements and Documents",
+        id: "Persyaratan dan Dokumen",
       },
-      content: <DokumenLegalitas />,
     },
     {
       value: "metode-pembayaran",
@@ -48,27 +44,33 @@ export default function TabsSection({ l }: Props) {
         en: "Payment Methods",
         id: "Metode Pembayaran",
       },
-      content: <PaymentMethods l={l} />,
+    },
+    {
+      value: "riplay",
+      label: {
+        en: "RIPLAY",
+        id: "RIPLAY",
+      },
     },
   ];
 
   const [filter, setFilter] = useQueryStates({
-    sf_content: parseAsString.withDefault("informasi-produk"),
+    he_content: parseAsString.withDefault("informasi-produk"),
   });
 
   return (
-    <article className="main-padding-x w-full max-h-screen justify-start items-center">
+    <article className="main-padding-x w-full justify-start items-center">
       <div className="flex flex-col gap-3"></div>
       <Tabs
         defaultValue="informasi-produk"
-        value={filter.sf_content}
-        onValueChange={(e) => setFilter(() => ({ sf_content: e }))}
+        value={filter.he_content}
+        onValueChange={(e) => setFilter(() => ({ he_content: e }))}
         className="grid grid-cols-1 px-0 md:grid-cols-4 gap-3"
         orientation="vertical"
       >
         <section className="col-span-1">
           <Text variant="display-sm" className="py-1">
-            {t("title")}
+            Pembiayaan Mobil
           </Text>
           <TabsList className="flex flex-col gap-3 items-start col-span-1">
             {sidebarContent.map((e, idx) => (
@@ -77,7 +79,7 @@ export default function TabsSection({ l }: Props) {
                 value={e.value}
                 className={cn(
                   "flex justify-start m-0 p-2 hover:bg-hover-blue",
-                  filter.sf_content === e.value ? "border border-primary" : "",
+                  filter.he_content === e.value ? "border border-primary" : "",
                 )}
               >
                 <Text variant="body-md-regular" className="text-start">

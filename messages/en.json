@@ -149,6 +149,7 @@
   },
   "OurProduct": {
     "stockFinancing": {
+      "title": "Stock Financing",
       "informasiProduk": {
         "hero": {
           "title": "The Right Solution for Your Showroom Needs",
@@ -215,6 +216,158 @@
             "description": "If the office building is still occupied"
           }
         ]
+      }
+    },
+    "heLoan": {
+      "informasiProduk": {
+        "hero": {
+          "title": "Invest in Equipment, Grow Your Business",
+          "description": "Our Heavy Equipment Financing allows you to invest in high-quality equipment and machinery to maintain operational efficiency and support your business growth."
+        },
+        "products": {
+          "title": "Heavy Equipment Financing Products We Provide",
+          "items": {
+            "new": {
+              "title": "New Heavy Equipment Financing",
+              "content": "The ideal solution to support your new heavy equipment needs! With flexible financing and competitive interest rates, we help you acquire the latest heavy equipment to boost your productivity and business efficiency. Own the best heavy equipment without delaying your expansion plans."
+            },
+            "used": {
+              "title": "Used Heavy Equipment Financing",
+              "content": "Get quality used heavy equipment that suits your business needs, through easy and flexible financing schemes. We understand your business need for cost efficiency without sacrificing performance. With our used heavy equipment financing, you can optimize working capital while ensuring smooth operations."
+            }
+          }
+        }
+      },
+      "prosesPengajuan": {
+        "title": "Submission Process",
+        "items": {
+          "step1": {
+            "title": "Customer Meets CMO",
+            "description": "Meet the CMO to submit the required documents"
+          },
+          "step2": {
+            "title": "Customer Project Survey by CMO",
+            "description": "Projects requiring Heavy Equipment Financing will undergo a quality inspection by the CMO"
+          },
+          "step3": {
+            "title": "Credit Application Approval Process",
+            "description": "After credit approval, a credit offer letter will be sent to the customer"
+          },
+          "step4": {
+            "title": "Signing the Credit Offer Letter",
+            "description": "Sign the credit agreement before the first payment to WFI"
+          },
+          "step5": {
+            "title": "Delivery and Payment",
+            "description": "Heavy Equipment Delivery, Verification, through to Payment and Contract Delivery"
+          }
+        },
+        "warning": {
+          "text": "For further details, please contact",
+          "link": "our Branch"
+        }
+      },
+      "persyaratan": {
+        "title": "Requirements and Documents",
+        "items": [
+          {
+            "image": "/assets/image/our-products/persyaratan/ktp.png",
+            "title": "ID Card (KTP)",
+            "description": "National Identity Card (KTP) of the management as stated in the latest company deed"
+          },
+          {
+            "image": "/assets/image/our-products/persyaratan/buku-tabungan.png",
+            "title": "Bank Statement",
+            "description": "Savings book or bank statement for the last 3 months"
+          },
+          {
+            "image": "/assets/image/our-products/persyaratan/npwp-kk.png",
+            "title": "Tax ID Number (NPWP)",
+            "description": "As proof of customer's financial and tax responsibility"
+          }
+        ],
+        "warning": {
+          "text": "For further details, please contact",
+          "link": "our Branch"
+        }
+      },
+      "cabangPenyedia": {
+        "title": "Heavy Equipment Financing Service Provider Branch",
+        "viewAllBranches": "View All Branches"
+      },
+      "riplay": {
+        "title": "RIPLAY",
+        "description": "Download the Product and Service Information Summary (RIPLAY) as information for all Woori Finance debtors"
+      }
+    },
+    "carLoan": {
+      "informasiProduk": {
+        "hero": {
+          "title": "A Glimpse of Our Car Financing",
+          "description": "Our vehicle financing options offer competitive interest rates, a fast process, and easy requirements. Whether buying a new or used car, get pre-approval today and drive with confidence!"
+        },
+        "products": {
+          "title": "Our Car Financing Products",
+          "items": {
+            "used": {
+              "title": "Used Car",
+              "content": "Our Used Car Financing offers an easy and fast way to purchase a used vehicle. Buying a used car is easier and faster with simple requirements and competitive interest rates. You can apply for financing with payment options tailored to your budget.",
+              "features": {
+                "tenure": {
+                  "label": "Financing Tenure",
+                  "value": "Financing tenure options ranging from 12 to 60 months"
+                },
+                "interest": {
+                  "label": "Competitive Interest Rate",
+                  "value": "Enjoy interest rates that make your monthly payments more affordable."
+                }
+              }
+            },
+            "new": {
+              "title": "New Car",
+              "content": "Simplify your decision to bring home a new car with our Car Financing service. Buying a new car is easier and faster with simple requirements and competitive interest rates.",
+              "features": {
+                "tenure": {
+                  "label": "Financing Tenure",
+                  "value": "Financing tenure options ranging from 12 to 60 months"
+                },
+                "interest": {
+                  "label": "Competitive Interest Rate",
+                  "value": "Enjoy interest rates that make your monthly payments more affordable."
+                }
+              }
+            }
+          }
+        }
+      },
+      "prosesPengajuan": {
+        "title": "Submission Process",
+        "items": {
+          "step1": {
+            "title": "Prospective Customer Selects a Car",
+            "description": "The prospective customer visits the showroom and selects their desired car first."
+          },
+          "step2": {
+            "title": "Simulation Calculation and Data Verification",
+            "description": "The CMO will provide the customer with a credit simulation calculation. If the customer agrees, a data verification process will be conducted."
+          },
+          "step3": {
+            "title": "CMO Conducts Document Completeness Check",
+            "description": "The CMO will conduct a survey to collect and verify the completeness of the required documents."
+          },
+          "step4": {
+            "title": "Customer Financing Application Approval",
+            "description": "If the customer qualifies for Financing, the customer's complete data will be submitted to the branch or head office for the approval stage."
+          },
+          "step5": {
+            "title": "Delivery and Payment",
+            "description": "After approval and payment, the car will be delivered to the customer."
+          }
+        },
+        "warning": {
+          "text": "For further details, please contact",
+          "link": "our Branch"
+        }
       }
     }
   },

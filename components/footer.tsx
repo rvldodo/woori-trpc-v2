@@ -16,8 +16,11 @@ import { cn } from "@/lib/utils";
 import { Separator } from "./ui/separator";
 import { useTranslations } from "next-intl";
 import Img from "./html/img";
-import { MessageSquare, Linkedin, Facebook, Instagram } from "lucide-react"; // Import Lucide icons
 import { Skeleton } from "./ui/skeleton";
+import { FaLinkedinIn } from "react-icons/fa";
+import { FaFacebookF } from "react-icons/fa";
+import { FaInstagram } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
 
 type FooterProps = {
   className?: string;
@@ -61,24 +64,24 @@ const Footer = (props: FooterProps) => {
             <Text variant="body-lg-semi">{t("contactUs")}</Text>
             <Text variant="caption-md-regular">+62-21-520-0434</Text>
             <div className="flex gap-2 items-center">
-              <MessageSquare className="w-4 h-4" />
+              <MdEmail className="w-5 h-5" />
               <Text variant="caption-md-regular">cs@woorifinance.co.id</Text>
             </div>
           </div>
           <div className="flex flex-col gap-5 pt-6">
             <Text variant="body-lg-semi">{t("socialMedia")}</Text>
             <div className="flex gap-3 items-center">
-              <Linkedin className="w-5 h-5 text-gray-700" />
+              <FaLinkedinIn className="w-5 h-5 text-gray-700" />
               <Text variant="caption-md-regular">
                 PT WOORI FINANCE INDONESIA Tbk.
               </Text>
             </div>
             <div className="flex gap-3 items-center">
-              <Facebook className="w-5 h-5 text-gray-700" />
+              <FaFacebookF className="w-5 h-5 text-gray-700" />
               <Text variant="caption-md-regular">Woori Finance Indonesia</Text>
             </div>
             <div className="flex gap-3 items-center">
-              <Instagram className="w-5 h-5 text-gray-700" />
+              <FaInstagram className="w-5 h-5 text-gray-700" />
               <Text variant="caption-md-regular">@woorifinance.indonesia</Text>
             </div>
           </div>
@@ -107,7 +110,7 @@ const Footer = (props: FooterProps) => {
           </div>
         </div>
         <div className="flex flex-col gap-3 w-full pt-5">
-          <div className="flex md:flex-row flex-col gap-3">
+          <div className="flex md:flex-row flex-col md:items-center gap-3">
             <div className="flex md:flex-row flex-row-reverse items-center gap-2 w-full bg-[#E3F4FF]">
               <Image alt="iso" src={iso} width={70} />
               <Text className="text-[#5F5F5F]" variant="caption-md-regular">
@@ -118,7 +121,7 @@ const Footer = (props: FooterProps) => {
               <Text variant="display-lg">{t("downloadApp")}</Text>
               <Image alt="google play" src={googlePlay} width={100} />
             </div>
-            <div className="flex gap-3 md:w-[40vw] h-10 w-full md:justify-center justify-start md:items-center items-start">
+            <div className="flex gap-3 md:w-[40vw] h-5 w-full md:justify-center justify-start md:items-center items-start">
               <Link href={PATHS.kebijakanPrivasi}>
                 <Text
                   className="flex justify-center md:w-full items-center text-blue underline text-primary"
