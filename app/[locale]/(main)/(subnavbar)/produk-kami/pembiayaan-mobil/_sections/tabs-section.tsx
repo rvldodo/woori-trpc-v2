@@ -8,6 +8,9 @@ import type { Locale } from "next-intl";
 import { parseAsString, useQueryStates } from "nuqs";
 import InfoProdukTabs from "./content/info-product";
 import ProsesPengajuanTabs from "./content/proses-pengajuan";
+import RiplayTabs from "./content/riplay";
+import PaymentMethods from "./content/payment-method";
+import PersyaratanDokumenTabs from "./content/persyaratan-dan-dokumen";
 
 type Props = {
   l: Locale;
@@ -37,6 +40,7 @@ export default function TabsSection({ l }: Props) {
         en: "Requirements and Documents",
         id: "Persyaratan dan Dokumen",
       },
+      content: <PersyaratanDokumenTabs />,
     },
     {
       value: "metode-pembayaran",
@@ -44,6 +48,7 @@ export default function TabsSection({ l }: Props) {
         en: "Payment Methods",
         id: "Metode Pembayaran",
       },
+      content: <PaymentMethods l={l} />,
     },
     {
       value: "riplay",
@@ -51,11 +56,12 @@ export default function TabsSection({ l }: Props) {
         en: "RIPLAY",
         id: "RIPLAY",
       },
+      content: <RiplayTabs l={l} />,
     },
   ];
 
   const [filter, setFilter] = useQueryStates({
-    he_content: parseAsString.withDefault("informasi-produk"),
+    car_content: parseAsString.withDefault("informasi-produk"),
   });
 
   return (
@@ -63,8 +69,8 @@ export default function TabsSection({ l }: Props) {
       <div className="flex flex-col gap-3"></div>
       <Tabs
         defaultValue="informasi-produk"
-        value={filter.he_content}
-        onValueChange={(e) => setFilter(() => ({ he_content: e }))}
+        value={filter.car_content}
+        onValueChange={(e) => setFilter(() => ({ car_content: e }))}
         className="grid grid-cols-1 px-0 md:grid-cols-4 gap-3"
         orientation="vertical"
       >
@@ -79,7 +85,7 @@ export default function TabsSection({ l }: Props) {
                 value={e.value}
                 className={cn(
                   "flex justify-start m-0 p-2 hover:bg-hover-blue",
-                  filter.he_content === e.value ? "border border-primary" : "",
+                  filter.car_content === e.value ? "border border-primary" : "",
                 )}
               >
                 <Text variant="body-md-regular" className="text-start">

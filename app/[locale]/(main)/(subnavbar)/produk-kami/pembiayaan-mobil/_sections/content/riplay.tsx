@@ -11,7 +11,7 @@ type Props = {
 };
 
 export default function RiplayTabs({ l }: Props) {
-  const { data, isLoading } = api.main.riplay.listHE.useQuery({ lang: l });
+  const { data, isLoading } = api.main.riplay.list.useQuery({ lang: l });
 
   return (
     <article className="w-full h-full flex flex-col py-3 gap-5">

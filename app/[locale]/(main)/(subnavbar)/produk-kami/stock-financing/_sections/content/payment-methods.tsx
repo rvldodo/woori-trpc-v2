@@ -58,7 +58,9 @@ export default function PaymentMethods({ l }: Props) {
               onValueChange={(e) => setFilter({ payment_methods: e })}
               className="w-full"
             >
-              <TabsList className="grid rounded-none border-b-2 border-b-muted w-full bg-transparent gap-3 grid-cols-2">
+              <TabsList
+                className={`grid rounded-none border-b-2 border-b-muted w-full bg-transparent gap-3 grid-cols-2`}
+              >
                 {type?.data.map((e, idx: number) => (
                   <TabsTrigger
                     value={e.category!.toLowerCase()}
@@ -69,7 +71,7 @@ export default function PaymentMethods({ l }: Props) {
                       variant="body-md-regular"
                       className="text-center w-full"
                     >
-                      {e.type![l]}
+                      {e.category!}
                     </Text>
                   </TabsTrigger>
                 ))}
@@ -90,7 +92,7 @@ export default function PaymentMethods({ l }: Props) {
                       className="w-full flex flex-row items-start gap-4"
                     >
                       <TabsList
-                        className="flex flex-col justify-start gap-2 bg-transparent h-auto p-0 shrink-0"
+                        className={`grid grid-cols-${data?.data.length || 3} justify-start gap-2 bg-transparent h-auto p-0 shrink-0`}
                         style={{ flexDirection: "column" }}
                         aria-orientation="vertical"
                       >

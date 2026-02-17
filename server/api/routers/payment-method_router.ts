@@ -22,10 +22,7 @@ export const paymentMethodRouter = createTRPCRouter({
 
       if (key) {
         conditions.push(
-          or(
-            sql`LOWER(${paymentMethods.type}->>'en') ILIKE LOWER('%' || ${key} || '%')`,
-            sql`LOWER(${paymentMethods.type}->>'id') ILIKE LOWER('%' || ${key} || '%')`,
-          ),
+          sql`LOWER(${paymentMethods.category}::text) ILIKE LOWER(${"%" + key + "%"})`,
         );
       }
 
@@ -51,7 +48,7 @@ export const paymentMethodRouter = createTRPCRouter({
         throw new TRPCError({ message: ERROR_FETCH, code: "BAD_REQUEST" });
       }
 
-      return { data: data };
+      return { data };
     }),
 
   typeByProductID: publicProcedure

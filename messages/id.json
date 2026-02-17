@@ -368,6 +368,45 @@
           "text": "Untuk detail lebih lanjut, silahkan menghubungi",
           "link": "Cabang kami"
         }
+      },
+      "persyaratan": {
+        "title": "Persyaratan dan Dokumen",
+        "items": [
+          {
+            "image": "/assets/image/our-products/persyaratan/ktp.png",
+            "title": "Warganegara Indonesia",
+            "description": "Memiliki KTP yang menyatakan bahwa Anda adalah Warga Negara Indonesia, dengan usia minimal 25 tahun dan maksimal 50 tahun"
+          },
+          {
+            "image": "/assets/image/our-products/persyaratan/npwp-kk.png",
+            "title": "NPWP dan Kartu Keluarga",
+            "description": "Sebagai bukti tanggung jawab keuangan dan pajak nasabah"
+          },
+          {
+            "image": "/assets/image/our-products/persyaratan/rekening-koran.png",
+            "title": "Rekening Koran",
+            "description": "Memiliki rekening koran atau buku tabungan 3 bulan terakhir"
+          },
+          {
+            "image": "/assets/image/our-products/persyaratan/bukti-domisili.png",
+            "title": "Bukti Domisili",
+            "description": "PBB/Rekening Listrik/Surat Keterangan Domisili RT/RW"
+          },
+          {
+            "image": "/assets/image/our-products/persyaratan/buku-nikah.png",
+            "title": "Buku Nikah",
+            "description": "atau surat cerai, jika Anda sudah menikah atau bercerai"
+          },
+          {
+            "image": "/assets/image/our-products/persyaratan/slip-gaji.png",
+            "title": "Slip Gaji",
+            "description": "Slip gaji karyawan/Surat Izin Usaha Perdagangan (SIUP) bagi pengusaha. *)"
+          }
+        ],
+        "warning": {
+          "text": "Untuk detail lebih lanjut, silahkan menghubungi",
+          "link": "Cabang kami"
+        }
       }
     }
   },

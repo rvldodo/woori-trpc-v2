@@ -368,6 +368,45 @@
           "text": "For further details, please contact",
           "link": "our Branch"
         }
+      },
+      "persyaratan": {
+        "title": "Requirements and Documents",
+        "items": [
+          {
+            "image": "/assets/image/our-products/persyaratan/ktp.png",
+            "title": "Indonesian Citizen",
+            "description": "Must have a National ID Card (KTP) stating that you are an Indonesian Citizen, with a minimum age of 25 years and maximum age of 50 years"
+          },
+          {
+            "image": "/assets/image/our-products/persyaratan/npwp-kk.png",
+            "title": "Tax ID (NPWP) and Family Card",
+            "description": "As proof of the customer's financial and tax responsibility"
+          },
+          {
+            "image": "/assets/image/our-products/persyaratan/rekening-koran.png",
+            "title": "Bank Statement",
+            "description": "Must have a bank statement or savings book for the last 3 months"
+          },
+          {
+            "image": "/assets/image/our-products/persyaratan/bukti-domisili.png",
+            "title": "Proof of Domicile",
+            "description": "Land and Building Tax (PBB) / Electricity Bill / Domicile Certificate from RT/RW"
+          },
+          {
+            "image": "/assets/image/our-products/persyaratan/buku-nikah.png",
+            "title": "Marriage Book",
+            "description": "Or divorce certificate, if you are married or divorced"
+          },
+          {
+            "image": "/assets/image/our-products/persyaratan/slip-gaji.png",
+            "title": "Pay Slip",
+            "description": "Employee pay slip / Trading Business License (SIUP) for business owners. *)"
+          }
+        ],
+        "warning": {
+          "text": "For further details, please contact",
+          "link": "our Branch"
+        }
       }
     }
   },

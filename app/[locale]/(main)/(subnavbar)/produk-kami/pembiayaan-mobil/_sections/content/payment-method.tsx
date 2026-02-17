@@ -1,12 +1,13 @@
 "use client";
 
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Text } from "@/components/html/text";
 import { Locale } from "next-intl";
 import { parseAsString, useQueryStates } from "nuqs";
 import { api } from "@/trpc/react";
 import { Spinner } from "@/components/ui/spinner";
+import { Button } from "@/components/ui/button";
 import { TextHTML } from "@/components/html/text-html";
 import { useEffect } from "react";
 
@@ -21,12 +22,12 @@ export default function PaymentMethods({ l }: Props) {
   });
 
   const { data, isLoading } = api.main.paymentMethods.listByProductId.useQuery({
-    productId: 4,
+    productId: 1,
     key: filter.payment_methods,
   });
 
   const { data: type, isLoading: typeLoading } =
-    api.main.paymentMethods.typeByProductID.useQuery({ productId: 2 });
+    api.main.paymentMethods.typeByProductID.useQuery({ productId: 1 });
 
   // Auto-select first method when data changes
   useEffect(() => {
@@ -58,7 +59,7 @@ export default function PaymentMethods({ l }: Props) {
               className="w-full"
             >
               <TabsList
-                className={`grid rounded-none border-b-2 border-b-muted w-full bg-transparent gap-3 grid-cols-${type?.data.length || 1}`}
+                className={`grid rounded-none border-b-2 border-b-muted w-full bg-transparent gap-3 grid-cols-5`}
               >
                 {type?.data.map((e, idx: number) => (
                   <TabsTrigger
@@ -70,7 +71,7 @@ export default function PaymentMethods({ l }: Props) {
                       variant="body-md-regular"
                       className="text-center w-full"
                     >
-                      {e.category}
+                      {e.category!}
                     </Text>
                   </TabsTrigger>
                 ))}
@@ -91,7 +92,7 @@ export default function PaymentMethods({ l }: Props) {
                       className="w-full flex flex-row items-start gap-4"
                     >
                       <TabsList
-                        className={`grid grid-cols-${data?.data.length || 3} justify-start gap-2 bg-transparent h-auto p-0 shrink-0`}
+                        className={`grid grid-cols-${data?.data.length || 2} justify-start gap-2 bg-transparent h-auto p-0 shrink-0`}
                         style={{ flexDirection: "column" }}
                         aria-orientation="vertical"
                       >
