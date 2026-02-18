@@ -1,4 +1,5 @@
 "use client";
+
 import { useTranslations } from "next-intl";
 import customerMeet from "@/public/assets/ilus/our-products/customer-meets-he.png";
 import submitted from "@/public/assets/ilus/submitted.png";

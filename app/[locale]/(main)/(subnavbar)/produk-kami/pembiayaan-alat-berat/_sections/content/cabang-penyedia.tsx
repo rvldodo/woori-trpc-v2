@@ -11,7 +11,6 @@ import { Locale, useTranslations } from "next-intl";
 import { parseAsString, useQueryStates } from "nuqs";
 import { useState } from "react";
 import { CabangCard } from "../../../../_components/branch-card";
-import { ScrollArea } from "@/components/ui/scroll-area";
 
 type Props = {
   l: Locale;
@@ -20,7 +19,7 @@ type Props = {
 export default function CabangPenyediaTabs({ l }: Props) {
   const t = useTranslations("OurProduct.heLoan.cabangPenyedia");
   const [selectedBranchId, setSelectedBranchId] = useState<number | null>(null);
-  const [filter, setFilter] = useQueryStates({
+  const [_, setFilter] = useQueryStates({
     area: parseAsString.withDefault(""),
   });
 

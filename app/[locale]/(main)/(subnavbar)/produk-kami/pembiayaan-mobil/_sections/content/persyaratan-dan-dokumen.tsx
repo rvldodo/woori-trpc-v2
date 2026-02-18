@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/carousel";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Locale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { PersyaratanCard } from "../../../_components/persyaratan-card";
 import { Volume2 } from "lucide-react";
 
