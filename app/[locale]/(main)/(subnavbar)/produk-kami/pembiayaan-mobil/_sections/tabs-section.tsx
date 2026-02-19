@@ -75,7 +75,7 @@ export default function TabsSection({ l }: Props) {
         orientation="vertical"
       >
         <section className="col-span-1">
-          <Text variant="display-sm" className="py-1">
+          <Text variant="display-lg" className="py-1">
             Pembiayaan Mobil
           </Text>
           <TabsList className="flex flex-col gap-3 items-start col-span-1">

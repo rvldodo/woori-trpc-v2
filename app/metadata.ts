@@ -3,7 +3,7 @@ import type { Locale } from "next-intl";
 import { LOCALES, MAIN_DESCRIPTION, MAIN_TITLE } from "@/lib/constants";
 
 type Props = {
-  path: string;
+  path?: string;
   locale: Locale | string;
   description?: string | null;
   title?: string | null;

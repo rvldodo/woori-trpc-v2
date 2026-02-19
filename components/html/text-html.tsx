@@ -117,6 +117,7 @@ const TextHTML = React.forwardRef<HTMLParagraphElement, TextProps>(
         "strong",
         "h1",
         "h2",
+        "h3",
         "a",
         "br",
         "table",
@@ -126,7 +127,7 @@ const TextHTML = React.forwardRef<HTMLParagraphElement, TextProps>(
         "th",
         "td",
       ],
-      ALLOWED_ATTR: ["href", "target", "rel"],
+      ALLOWED_ATTR: ["href", "target", "rel", "class", "style"],
     });
 
     return (
@@ -134,7 +135,7 @@ const TextHTML = React.forwardRef<HTMLParagraphElement, TextProps>(
         className={cn(
           textVariant({ variant, textColor }),
           className,
-          "[&_h1]:text-3xl [&_h1]:font-bold [&_h1]:my-6 [&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:my-4 [&_ul]:list-disc [&_ul]:ml-5 [&_ul]:space-y-2 [&_ol]:list-decimal [&_ol]:ml-5 [&_ol]:space-y-2 [&_a]:text-blue-600 [&_a]:underline [&_table]:w-full [&_table]:my-4 [&_table]:border-collapse [&_th]:bg-gray-100 [&_th]:p-3 [&_th]:text-left [&_th]:border [&_th]:border-gray-300 [&_td]:p-3 [&_td]:border [&_td]:border-gray-300 [&_tr]:hover:bg-gray-50",
+          "[&_h1]:text-3xl [&_h1]:font-bold [&_h1]:my-6 [&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:my-4 [&_h3]:text-xl [&_h3]:font-medium [&_h3]:my-4 [&_ul]:list-disc [&_ul]:ml-5 [&_ol]:list-decimal [&_ol]:ml-5 [&_li]:my-2",
         )}
         ref={ref}
         // biome-ignore lint/security/noDangerouslySetInnerHtml: Sanitized with DOMPurify

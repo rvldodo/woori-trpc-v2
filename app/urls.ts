@@ -86,16 +86,39 @@ const PATHS = {
     publikasiPenangananPengaduan: "/publikasi-penanganan-pengaduan",
   },
   korporasi: {
-    base: "/korporasi",
-    tentangKami: "/korporasi/tentang-kami",
-    informasiInvestor: "/korporasi/informasi-investor",
-    laporanKeuangan: "/korporasi/informasi-investor/laporan-keuangan",
+    base: "/korporat",
+    tentangKami: "/korporat/tentang-kami",
+    penghargaan: "/korporat/tentang-kami/penghargaan",
+    lembagadanProfesiPenunjang:
+      "/korporat/tentang-kami/lembaga-dan-profesi-penunjang",
+    dewanDireksidanKomisaris:
+      "/korporat/tentang-kami/dewan-direksi-dan-komisaris",
+    strukturOrganisasi: "/korporat/tentang-kami/struktur-organisasi",
+    informasiInvestor: "/korporat/informasi-investor",
+    presentasiPerusahaan: "/korporat/informasi-investor/presentasi-perusahaan",
+    aksikorporatdanKeterbukaanInformasi:
+      "/korporat/informasi-investor/aksi-korporasi-dan-keterbukaan-informasi",
+    laporanTahunandanKeberlanjutan:
+      "/korporat/informasi-investor/laporan-tahunan-dan-keberlanjutan",
+    laporanKeuangan: "/korporat/informasi-investor/laporan-keuangan",
+    rapatUmumPemegangSaham:
+      "/korporat/informasi-investor/rapat-umum-pemegang-saham",
+    kepemilikanSaham: "/korporat/informasi-investor/kepemilikan-saham",
     tataKelolaPerusahaan: {
-      base: "/korporasi/tata-kelola-perusahaan",
-      kodeEtik: "/korporasi/tata-kelola-perusahaan/kode-etik",
+      base: "/korporat/tata-kelola-perusahaan",
+      kodeEtik: "/korporat/tata-kelola-perusahaan/kode-etik",
     },
-    tanggungJawabSosialPerusahaan:
-      "/korporasi/tanggung-jawab-sosial-perusahaan",
+    dokumenAnggaranDasar:
+      "/korporat/tata-kelola-perusahaan/dokumen-anggaran-dasar",
+    kebijakanManajemenResiko:
+      "/korporat/tata-kelola-perusahaan/kebijakan-manajemen-resiko",
+    kodeEtik: "/korporat/tata-kelola-perusahaan/kode-etik",
+    strukturTataKelolaPerusahaan:
+      "/korporat/tata-kelola-perusahaan/struktur-tata-kelola-perusahaan",
+    piagamUnitAuditInternal:
+      "/korporat/tata-kelola-perusahaan/piagam-unit-audit-internal",
+    pedomanKerja: "/korporat/tata-kelola-perusahaan/pedoman-kerja",
+    tanggungJawabSosialPerusahaan: "/korporat/tanggung-jawab-sosial-perusahaan",
   },
   pengadaan: "/pengadaan",
   syaratDanKetentuan: "/syarat-dan-ketentuan",
@@ -115,10 +138,35 @@ export const NEW_PATHS: Record<string, string> = {
   PembiayaanAlatBerat: "/produk-kami/pembiayaan-alat-berat",
   PembiayaanMultiguna: "/produk-kami/pembiayaan-multiguna",
   StockFinancing: "/produk-kami/stock-financing",
-  TentangKami: "/korporasi/tentang-kami",
-  InformasiInvestor: "/korporasi/informasi-investor",
-  TataKelolaPerusahaan: "/korporasi/tata-kelola-perusahaan",
-  TanggungJawabSosialPerusahaan: "/korporasi/tanggung-jawab-sosial-perusahaan",
+  TentangKami: "/korporat/tentang-kami",
+  Penghargaan: "/korporat/tentang-kami/penghargaan",
+  LembagadanProfesiPenunjang:
+    "/korporat/tentang-kami/lembaga-dan-profesi-penunjang",
+  DewanDireksidanKomisaris:
+    "/korporat/tentang-kami/dewan-direksi-dan-komisaris",
+  StrukturOrganisasi: "/korporat/tentang-kami/struktur-organisasi",
+  InformasiInvestor: "/korporat/informasi-investor",
+  PresentasiPerusahaan: "/korporat/informasi-investor/presentasi-perusahaan",
+  AksiKorporasidanKeterbukaanInformasi:
+    "/korporat/informasi-investor/aksi-korporasi-dan-keterbukaan-informasi",
+  LaporanTahunandanKeberlanjutan:
+    "/korporat/informasi-investor/laporan-tahunan-dan-keberlanjutan",
+  LaporanKeuangan: "/korporat/informasi-investor/laporan-keuangan",
+  RapatUmumPemegangSaham:
+    "/korporat/informasi-investor/rapat-umum-pemegang-saham",
+  KepemilikanSaham: "/korporat/informasi-investor/kepemilikan-saham",
+  TataKelolaPerusahaan: "/korporat/tata-kelola-perusahaan",
+  DokumenAnggaranDasar:
+    "/korporat/tata-kelola-perusahaan/dokumen-anggaran-dasar",
+  KebijakanManajemenResiko:
+    "/korporat/tata-kelola-perusahaan/kebijakan-manajemen-resiko",
+  KodeEtik: "/korporat/tata-kelola-perusahaan/kode-etik",
+  StrukturTataKelolaPerusahaan:
+    "/korporat/tata-kelola-perusahaan/struktur-tata-kelola-perusahaan",
+  PiagamUnitAuditInternal:
+    "/korporat/tata-kelola-perusahaan/piagam-unit-audit-internal",
+  PedomanKerja: "/korporat/tata-kelola-perusahaan/pedoman-kerja",
+  TanggungJawabSosialPerusahaan: "/korporat/tanggung-jawab-sosial-perusahaan",
 };
 
 const ALL_PATHS = Object.values(PATHS).flat();

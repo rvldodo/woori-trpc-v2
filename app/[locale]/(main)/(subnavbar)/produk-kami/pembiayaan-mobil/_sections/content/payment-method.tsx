@@ -10,6 +10,7 @@ import { Spinner } from "@/components/ui/spinner";
 import { Button } from "@/components/ui/button";
 import { TextHTML } from "@/components/html/text-html";
 import { useEffect } from "react";
+import DOMPurify from "dompurify";
 
 type Props = {
   l: Locale;

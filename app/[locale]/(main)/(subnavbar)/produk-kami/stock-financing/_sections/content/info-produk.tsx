@@ -15,7 +15,7 @@ export default function InfoProdukTabs() {
   return (
     <section className="relative w-full py-3 flex flex-col overflow-hidden z-10">
       <div className="flex md:flex-row flex-col w-full justify-between gap-2 pb-8">
-        <Text variant="display-md" className="md:w-[30vw] w-full">
+        <Text variant="display-md" className="md:w-[40vw] w-full">
           {t("informasiProduk.hero.title")}
         </Text>
         <Text className="w-full" variant="body-md-regular">

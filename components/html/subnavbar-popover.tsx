@@ -38,6 +38,7 @@ export function SubnavbarPopover({ item, locale }: Props) {
       </PopoverTrigger>
       <PopoverContent className="flex flex-col bg-background p-0 gap-0">
         {item.subNavbarTabs.map((t, id) => {
+          console.log(t.tabs["id" as Lang].split(" ").join(""), " ====== ");
           return (
             <Link
               key={id.toString()}
