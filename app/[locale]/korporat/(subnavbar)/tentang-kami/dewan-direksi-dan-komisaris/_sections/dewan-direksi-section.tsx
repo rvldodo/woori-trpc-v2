@@ -33,7 +33,10 @@ export default function DewanDireksiSection({ l }: Props) {
   return (
     <article className="w-full md:wrapper px-[24px] py-8 flex flex-col gap-4 justify-center items-center">
       <div className="main-padding-x flex md:flex-row flex-col gap-4 md:justify-start justify-center">
-        <Text variant="display-lg" className="w-full md:text-start text-center">
+        <Text
+          variant="display-lg"
+          className="w-full md:text-center text-center"
+        >
           {wording?.wording.title?.[l]}
         </Text>
         <TextHTML
