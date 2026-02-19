@@ -18,11 +18,6 @@ export default async function Subnavbar({ l }: Props) {
     <div className="main-padding-x py-1 w-full md:flex hidden items-center sticky  top-[65px] border-b bg-white z-50 shadow-md gap-2">
       {temp.map((e: SubnavbarProps, idx: number) => {
         if (e.subNavbarTabs.length === 0) {
-          console.log(
-            NEW_PATHS[e.subnavbar["id" as Lang].split(" ").join("")],
-            " ============== ",
-          );
-
           return (
             <Link
               key={idx.toString()}

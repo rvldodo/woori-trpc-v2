@@ -18,7 +18,11 @@ export default function TabsNavbar({ l }: Props) {
   const { data, isLoading } = api.main.menus.subTabs.useQuery({ subMenuId: 6 });
 
   return (
-    <nav className={cn("py-0 w-full flex border-b z-50 shadow-md")}>
+    <nav
+      className={cn(
+        "sticky top-[114px] bg-background-primary py-0 w-full flex border-b z-50 shadow-md",
+      )}
+    >
       <div className="w-full overflow-x-auto no-scrollbar">
         <header className="flex w-full min-w-max">
           {isLoading || !data ? (

@@ -1,6 +1,8 @@
 import { getMetadata } from "@/app/metadata";
 import { PATHS } from "@/app/urls";
 import { Metadata } from "next";
+import DewanDireksiSection from "./_sections/dewan-direksi-section";
+import { Locale } from "next-intl";
 
 export const generateMetadata = async (
   props: PageProps<"/[locale]">,
@@ -14,6 +16,12 @@ export const generateMetadata = async (
   });
 };
 
-export default function DewanDireksiPage() {
-  return <div></div>;
+export default async function DewanDireksiPage({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>;
+}) {
+  const { locale } = await params;
+
+  return <DewanDireksiSection l={locale} />;
 }
