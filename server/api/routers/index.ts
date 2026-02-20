@@ -1,3 +1,4 @@
+import { aboutUsRouter } from "./about-us_router";
 import { boardsRouter } from "./board_router";
 import { branchesRouter } from "./branches_router";
 import { complainTypeRouter } from "./complaint-type_router";
@@ -44,4 +45,5 @@ export const main = {
   template6: template6Router,
   template7: template7Router,
   boards: boardsRouter,
+  aboutUs: aboutUsRouter,
 };

@@ -6,6 +6,7 @@ export const useModalState = () => {
     success: parseAsBoolean.withDefault(false),
     update: parseAsString,
     delete: parseAsString,
+    detail_manajemen: parseAsString,
   });
 
   const onChangeModal = (

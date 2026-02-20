@@ -2,7 +2,8 @@ import { boards, template2 } from "@/drizzle/migrations/schema";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 import { TRPCError } from "@trpc/server";
 import { ERROR_FETCH } from "@/lib/constants";
-import { and, eq, isNull } from "drizzle-orm";
+import { and, asc, eq, isNull } from "drizzle-orm";
+import z from "zod";
 
 export const boardsRouter = createTRPCRouter({
   types: publicProcedure.query(async ({ ctx }) => {
@@ -29,26 +30,44 @@ export const boardsRouter = createTRPCRouter({
 
     return { wording };
   }),
+
   direksi: publicProcedure.query(async ({ ctx }) => {
     const direksi = await ctx.db
       .select()
       .from(boards)
-      .where(and(eq(boards.boardType, "DIREKSI"), isNull(boards.deletedTime)));
+      .where(and(eq(boards.boardType, "DIREKSI"), isNull(boards.deletedTime)))
+      .orderBy(asc(boards.id));
     if (!direksi)
       throw new TRPCError({ message: ERROR_FETCH, code: "BAD_REQUEST" });
 
     return { data: direksi };
   }),
+
   komisaris: publicProcedure.query(async ({ ctx }) => {
-    const direksi = await ctx.db
+    const komisaris = await ctx.db
       .select()
       .from(boards)
-      .where(
-        and(eq(boards.boardType, "KOMISARIS"), isNull(boards.deletedTime)),
-      );
-    if (!direksi)
+      .where(and(eq(boards.boardType, "KOMISARIS"), isNull(boards.deletedTime)))
+      .orderBy(asc(boards.id));
+
+    if (!komisaris)
       throw new TRPCError({ message: ERROR_FETCH, code: "BAD_REQUEST" });
 
-    return { data: direksi };
+    return { data: komisaris };
   }),
+
+  detail: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const [board] = await ctx.db
+        .select()
+        .from(boards)
+        .where(
+          and(eq(boards.id, Number(input.id)), isNull(boards.deletedTime)),
+        );
+      if (!board)
+        throw new TRPCError({ message: ERROR_FETCH, code: "BAD_REQUEST" });
+
+      return { data: board };
+    }),
 });
