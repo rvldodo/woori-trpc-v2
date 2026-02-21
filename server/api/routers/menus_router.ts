@@ -5,7 +5,7 @@ import {
 } from "@/drizzle/migrations/schema";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 import { TRPCError } from "@trpc/server";
-import { and, asc, eq } from "drizzle-orm";
+import { and, asc, desc, eq, isNull } from "drizzle-orm";
 import { z } from "zod";
 import { ERROR_FETCH } from "@/lib/constants";
 
@@ -31,7 +31,12 @@ export const menusRouter = createTRPCRouter({
         .select()
         .from(subNavbar)
         .leftJoin(subNavbarTabs, eq(subNavbarTabs.subNavbarId, subNavbar.id))
-        .where(eq(subNavbar.mainNavbarId, mainMenuId))
+        .where(
+          and(
+            eq(subNavbar.mainNavbarId, mainMenuId),
+            isNull(subNavbarTabs.deletedTime),
+          ),
+        )
         .orderBy(asc(subNavbar.id));
 
       const groupedData = data.reduce((acc: Record<number, any>, row) => {
@@ -72,8 +77,10 @@ export const menusRouter = createTRPCRouter({
           and(
             eq(subNavbarTabs.subNavbarId, subMenuId),
             eq(subNavbarTabs.isActive, true),
+            isNull(subNavbarTabs.deletedTime),
           ),
-        );
+        )
+        .orderBy(desc(subNavbarTabs.id));
 
       if (!data)
         throw new TRPCError({ message: ERROR_FETCH, code: "BAD_REQUEST" });

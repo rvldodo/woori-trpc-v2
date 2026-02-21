@@ -1,18 +1,56 @@
 import { template5, template6 } from "@/drizzle/migrations/schema";
 import { createTRPCRouter, publicProcedure } from "../trpc";
-import { and, desc, eq, isNull } from "drizzle-orm";
+import {
+  and,
+  desc,
+  eq,
+  isNotNull,
+  isNull,
+  or,
+  sql,
+  SQLWrapper,
+} from "drizzle-orm";
 import { TRPCError } from "@trpc/server";
 import { ERROR_FETCH } from "@/lib/constants";
+import z from "zod";
 
-const PENGHARGAAN_ID = 8;
-const PRESENTASI_PERUSAHAAN_ID = 15;
-const KEPEMILIKAN_SAHAM = 9;
-const AKSI_KORPORASI = 14;
-const RUPS = 10;
-const LAPORAN_KEUANGAN = 12;
-const LAPORAN_KEBERLANJUTAN = 13;
+export const PENGHARGAAN_ID = 8;
+export const PRESENTASI_PERUSAHAAN_ID = 15;
+export const KEPEMILIKAN_SAHAM = 9;
+export const AKSI_KORPORASI = 14;
+export const RUPS = 10;
+export const LAPORAN_KEUANGAN = 12;
+export const LAPORAN_KEBERLANJUTAN = 13;
 
 export const aboutUsRouter = createTRPCRouter({
+  template6Category: publicProcedure
+    .input(z.object({ id: z.number() }))
+    .query(async ({ ctx, input }) => {
+      const categories = await ctx.db
+        .select()
+        .from(template6)
+        .where(
+          and(
+            eq(template6.subNavbarTabId, input.id),
+            isNotNull(template6.subNavbarTabId),
+          ),
+        )
+        .orderBy(template6.id);
+
+      if (!categories.length)
+        throw new TRPCError({ message: ERROR_FETCH, code: "NOT_FOUND" });
+
+      const unique = [
+        ...new Map(
+          categories
+            .filter((e) => e.category !== null)
+            .map((e) => [JSON.stringify(e.category), e.category]),
+        ).values(),
+      ];
+
+      return { data: unique };
+    }),
+
   penghargaan: publicProcedure.query(async ({ ctx }) => {
     const data = await ctx.db
       .select()
@@ -30,116 +68,217 @@ export const aboutUsRouter = createTRPCRouter({
     return { data };
   }),
 
-  presentasiPerusahaan: publicProcedure.query(async ({ ctx }) => {
-    const data = await ctx.db
-      .select()
-      .from(template6)
-      .where(eq(template6.subNavbarTabId, PRESENTASI_PERUSAHAAN_ID));
+  presentasiPerusahaan: publicProcedure
+    .input(
+      z.object({ category: z.string().optional(), key: z.string().optional() }),
+    )
+    .query(async ({ ctx, input }) => {
+      const conditions: (SQLWrapper | undefined)[] = [
+        isNull(template6.deletedTime),
+        eq(template6.subNavbarTabId, PRESENTASI_PERUSAHAAN_ID),
+      ];
 
-    if (!data)
-      throw new TRPCError({ message: ERROR_FETCH, code: "BAD_REQUEST" });
+      if (input.category) {
+        conditions.push(
+          or(
+            sql`LOWER(${template6.category}->>'en') LIKE LOWER('%' || ${input.category} || '%')`,
+            sql`LOWER(${template6.category}->>'id') LIKE LOWER('%' || ${input.category} || '%')`,
+          ),
+        );
+      }
 
-    return { data };
-  }),
+      if (input.key) {
+        conditions.push(
+          sql`${template6.title}::text ILIKE '%' || ${input.key} || '%'`,
+        );
+      }
 
-  kepemilikanSaham: publicProcedure.query(async ({ ctx }) => {
-    const data = await ctx.db
-      .select()
-      .from(template6)
-      .where(eq(template6.subNavbarTabId, KEPEMILIKAN_SAHAM));
+      const data = await ctx.db
+        .select()
+        .from(template6)
+        .where(and(...conditions))
+        .orderBy(desc(template6.createdTime));
 
-    if (!data)
-      throw new TRPCError({ message: ERROR_FETCH, code: "BAD_REQUEST" });
+      if (!data)
+        throw new TRPCError({ message: ERROR_FETCH, code: "BAD_REQUEST" });
 
-    return { data };
-  }),
+      return { data };
+    }),
 
-  aksiKorporasi: publicProcedure.query(async ({ ctx }) => {
-    const categories = await ctx.db
-      .select({
-        category: template6.category,
-      })
-      .from(template6)
-      .where(eq(template6.subNavbarTabId, AKSI_KORPORASI));
+  kepemilikanSaham: publicProcedure
+    .input(z.object({ category: z.string().optional() }))
+    .query(async ({ ctx, input }) => {
+      const conditions: (SQLWrapper | undefined)[] = [
+        isNull(template6.deletedTime),
+        eq(template6.subNavbarTabId, KEPEMILIKAN_SAHAM),
+      ];
 
-    if (!categories)
-      throw new TRPCError({ message: ERROR_FETCH, code: "BAD_REQUEST" });
+      if (input.category) {
+        conditions.push(
+          or(
+            sql`LOWER(${template6.category}->>'en') LIKE LOWER('%' || ${input.category} || '%')`,
+            sql`LOWER(${template6.category}->>'id') LIKE LOWER('%' || ${input.category} || '%')`,
+          ),
+        );
+      }
 
-    const data = await ctx.db
-      .select()
-      .from(template6)
-      .where(eq(template6.subNavbarTabId, AKSI_KORPORASI));
+      const data = await ctx.db
+        .select()
+        .from(template6)
+        .where(and(...conditions))
+        .orderBy(desc(template6.createdTime));
 
-    if (!data)
-      throw new TRPCError({ message: ERROR_FETCH, code: "BAD_REQUEST" });
+      if (!data)
+        throw new TRPCError({ message: ERROR_FETCH, code: "BAD_REQUEST" });
 
-    return { data, categories };
-  }),
+      return { data };
+    }),
 
-  rups: publicProcedure.query(async ({ ctx }) => {
-    const categories = await ctx.db
-      .select({
-        category: template6.category,
-      })
-      .from(template6)
-      .where(eq(template6.subNavbarTabId, RUPS));
+  aksiKorporasi: publicProcedure
+    .input(
+      z.object({ category: z.string().optional(), key: z.string().optional() }),
+    )
+    .query(async ({ ctx, input }) => {
+      const conditions: (SQLWrapper | undefined)[] = [
+        isNull(template6.deletedTime),
+        eq(template6.subNavbarTabId, AKSI_KORPORASI),
+      ];
 
-    if (!categories)
-      throw new TRPCError({ message: ERROR_FETCH, code: "BAD_REQUEST" });
+      if (input.category) {
+        conditions.push(
+          or(
+            sql`LOWER(${template6.category}->>'en') LIKE LOWER('%' || ${input.category} || '%')`,
+            sql`LOWER(${template6.category}->>'id') LIKE LOWER('%' || ${input.category} || '%')`,
+          ),
+        );
+      }
 
-    const data = await ctx.db
-      .select()
-      .from(template6)
-      .where(eq(template6.subNavbarTabId, RUPS))
-      .orderBy(desc(template6.createdTime));
+      if (input.key) {
+        conditions.push(
+          sql`${template6.title}::text ILIKE '%' || ${input.key} || '%'`,
+        );
+      }
 
-    if (!data)
-      throw new TRPCError({ message: ERROR_FETCH, code: "BAD_REQUEST" });
+      const data = await ctx.db
+        .select()
+        .from(template6)
+        .where(and(...conditions))
+        .orderBy(desc(template6.createdTime));
 
-    return { data, categories };
-  }),
+      if (!data)
+        throw new TRPCError({ message: ERROR_FETCH, code: "BAD_REQUEST" });
 
-  laporanKeuangan: publicProcedure.query(async ({ ctx }) => {
-    const categories = await ctx.db
-      .select({
-        category: template6.category,
-      })
-      .from(template6)
-      .where(eq(template6.subNavbarTabId, LAPORAN_KEUANGAN));
+      return { data };
+    }),
 
-    if (!categories)
-      throw new TRPCError({ message: ERROR_FETCH, code: "BAD_REQUEST" });
+  rups: publicProcedure
+    .input(
+      z.object({ category: z.string().optional(), key: z.string().optional() }),
+    )
+    .query(async ({ ctx, input }) => {
+      const conditions: (SQLWrapper | undefined)[] = [
+        isNull(template6.deletedTime),
+        eq(template6.subNavbarTabId, RUPS),
+      ];
 
-    const data = await ctx.db
-      .select()
-      .from(template6)
-      .where(eq(template6.subNavbarTabId, LAPORAN_KEUANGAN));
+      if (input.category) {
+        conditions.push(
+          or(
+            sql`LOWER(${template6.category}->>'en') LIKE LOWER('%' || ${input.category} || '%')`,
+            sql`LOWER(${template6.category}->>'id') LIKE LOWER('%' || ${input.category} || '%')`,
+          ),
+        );
+      }
 
-    if (!data)
-      throw new TRPCError({ message: ERROR_FETCH, code: "BAD_REQUEST" });
+      if (input.key) {
+        conditions.push(
+          sql`${template6.title}::text ILIKE '%' || ${input.key} || '%'`,
+        );
+      }
 
-    return { data, categories };
-  }),
+      const data = await ctx.db
+        .select()
+        .from(template6)
+        .where(and(...conditions))
+        .orderBy(desc(template6.createdTime));
 
-  laporanKeberlanjutan: publicProcedure.query(async ({ ctx }) => {
-    const categories = await ctx.db
-      .select({
-        category: template6.category,
-      })
-      .from(template6)
-      .where(eq(template6.subNavbarTabId, LAPORAN_KEBERLANJUTAN));
+      if (!data)
+        throw new TRPCError({ message: ERROR_FETCH, code: "BAD_REQUEST" });
 
-    if (!categories)
-      throw new TRPCError({ message: ERROR_FETCH, code: "BAD_REQUEST" });
+      return { data };
+    }),
 
-    const data = await ctx.db
-      .select()
-      .from(template6)
-      .where(eq(template6.subNavbarTabId, LAPORAN_KEBERLANJUTAN));
+  laporanKeuangan: publicProcedure
+    .input(
+      z.object({ category: z.string().optional(), key: z.string().optional() }),
+    )
+    .query(async ({ ctx, input }) => {
+      const conditions: (SQLWrapper | undefined)[] = [
+        isNull(template6.deletedTime),
+        eq(template6.subNavbarTabId, LAPORAN_KEUANGAN),
+      ];
 
-    if (!data)
-      throw new TRPCError({ message: ERROR_FETCH, code: "BAD_REQUEST" });
+      if (input.category) {
+        conditions.push(
+          or(
+            sql`LOWER(${template6.category}->>'en') LIKE LOWER('%' || ${input.category} || '%')`,
+            sql`LOWER(${template6.category}->>'id') LIKE LOWER('%' || ${input.category} || '%')`,
+          ),
+        );
+      }
 
-    return { data, categories };
-  }),
+      if (input.key) {
+        conditions.push(
+          sql`${template6.title}::text ILIKE '%' || ${input.key} || '%'`,
+        );
+      }
+
+      const data = await ctx.db
+        .select()
+        .from(template6)
+        .where(and(...conditions))
+        .orderBy(desc(template6.createdTime));
+
+      if (!data)
+        throw new TRPCError({ message: ERROR_FETCH, code: "BAD_REQUEST" });
+
+      return { data };
+    }),
+
+  laporanKeberlanjutan: publicProcedure
+    .input(
+      z.object({ category: z.string().optional(), key: z.string().optional() }),
+    )
+    .query(async ({ ctx, input }) => {
+      const conditions: (SQLWrapper | undefined)[] = [
+        isNull(template6.deletedTime),
+        eq(template6.subNavbarTabId, LAPORAN_KEBERLANJUTAN),
+      ];
+
+      if (input.category) {
+        conditions.push(
+          or(
+            sql`LOWER(${template6.category}->>'en') LIKE LOWER('%' || ${input.category} || '%')`,
+            sql`LOWER(${template6.category}->>'id') LIKE LOWER('%' || ${input.category} || '%')`,
+          ),
+        );
+      }
+
+      if (input.key) {
+        conditions.push(
+          sql`${template6.title}::text ILIKE '%' || ${input.key} || '%'`,
+        );
+      }
+
+      const data = await ctx.db
+        .select()
+        .from(template6)
+        .where(and(...conditions))
+        .orderBy(desc(template6.createdTime));
+
+      if (!data)
+        throw new TRPCError({ message: ERROR_FETCH, code: "BAD_REQUEST" });
+
+      return { data };
+    }),
 });

@@ -21,6 +21,7 @@ import { Button } from "@/components/ui/button";
 import { dateFormat } from "@/lib/formatter";
 import { Spinner } from "@/components/ui/spinner";
 import { DataTable } from "@/components/data-table";
+import { Badge } from "@/components/ui/badge";
 
 type Props = {
   l: Locale;
@@ -54,15 +55,17 @@ export default function TableSection({ l }: Props) {
     {
       header: t("table.head2"),
       accessorKey: "title",
-      cell: ({ row }) => row.original.title![l] ?? "-",
+      cell: ({ row }) => row?.original.title?.[l],
     },
     {
       header: t("table.head3"),
       accessorKey: "category",
       cell: ({ row }) => (
-        <Button variant="outline" disabled>
-          {row.original.category![l]}
-        </Button>
+        <Badge variant="outline" className="p-4 rounded-lg">
+          <Text variant="body-sm-regular" color="primary">
+            {row?.original.category?.[l]}
+          </Text>
+        </Badge>
       ),
     },
     {

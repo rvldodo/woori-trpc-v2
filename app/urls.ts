@@ -113,6 +113,7 @@ const PATHS = {
     kebijakanManajemenResiko:
       "/korporat/tata-kelola-perusahaan/kebijakan-manajemen-resiko",
     kodeEtik: "/korporat/tata-kelola-perusahaan/kode-etik",
+    kodeEtikDetail: "/korporat/kode-etik-detail",
     strukturTataKelolaPerusahaan:
       "/korporat/tata-kelola-perusahaan/struktur-tata-kelola-perusahaan",
     piagamUnitAuditInternal:

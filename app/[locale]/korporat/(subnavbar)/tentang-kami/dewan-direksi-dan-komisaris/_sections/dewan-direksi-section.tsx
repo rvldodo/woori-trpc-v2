@@ -39,7 +39,7 @@ export default function DewanDireksiSection({ l }: Props) {
   return (
     <Fragment>
       <BoardDetail
-        id={modal.detail_manajemen}
+        name={modal.detail_manajemen}
         close={() => onChangeModal("detail_manajemen", null)}
         l={l}
       />
@@ -100,12 +100,10 @@ export default function DewanDireksiSection({ l }: Props) {
                 type="button"
                 tabIndex={0}
                 className="flex flex-col gap-3 justify-center items-center cursor-pointer"
-                onClick={() =>
-                  onChangeModal("detail_manajemen", e.id.toString())
-                }
+                onClick={() => onChangeModal("detail_manajemen", e.name)}
                 onKeyDown={(ev) => {
                   if (ev.key === "Enter" || ev.key === " ")
-                    onChangeModal("detail_manajemen", e.id.toString());
+                    onChangeModal("detail_manajemen", e.name);
                 }}
               >
                 <Img
@@ -131,12 +129,10 @@ export default function DewanDireksiSection({ l }: Props) {
                 type="button"
                 tabIndex={0}
                 className="flex flex-col gap-3 justify-center items-center cursor-pointer"
-                onClick={() =>
-                  onChangeModal("detail_manajemen", e.id.toString())
-                }
+                onClick={() => onChangeModal("detail_manajemen", e.name)}
                 onKeyDown={(ev) => {
                   if (ev.key === "Enter" || ev.key === " ")
-                    onChangeModal("detail_manajemen", e.id.toString());
+                    onChangeModal("detail_manajemen", e.name);
                 }}
               >
                 <Img

@@ -1,6 +1,8 @@
 import { getMetadata } from "@/app/metadata";
 import { PATHS } from "@/app/urls";
-import { Metadata } from "next";
+import type { Metadata } from "next";
+import type { Locale } from "next-intl";
+import AksiKorporasiSection from "./_sections/aksi-korporasi-section";
 
 export const generateMetadata = async (
   props: PageProps<"/[locale]">,
@@ -14,6 +16,12 @@ export const generateMetadata = async (
   });
 };
 
-export default function AksiKorporasiPage() {
-  return <div></div>;
+export default async function AksiKorporasiPage({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>;
+}) {
+  const { locale } = await params;
+
+  return <AksiKorporasiSection l={locale} />;
 }

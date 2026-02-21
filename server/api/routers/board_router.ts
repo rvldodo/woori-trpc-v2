@@ -57,14 +57,12 @@ export const boardsRouter = createTRPCRouter({
   }),
 
   detail: publicProcedure
-    .input(z.object({ id: z.string() }))
+    .input(z.object({ name: z.string() }))
     .query(async ({ ctx, input }) => {
       const [board] = await ctx.db
         .select()
         .from(boards)
-        .where(
-          and(eq(boards.id, Number(input.id)), isNull(boards.deletedTime)),
-        );
+        .where(and(eq(boards.name, input.name), isNull(boards.deletedTime)));
       if (!board)
         throw new TRPCError({ message: ERROR_FETCH, code: "BAD_REQUEST" });
 

@@ -9,13 +9,13 @@ import { api } from "@/trpc/react";
 import { skipToken } from "@tanstack/react-query";
 import { Locale } from "next-intl";
 
-type Props = { id: string | null; close: () => void; l: Locale };
+type Props = { name: string | null; close: () => void; l: Locale };
 
-export default function BoardDetail({ id, close, l }: Props) {
-  const show = !!id;
+export default function BoardDetail({ name, close, l }: Props) {
+  const show = !!name;
 
   const { data, isLoading } = api.main.boards.detail.useQuery(
-    id ? { id: String(id) } : skipToken,
+    name ? { name: String(name) } : skipToken,
   );
 
   return (
@@ -44,7 +44,7 @@ export default function BoardDetail({ id, close, l }: Props) {
               </div>
             </div>
             <TextHTML
-              variant="body-lg-regular"
+              variant="body-md-regular"
               html={data?.data.text?.[l] ?? ""}
             />
           </>
