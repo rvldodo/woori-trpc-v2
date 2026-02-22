@@ -61,21 +61,26 @@ export default function Navbar() {
               const menuId =
                 e.header!["id"] === "Individu" ? undefined : e.header!["id"];
               const isActive =
-                activeTab?.toLowerCase() === menuId?.toLowerCase();
+                menuId === undefined
+                  ? // Individu: active when not on korporat or pengadaan
+                    activeTab?.toLowerCase() !== "korporat" &&
+                    activeTab?.toLowerCase() !== "pengadaan"
+                  : // Other menus: ONLY active when path matches their own menuId
+                    activeTab?.toLowerCase() === menuId.toLowerCase();
 
               return (
                 <Link
                   key={e.id}
                   href={NEW_PATHS[e.header!["id"]] || "/"}
                   className="md:flex hidden text-[#434343] text-center cursor-pointer h-full"
-                  onClick={() => setActiveTab(e.header!["id"])}
+                  onClick={() => setActiveTab(e.header?.["id"])}
                 >
                   <div
                     className={`flex items-center px-4 py-4 border-b-2 ${
                       isActive ? "border-[#007BC7]" : "border-transparent"
                     } transition-all duration-100 ease-in-out`}
                   >
-                    <Text variant="body-md-medium">{e.header![locale]}</Text>
+                    <Text variant="body-md-medium">{e.header?.[locale]}</Text>
                   </div>
                 </Link>
               );
