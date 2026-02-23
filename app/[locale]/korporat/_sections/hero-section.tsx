@@ -4,7 +4,7 @@ import { Text } from "@/components/html/text";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { api } from "@/trpc/react";
-import { Locale, useTranslations } from "next-intl";
+import { type Locale, useTranslations } from "next-intl";
 import Link from "next/link";
 
 type Props = {
@@ -22,7 +22,7 @@ export default function HeroSection({ l }: Props) {
       className="relative w-full h-[60vh] bg-[url('/assets/image/corporate.png')] bg-cover"
       style={{ backgroundPosition: "center 35%", backgroundSize: "150%" }}
     >
-      <div className="w-full h-full absolute bg-gradient-to-t from-[#0080A9]/100 via-transparent to bg-transparent" />
+      <div className="w-full h-full absolute bg-linear-to-t from-[#0080A9] via-transparent to bg-transparent" />
       {loadingHero || !heroData ? (
         <div className="w-full h-full flex justify-center items-center">
           <Spinner />
@@ -33,13 +33,13 @@ export default function HeroSection({ l }: Props) {
             variant="display-lg"
             className="md:w-[40vw] w-full md:text-start text-center text-white"
           >
-            {heroData.data.title![l]}
+            {heroData.data.title?.[l]}
           </Text>
           <Text
             variant="body-lg-medium"
-            className="md:w-[40vw] w-full md:text-start text-center text-white shadow-md"
+            className="md:w-[40vw] w-full md:text-start text-center text-white"
           >
-            {heroData.data.description![l]}
+            {heroData.data.description?.[l]}
           </Text>
 
           <Link href="#profil">

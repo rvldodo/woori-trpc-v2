@@ -410,6 +410,22 @@
       }
     }
   },
+  "StrukturTataKelolaPerusahaa": {
+    "search_placeholder": "Search Document",
+    "category_label": "Category",
+    "category_button": "Corporate Secretary",
+    "no_documents": "No documents found",
+    "company_secretary_title": "Company Secretary",
+    "company_secretary_description": "Referring to OJK's regulation number 35/POJK.04/2014 concerning Corporate Secretary of a Public Company, and as a part of GCG practices, a public company is obliged to have a Corporate Secretary. The main function of the Corporate Secretary is to act as the Company's official source of public information in providing information services regarding the Company's condition to investors and the public, to follow up and to keep up to date on the capital market development, and to provide advice to the Board of Directors regarding the laws and regulations to be in compliance with, as well as to be the communication liaison with stakeholders, especially the authorities. Based on Letter Number 1394/WFI/HRD/IIX/23 dated August 24, 2023, regarding the Appointment of Corporate Secretary of PT Woori Finance Indonesia Tbk, Lisa Azizah Subagiyo was appointed.",
+    "contact_info_title": "WFI Corporate Secretary Contact Information",
+    "table_headers": {
+      "name": "Name",
+      "phone": "Phone",
+      "fax": "Fax",
+      "email": "Email",
+      "office_address": "Office Address"
+    }
+  },
   "Footer": {
     "mainOffice": "MAIN OFFICE",
     "seeOtherBranches": "See other Branches Location",

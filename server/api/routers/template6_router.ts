@@ -18,6 +18,7 @@ const KEBIJAKAN_MANAJEMEN_RESIKO = 20;
 const KODE_ETIK = 19;
 const PEDOMAN_KERJA = 16;
 const PIAGAM_UNIT_AUDIT_INTERNAL = 17;
+const KOMITE_AUDIT = 18;
 
 export const template6Router = createTRPCRouter({
   template6Category: publicProcedure
@@ -167,6 +168,42 @@ export const template6Router = createTRPCRouter({
       const conditions: (SQLWrapper | undefined)[] = [
         isNull(template6.deletedTime),
         eq(template6.subNavbarTabId, PIAGAM_UNIT_AUDIT_INTERNAL),
+      ];
+
+      if (input.category) {
+        conditions.push(
+          or(
+            sql`LOWER(${template6.category}->>'en') LIKE LOWER('%' || ${input.category} || '%')`,
+            sql`LOWER(${template6.category}->>'id') LIKE LOWER('%' || ${input.category} || '%')`,
+          ),
+        );
+      }
+
+      if (input.key) {
+        conditions.push(
+          sql`${template6.title}::text ILIKE '%' || ${input.key} || '%'`,
+        );
+      }
+
+      const data = await ctx.db
+        .select()
+        .from(template6)
+        .where(and(...conditions))
+        .orderBy(desc(template6.createdTime));
+
+      if (!data)
+        throw new TRPCError({ message: ERROR_FETCH, code: "BAD_REQUEST" });
+
+      return { data };
+    }),
+  komiteAudit: publicProcedure
+    .input(
+      z.object({ category: z.string().optional(), key: z.string().optional() }),
+    )
+    .query(async ({ ctx, input }) => {
+      const conditions: (SQLWrapper | undefined)[] = [
+        isNull(template6.deletedTime),
+        eq(template6.subNavbarTabId, KOMITE_AUDIT),
       ];
 
       if (input.category) {

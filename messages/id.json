@@ -410,6 +410,22 @@
       }
     }
   },
+  "StrukturTataKelolaPerusahaa": {
+    "search_placeholder": "Cari Dokumen",
+    "category_label": "Kategori",
+    "category_button": "Sekretaris Perusahaan",
+    "no_documents": "Tidak ada dokumen ditemukan",
+    "company_secretary_title": "Sekretaris Perusahaan",
+    "company_secretary_description": "Merujuk pada peraturan POJK Nomor 35/POJK.04/2014 tentang Sekretaris Perusahaan Publik, serta sebagai pelaksanaan dari praktik tata kelola perusahaan yang baik, sebuah perusahaan publik wajib memiliki seorang Sekretaris Perusahaan. Sekretaris Perusahaan memiliki fungsi utama sebagai sumber resmi pihak Perusahaan dalam layanan informasi terkait kondisi Perusahaan bagi investor dan masyarakat, mengikuti perkembangan pasar modal dan memberi masukan kepada Direksi terkait hukum dan peraturan yang harus diikuti, juga menjadi penghubung komunikasi dengan para pemangku kepentingan terutama pihak yang berwenang. Berdasarkan Surat Nomor 1394/WFI/HRD/IIX/23 tanggal 24 Agustus 2023 Tentang Pengangkatan Sekretaris Perusahaan PT Woori Finance Indonesia Tbk dijabat oleh Lisa Azizah Subagiyo.",
+    "contact_info_title": "Informasi Kontak Sekretaris Perusahaan WFI",
+    "table_headers": {
+      "name": "Nama",
+      "phone": "Telepon",
+      "fax": "Faksimili",
+      "email": "Email",
+      "office_address": "Alamat Kantor"
+    }
+  },
   "Footer": {
     "mainOffice": "KANTOR PUSAT",
     "seeOtherBranches": "Lihat lokasi cabang lainnya",
