@@ -77,9 +77,10 @@ export default function StrukturTataKelolaSection({ l }: Props) {
     {
       header: t("table_headers.office_address"),
       accessorKey: "office_address",
+      size: 50,
       cell: ({ row }) => {
         return (
-          <div>
+          <div className="w-52 text-wrap flex justify-center">
             {row?.original?.office_address
               ? row?.original?.office_address
               : "-"}
@@ -130,11 +131,11 @@ export default function StrukturTataKelolaSection({ l }: Props) {
         )}
       </section>
 
-      <ScrollArea className="main-padding-x col-span-4 flex flex-col justify-between gap-3 h-125">
+      <ScrollArea className="main-padding-x col-span-4 flex flex-col justify-between gap-3 h-125 relative">
         <div
           className={cn(
             filter.category === "" ? "flex" : "hidden",
-            "w-full flex-col gap-3",
+            "w-full flex-col gap-5 absolute main-padding-x",
           )}
         >
           <Text variant="display-md">{t("company_secretary_title")}</Text>

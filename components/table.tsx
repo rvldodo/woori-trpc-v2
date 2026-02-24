@@ -41,7 +41,7 @@ export function SimpleTable<TData, TValue>({
   });
 
   return (
-    <div className="overflow-hidden rounded-md border">
+    <div className="overflow-hidden rounded-md border relative">
       <Table>
         <TableHeader className="bg-muted">
           {table.getHeaderGroups().map((headerGroup) => (

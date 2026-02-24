@@ -1,6 +1,7 @@
 "use client";
 
 import { PATHS } from "@/app/urls";
+import Img from "@/components/html/img";
 import { Text } from "@/components/html/text";
 import { TextHTML } from "@/components/html/text-html";
 import {
@@ -22,8 +23,8 @@ type Props = {
   slug: string;
 };
 
-export default function KodeEtikDetailSection({ l, slug }: Props) {
-  const { data, isLoading } = api.main.template6.template6DataByTitle.useQuery(
+export default function TanggungJawabSosialDetailSection({ l, slug }: Props) {
+  const { data, isLoading } = api.main.template7.detail.useQuery(
     {
       title: toTitleCase(slug),
     },
@@ -49,9 +50,13 @@ export default function KodeEtikDetailSection({ l, slug }: Props) {
               <BreadcrumbItem>
                 <BreadcrumbLink
                   className="cursor-pointer"
-                  onClick={() => redirect(PATHS.korporasi.kodeEtik)}
+                  onClick={() =>
+                    redirect(PATHS.korporasi.tanggungJawabSosialPerusahaan)
+                  }
                 >
-                  <Text variant="caption-md-regular">Kode Etik</Text>
+                  <Text variant="caption-md-regular">
+                    Tanggung Jawab Sosial Perusahaan
+                  </Text>
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
@@ -66,14 +71,21 @@ export default function KodeEtikDetailSection({ l, slug }: Props) {
           </Breadcrumb>
           <div className="flex flex-col gap-5">
             <div className="flex flex-col gap-2">
-              <Text variant="display-md">{data?.data.title?.[l]}</Text>
+              <Text variant="display-lg">{data?.data.title?.[l]}</Text>
               <Text variant="caption-md-regular">
                 Diperbaru pada {dateFormat(data?.data.createdTime ?? "")}
               </Text>
             </div>
+            <Img
+              src={`/api/files${data?.data.imgUrl}`}
+              alt={data?.data.title?.[l]}
+              width={1000}
+              height={1000}
+              className="w-full object-cover"
+            />
             <TextHTML
               variant="body-md-regular"
-              html={data?.data.content?.[l] ?? ""}
+              html={data?.data.description?.[l] ?? ""}
             />
           </div>
         </section>

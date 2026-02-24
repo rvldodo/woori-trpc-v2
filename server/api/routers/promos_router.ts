@@ -10,31 +10,41 @@ import {
   ERROR_DATA_NOT_FOUND,
   ERROR_FETCH,
 } from "@/lib/constants";
-import { and, eq, isNull } from "drizzle-orm";
+import { and, asc, desc, eq, isNull, sql, SQLWrapper } from "drizzle-orm";
 import { z } from "zod";
+import { schema } from "../schema";
 
 type USER_TYPE = "INDIVIDU" | "KORPORAT";
 
 export const promosRouter = createTRPCRouter({
-  list: publicProcedure.query(async ({ ctx }) => {
-    const data = await ctx.db
-      .select()
-      .from(promos)
-      .where(isNull(promos.deletedTime));
+  list: publicProcedure
+    .input(z.object({ promo_order: z.string().optional() }))
+    .query(async ({ ctx, input }) => {
+      const conditions: (SQLWrapper | undefined)[] = [
+        isNull(promos.deletedTime),
+      ];
 
-    if (!data)
-      throw new TRPCError({ message: ERROR_FETCH, code: "BAD_REQUEST" });
+      const data = await ctx.db
+        .select()
+        .from(promos)
+        .where(and(...conditions))
+        .orderBy(
+          input.promo_order ? asc(promos.deadline) : desc(promos.deadline),
+        );
 
-    return { data };
-  }),
+      if (!data)
+        throw new TRPCError({ message: ERROR_FETCH, code: "BAD_REQUEST" });
+
+      return { data };
+    }),
 
   detail: publicProcedure
-    .input(z.object({ promoId: z.number() }))
+    .input(z.object({ slug: z.string() }))
     .query(async ({ ctx, input }) => {
       const [data] = await ctx.db
         .select()
         .from(promos)
-        .where(eq(promos.id, Number(input.promoId)))
+        .where(sql`${promos.title}::text ILIKE '%' || ${input.slug} || '%'`)
         .leftJoin(loanTypes, eq(promos.loanTypeId, loanTypes.id));
 
       if (!data)
@@ -59,25 +69,17 @@ export const promosRouter = createTRPCRouter({
   }),
 
   subscription: publicProcedure
-    .input(
-      z.object({
-        userType: z.string(),
-        name: z.string(),
-        phone: z.string(),
-        company: z.string().optional(),
-        promoId: z.number(),
-      }),
-    )
+    .input(schema.promo.subscription)
     .mutation(async ({ ctx, input }) => {
-      const { name, company, phone, promoId, userType } = input;
+      const { name, company, phone, promo_id, user_type } = input;
 
       const data = await ctx.db.insert(promoSubscription).values({
-        userType: userType as USER_TYPE,
+        userType: user_type as USER_TYPE,
         name,
         phoneNumber: phone,
         companyName: company || "",
         isSubscribe: true,
-        promoId,
+        promoId: promo_id,
       });
 
       if (!data)

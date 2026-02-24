@@ -76,7 +76,7 @@ export default function PromoSection({ l }: Props) {
                         key={e.id}
                         className="md:basis-1/3 basis-1/1 flex justify-center md:px-0 mx-2 border-none"
                       >
-                        <PromoCard l={l} id={e.id} />
+                        <PromoCard l={l} slug={e.title?.[l] ?? ""} />
                       </CarouselItem>
                     );
                   })}

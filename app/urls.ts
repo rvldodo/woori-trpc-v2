@@ -120,6 +120,8 @@ const PATHS = {
       "/korporat/tata-kelola-perusahaan/piagam-unit-audit-internal",
     pedomanKerja: "/korporat/tata-kelola-perusahaan/pedoman-kerja",
     tanggungJawabSosialPerusahaan: "/korporat/tanggung-jawab-sosial-perusahaan",
+    tanggungJawabSosialPerusahaanDetail:
+      "/korporat/tanggung-jawab-sosial-perusahaan-detail",
   },
   pengadaan: "/pengadaan",
   syaratDanKetentuan: "/syarat-dan-ketentuan",

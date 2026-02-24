@@ -36,4 +36,14 @@ export class schema {
       message: z.string().min(1, "Message is required"),
     }),
   };
+
+  static promo = {
+    subscription: z.object({
+      user_type: z.string(),
+      name: z.string(),
+      company: z.string().optional(),
+      phone: z.string().min(10),
+      promo_id: z.number(),
+    }),
+  };
 }

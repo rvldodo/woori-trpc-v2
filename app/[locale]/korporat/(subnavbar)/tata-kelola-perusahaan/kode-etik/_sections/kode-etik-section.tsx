@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Spinner } from "@/components/ui/spinner";
-import { dateFormat } from "@/lib/formatter";
+import { dateFormat, toURLCase } from "@/lib/formatter";
 import { api } from "@/trpc/react";
 import { useDebounce } from "@uidotdev/usehooks";
 import { File, FileTextIcon, Search } from "lucide-react";
@@ -85,7 +85,7 @@ export default function KodeEtikSection({ l }: Props) {
           data?.data.map((e) => (
             <Link
               key={e.id}
-              href={`${PATHS.korporasi.kodeEtikDetail}/${e.title?.[l]}`}
+              href={`${PATHS.korporasi.kodeEtikDetail}/${toURLCase(e.title?.[l] ?? "")}`}
               className="block py-2"
             >
               <Card>

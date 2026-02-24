@@ -1,28 +1,28 @@
 import { getMetadata } from "@/app/metadata";
 import { PATHS } from "@/app/urls";
 import { Metadata } from "next";
-import { Locale } from "next-intl";
-import KodeEtikDetailSection from "./_sections/detail-section";
+import type { Locale } from "next-intl";
+import PengadatanDetailSection from "./_sections/detail-section";
 import { toTitleCase } from "@/lib/formatter";
 
 export const generateMetadata = async (
-  props: PageProps<"/[locale]/korporat/kode-etik-detail/[slug]">,
+  props: PageProps<"/[locale]/pengadaan/[slug]">,
 ): Promise<Metadata> => {
   const { locale, slug } = await props.params;
 
   return await getMetadata({
-    path: `${PATHS.korporasi.kodeEtikDetail}/${slug}`,
+    path: `${PATHS.pengadaan}/${decodeURI(slug)}`,
     locale,
-    title: `Kode Etik | ${toTitleCase(slug)}`,
+    title: toTitleCase(slug),
   });
 };
 
-export default async function KodeEtikDetail({
+export default async function PengadaanDetail({
   params,
 }: {
   params: Promise<{ locale: Locale; slug: string }>;
 }) {
   const { locale, slug } = await params;
 
-  return <KodeEtikDetailSection l={locale} slug={decodeURIComponent(slug)} />;
+  return <PengadatanDetailSection l={locale} slug={decodeURI(slug)} />;
 }

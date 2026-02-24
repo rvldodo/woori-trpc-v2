@@ -5,7 +5,7 @@ import { PATHS } from "@/app/urls";
 import { api } from "@/trpc/react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Text } from "@/components/html/text";
-import { dateFormat } from "@/lib/formatter";
+import { dateFormat, toURLCase } from "@/lib/formatter";
 import { ArrowRight } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Locale, useTranslations } from "next-intl";
@@ -13,15 +13,18 @@ import Img from "@/components/html/img";
 
 type Props = {
   l: Locale;
-  id: number | string;
+  slug: string;
 };
 
-export const PromoCard = ({ l, id }: Props) => {
+export const PromoCard = ({ l, slug = "" }: Props) => {
   const t = useTranslations("Promo");
 
-  const { data, isLoading } = api.main.promos.detail.useQuery({
-    promoId: Number(id),
-  });
+  const { data, isLoading } = api.main.promos.detail.useQuery(
+    {
+      slug,
+    },
+    { enabled: !!slug },
+  );
 
   return isLoading || !data ? (
     <Skeleton className="w-25 h-15 rounded-lg" />
@@ -43,12 +46,14 @@ export const PromoCard = ({ l, id }: Props) => {
             {data.data.promos.title![l]}
           </Text>
           <Text variant="caption-md-regular" className="text-[#434343]">
-            {t("validUntil")}
-            {dateFormat(data.data.promos.deadline!)}
+            {t("validUntil")} {dateFormat(data.data.promos.deadline!)}
           </Text>
         </div>
 
-        <Link href={`${PATHS.home.promo}/${id}`} className="flex gap-2">
+        <Link
+          href={`${PATHS.home.promo}/${toURLCase(slug)}`}
+          className="flex gap-2 items-center text-primary-blue"
+        >
           <Text variant="caption-md-regular" className="text-blue">
             {t("learnMore")}
           </Text>

@@ -63,13 +63,14 @@ export const procurementRouter = createTRPCRouter({
     }),
 
   detail: publicProcedure
-    .input(z.coerce.number())
+    .input(z.object({ slug: z.string() }))
     .query(async ({ ctx, input }) => {
-      const procurementId = input;
       const [data] = await ctx.db
         .select()
         .from(procurements)
-        .where(eq(procurements.id, procurementId));
+        .where(
+          sql`${procurements.title}::text ILIKE '%' || ${input.slug} || '%'`,
+        );
 
       if (!data?.id)
         throw new TRPCError({

@@ -11,10 +11,18 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
-import { dateFormat, hyphenToPascalCase, toTitleCase } from "@/lib/formatter";
+import {
+  dateFormat,
+  extractTitleFromPath,
+  hyphenToPascalCase,
+  toTitleCase,
+} from "@/lib/formatter";
 import { api } from "@/trpc/react";
-import type { Locale } from "next-intl";
+import { Download } from "lucide-react";
+import { Locale } from "next-intl";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 type Props = {
@@ -22,11 +30,9 @@ type Props = {
   slug: string;
 };
 
-export default function KodeEtikDetailSection({ l, slug }: Props) {
-  const { data, isLoading } = api.main.template6.template6DataByTitle.useQuery(
-    {
-      title: toTitleCase(slug),
-    },
+export default function PengadatanDetailSection({ l, slug }: Props) {
+  const { data, isLoading } = api.main.procurements.detail.useQuery(
+    { slug: toTitleCase(slug) },
     { enabled: !!slug },
   );
 
@@ -49,9 +55,9 @@ export default function KodeEtikDetailSection({ l, slug }: Props) {
               <BreadcrumbItem>
                 <BreadcrumbLink
                   className="cursor-pointer"
-                  onClick={() => redirect(PATHS.korporasi.kodeEtik)}
+                  onClick={() => redirect(PATHS.pengadaan)}
                 >
-                  <Text variant="caption-md-regular">Kode Etik</Text>
+                  <Text variant="caption-md-regular">Pengadaan</Text>
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
@@ -73,8 +79,34 @@ export default function KodeEtikDetailSection({ l, slug }: Props) {
             </div>
             <TextHTML
               variant="body-md-regular"
-              html={data?.data.content?.[l] ?? ""}
+              html={data?.data.description?.[l] ?? ""}
             />
+
+            <Text variant="display-md">
+              File yang dibutuhkan untuk pengajuan Pengadaan
+            </Text>
+            <TextHTML
+              variant="body-md-regular"
+              html={data?.data.requirements?.[l] ?? ""}
+            />
+
+            {data?.data.files?.map((e, idx: number) => (
+              <div
+                className="flex justify-between items-center"
+                key={idx.toString()}
+              >
+                <Text variant="body-md-semi">{extractTitleFromPath(e)}</Text>
+                <Link href={`/api/files${e}`}>
+                  <Button
+                    className="flex gap-2rounded-lg bg-transparent"
+                    variant="woori_white"
+                  >
+                    Unduh
+                    <Download className="w-5 h-5" />
+                  </Button>
+                </Link>
+              </div>
+            ))}
           </div>
         </section>
       )}

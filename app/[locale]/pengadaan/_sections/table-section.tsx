@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { PAGINATION_LIMIT } from "@/lib/constants";
-import { Filter, Link, Search } from "lucide-react";
+import { Filter, Link as LinkIcon, Search } from "lucide-react";
 import type { Locale } from "next-intl";
 import { parseAsInteger, parseAsString, useQueryStates } from "nuqs";
 import { useTranslations } from "use-intl";
@@ -18,10 +18,12 @@ import { api } from "@/trpc/react";
 import type { ColumnDef } from "@tanstack/react-table";
 import type { FilterParams, ProcurementType } from "@/types";
 import { Button } from "@/components/ui/button";
-import { dateFormat } from "@/lib/formatter";
+import { dateFormat, toURLCase } from "@/lib/formatter";
 import { Spinner } from "@/components/ui/spinner";
 import { DataTable } from "@/components/data-table";
 import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
+import { PATHS } from "@/app/urls";
 
 type Props = {
   l: Locale;
@@ -77,13 +79,16 @@ export default function TableSection({ l }: Props) {
     {
       header: t("table.head5"),
       accessorKey: "detail",
-      cell: () => (
-        <div className="w-full h-full flex justify-center items-center">
+      cell: ({ row }) => (
+        <Link
+          href={`${PATHS.pengadaan}/${toURLCase(row.original.title?.[l] ?? "")}`}
+          className="w-full h-full flex justify-center items-center"
+        >
           <Button className="flex items-center gap-2">
             {t("table.head5-text")}
-            <Link className="w-5 h-5 text-white" />
+            <LinkIcon className="w-5 h-5 text-white" />
           </Button>
-        </div>
+        </Link>
       ),
     },
   ];

@@ -28,3 +28,20 @@ export const hyphenToPascalCase = (str: string): string => {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(" ");
 };
+
+export const toURLCase = (str: string) =>
+  str.toLowerCase().split(" ").join("-");
+
+export const extractTitleFromPath = (filePath: string): string => {
+  const fileName = filePath.split("/").pop() || "";
+  const nameWithoutExt = fileName.replace(/\.[^/.]+$/, "");
+  const cleanedName = nameWithoutExt.replace(/-\d+$/, "");
+  const title = cleanedName.replace(/[_-]+/g, " ");
+  return title.trim();
+};
+
+export const createExcerpt = (htmlContent: string, maxSentences = 2) => {
+  const textOnly = htmlContent.replace(/<[^>]*>/g, "");
+  const sentences = textOnly.split(/(?<=[.!?])\s+/);
+  return sentences.slice(0, maxSentences).join(" ").trim();
+};
