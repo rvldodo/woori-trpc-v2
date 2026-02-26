@@ -15,10 +15,15 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Locale } from "next-intl";
 
 type Schema = z.infer<typeof schema.form.loan>;
 
-export default function NewCarForm() {
+type Props = {
+  l: Locale;
+};
+
+export default function NewCarForm({ l }: Props) {
   const { handleSubmit, control, register } = useForm<Schema>({
     mode: "all",
     resolver: zodResolver(schema.form.loan),

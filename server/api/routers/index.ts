@@ -6,6 +6,7 @@ import { complaintsRouter } from "./complaints_router";
 import { faqRouter } from "./faqs_router";
 import { globalParamsRouter } from "./global-params_router";
 import { heroRouter } from "./hero_router";
+import { simulationLoanRouter } from "./loan_router";
 import { menusRouter } from "./menus_router";
 import { milestonesRouter } from "./milestone_router";
 import { paymentMethodRouter } from "./payment-method_router";
@@ -46,4 +47,5 @@ export const main = {
   template7: template7Router,
   boards: boardsRouter,
   aboutUs: aboutUsRouter,
+  loan: simulationLoanRouter,
 };

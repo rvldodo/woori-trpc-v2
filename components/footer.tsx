@@ -34,7 +34,7 @@ const Footer = (props: FooterProps) => {
   const isSimulasiPath = path.split("/");
 
   const { data, isLoading } = api.main.globalParams.getByKey.useQuery({
-    key: "QR",
+    key: "QR Code Download",
   });
 
   const imgUrl = `/api/files${data?.data.value as string}`;

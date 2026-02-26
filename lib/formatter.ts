@@ -29,6 +29,19 @@ export const hyphenToPascalCase = (str: string): string => {
     .join(" ");
 };
 
+export const toTitle = (str: string) =>
+  str
+    .toLowerCase()
+    .split(" ")
+    .map((word) => {
+      // preserve hyphenated parts like benz-glc
+      return word
+        .split("-")
+        .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+        .join("-");
+    })
+    .join(" ");
+
 export const toURLCase = (str: string) =>
   str.toLowerCase().split(" ").join("-");
 
@@ -44,4 +57,13 @@ export const createExcerpt = (htmlContent: string, maxSentences = 2) => {
   const textOnly = htmlContent.replace(/<[^>]*>/g, "");
   const sentences = textOnly.split(/(?<=[.!?])\s+/);
   return sentences.slice(0, maxSentences).join(" ").trim();
+};
+
+export const formatCurrency = (amount: number) => {
+  const amounFormatter = amount.toLocaleString("en-US", {
+    maximumFractionDigits: 2,
+    maximumSignificantDigits: 2,
+  });
+
+  return `Rp ${amounFormatter}`;
 };

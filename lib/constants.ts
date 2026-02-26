@@ -38,11 +38,95 @@ export const ICONS = {
   instagram: "mdi:instagram",
 };
 
-export const CURRENT_STACK = [
-  "Next.js",
-  "Typescript",
-  "Golang",
-  "Postgresql",
-  "SQLServer",
-  "Docker",
+export const TOOLTIP_INSURANCE_TYPE = [
+  {
+    id: 1,
+    title: {
+      en: "Total Loss Only (TLO)",
+      id: "Total Loss Only (TLO)",
+    },
+    description: {
+      en: "Total Loss Only (TLO) insurance covers major losses if the damage reaches 75% or more of the vehicle's value, protecting you in the event of a serious accident or theft.",
+      id: "Asuransi Total Loss (TLO) menanggung kerugian besar jika kerusakannya mencapai 75% atau lebih dari nilai kendaraan, melindungi Anda jika terjadi kecelakaan parah atau pencurian.",
+    },
+  },
+  {
+    id: 2,
+    title: {
+      en: "Comprehensive",
+      id: "Komprehensif",
+    },
+    description: {
+      en: "Comprehensive insurance coverage for all types of damage, from minor scratches to total loss.",
+      id: "Cakupan asuransi komprehensif untuk kerusakan, dari goresan kecil hingga kerugian total.",
+    },
+  },
+  {
+    id: 3,
+    title: {
+      en: "Combination",
+      id: "Kombinasi",
+    },
+    description: {
+      en: "Combination insurance starts with comprehensive coverage and then switches to TLO, adapting to changes in your vehicle's value over time.",
+      id: "Asuransi kombinasi dimulai dengan cakupan komprehensif dan kemudian beralih ke TLO, beradaptasi dengan perubahan nilai kendaraan Anda dari waktu ke waktu.",
+    },
+  },
+];
+
+export const INSURANCE_TYPE = [
+  {
+    value: "1",
+    label: {
+      en: "Comprehensive",
+      id: "Komprehensif",
+    },
+  },
+  {
+    value: "2",
+    label: {
+      en: "Total Loss Only (TLO)",
+      id: "TLO",
+    },
+  },
+  {
+    value: "3",
+    label: {
+      en: "Combination",
+      id: "Kombinasi",
+    },
+  },
+];
+
+export const DOWN_PAYMENT_TYPE = [
+  {
+    value: "1",
+    label: {
+      en: "DP",
+      id: "DP",
+    },
+    title: {
+      en: "Down Payment",
+      id: "Uang Muka",
+    },
+    description: {
+      en: "The initial amount paid upfront, excluding any additional fees or changes.",
+      id: "Jumlah awal yang dibayarkan di muka, tidak termasuk biaya tambahan atau perubahan apa pun.",
+    },
+  },
+  {
+    value: "2",
+    label: {
+      en: "TDP",
+      id: "TDP",
+    },
+    title: {
+      en: "Total Down Payment",
+      id: "Total Uang Muka",
+    },
+    description: {
+      en: "The total amount paid upfront, including fees, insurance, and other related costs.",
+      id: "Jumlah keseluruhan yang dibayarkan di muka, termasuk biaya, asuransi, dan biaya terkait lainnya.",
+    },
+  },
 ];

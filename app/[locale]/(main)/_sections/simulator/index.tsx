@@ -63,7 +63,7 @@ export default function SimulatorSection({ l }: Props) {
                 <TextEffect
                   variant="display-lg"
                   preset="fade-in-blur"
-                  speedSegment={0.3}
+                  speedSegment={0.5}
                   as="p"
                 >
                   {mobilBekasUsp.title![l]}
@@ -71,7 +71,7 @@ export default function SimulatorSection({ l }: Props) {
                 <TextEffect
                   variant="body-md-regular"
                   preset="fade-in-blur"
-                  speedSegment={0.3}
+                  speedSegment={0.5}
                   as="p"
                 >
                   {mobilBekasUsp.description![l]}
@@ -133,7 +133,7 @@ export default function SimulatorSection({ l }: Props) {
                 <TextEffect
                   variant="display-lg"
                   preset="fade-in-blur"
-                  speedSegment={0.3}
+                  speedSegment={0.5}
                   as="p"
                 >
                   {mobilBaruUsp.title![l]}
@@ -141,7 +141,7 @@ export default function SimulatorSection({ l }: Props) {
                 <TextEffect
                   variant="body-md-regular"
                   preset="fade-in-blur"
-                  speedSegment={0.3}
+                  speedSegment={0.5}
                   as="p"
                 >
                   {mobilBaruUsp.description![l]}
@@ -237,10 +237,10 @@ export default function SimulatorSection({ l }: Props) {
               </TabsList>
               <div className="w-full h-full">
                 <TabsContent value="used-car" className="flex flex-col gap-6">
-                  <UsedCarForm />
+                  <UsedCarForm l={l} />
                 </TabsContent>
                 <TabsContent value="new-car" className="flex flex-col gap-6">
-                  <NewCarForm />
+                  <NewCarForm l={l} />
                 </TabsContent>
               </div>
             </CardContent>
