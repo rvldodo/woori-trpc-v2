@@ -11,7 +11,7 @@ export class schema {
 
   static form = {
     loan: z.object({
-      jenis: z.string().nullable(),
+      jenis: z.string().optional(),
       lokasi: z.string().nullable(),
       cabang: z.string().nullable(),
       brand: z.string().nullable(),

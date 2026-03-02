@@ -3,7 +3,7 @@
 import { schema } from "@/server/api/schema";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import z from "zod";
+import type z from "zod";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -22,7 +22,7 @@ import {
   toTitle,
   toTitleCase,
 } from "@/lib/formatter";
-import { Locale } from "next-intl";
+import { useTranslations, type Locale } from "next-intl";
 import { Spinner } from "@/components/ui/spinner";
 import { getPastCarYears } from "@/lib/utils";
 import {
@@ -36,10 +36,13 @@ import { Text } from "@/components/html/text";
 import {
   DOWN_PAYMENT_TYPE,
   INSURANCE_TYPE,
+  LOAN_DATA_LOCAL_STORAGE,
   TOOLTIP_INSURANCE_TYPE,
 } from "@/lib/constants";
 import { useCallback, useEffect, useState } from "react";
-import { LocaleContentOptional } from "@/types";
+import type { LocaleContentOptional } from "@/types";
+import { redirect } from "next/navigation";
+import { PATHS } from "@/app/urls";
 
 type Schema = z.infer<typeof schema.form.loan>;
 
@@ -48,20 +51,21 @@ type Props = {
 };
 
 export default function UsedCarForm({ l }: Props) {
+  const t = useTranslations("Form");
+
   const {
     handleSubmit,
     control,
     register,
     watch,
-    formState: { isValid },
     getValues,
     setValue,
+    formState: { errors },
   } = useForm<Schema>({
     mode: "all",
     resolver: zodResolver(schema.form.loan),
     defaultValues: {
       price: 10000000,
-      dpPrice: 0,
     },
   });
 
@@ -176,10 +180,10 @@ export default function UsedCarForm({ l }: Props) {
       ? Number(dpPercentage?.data.value) * Number(watch("price"))
       : Number(tdpPercentage?.data.value) * Number(watch("price"));
 
-  useEffect(() => {
-    const dpType = watch("dpType");
-    const price = watch("price");
+  const dpType = watch("dpType");
+  const price = watch("price");
 
+  useEffect(() => {
     if (!dpType || !price) return;
     if (dpLoading || tdpLoading) return;
 
@@ -192,37 +196,59 @@ export default function UsedCarForm({ l }: Props) {
 
     setValue("dpPrice", calculated);
     setDisplayAmountDP(formatCurrency(calculated));
-  }, [watch("dpType"), dpPercentage, tdpPercentage]);
+  }, [
+    dpPercentage,
+    tdpPercentage,
+    tdpLoading,
+    dpLoading,
+    setValue,
+    dpType,
+    price,
+  ]);
 
   const isFilled =
-    watch("lokasi") &&
-    watch("cabang") &&
-    watch("brand") &&
-    watch("model") &&
-    watch("type") &&
-    watch("year") &&
-    watch("insuranceType") &&
-    watch("price") &&
-    watch("dpType") &&
-    watch("dpPrice");
+    !!watch("lokasi") &&
+    !!watch("cabang") &&
+    !!watch("brand") &&
+    !!watch("model") &&
+    !!watch("type") &&
+    !!watch("year") &&
+    !!watch("insuranceType") &&
+    !!watch("price") &&
+    !!watch("dpType") &&
+    !!watch("dpPrice");
 
-  console.log(isFilled, " ======== ");
+  const isAmountFit =
+    Number(Number(watch("dpPrice")).toFixed()) >=
+      Number(dpMinAmount.toFixed()) &&
+    Number(Number(watch("dpPrice")).toFixed()) <
+      Number(watch("price")?.toFixed());
+
+  const handleSubmitNext = (e: Schema) => {
+    localStorage.setItem(LOAN_DATA_LOCAL_STORAGE, JSON.stringify(e));
+    redirect(`${PATHS.home.pinjaman.mobilBekas}/hasil-simulasi`);
+  };
+
+  console.log(errors);
 
   return (
-    <form onSubmit={() => {}} className="w-full pt-10 flex flex-col gap-5">
+    <form
+      onSubmit={handleSubmit((e) => handleSubmitNext(e))}
+      className="w-full pt-10 flex flex-col gap-5"
+    >
       <Controller
         name="lokasi"
         control={control}
         render={({ field }) => (
           <div className="flex flex-col gap-3">
-            <Label>Your Location</Label>
+            <Label>{t("location.label")}</Label>
             <Select
               value={field.value ? String(field.value) : undefined}
               onValueChange={field.onChange}
               disabled={locationLoading}
             >
               <SelectTrigger className="w-full">
-                <SelectValue placeholder="Choose you location" />
+                <SelectValue placeholder={t("location.placeholder")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
@@ -243,14 +269,14 @@ export default function UsedCarForm({ l }: Props) {
         control={control}
         render={({ field }) => (
           <div className="flex flex-col gap-3">
-            <Label>Branch Location</Label>
+            <Label>{t("branch.label")}</Label>
             <Select
               value={field.value ? String(field.value) : undefined}
               onValueChange={field.onChange}
               disabled={!watch("lokasi") || branchLoading}
             >
               <SelectTrigger className="w-full">
-                <SelectValue placeholder="Choose branch location" />
+                <SelectValue placeholder={t("branch.placeholder")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
@@ -272,14 +298,14 @@ export default function UsedCarForm({ l }: Props) {
           control={control}
           render={({ field }) => (
             <div className="flex flex-col gap-3 w-full">
-              <Label>Car Brand</Label>
+              <Label>{t("brand.label")}</Label>
               <Select
                 value={field.value ? String(field.value) : undefined}
                 onValueChange={field.onChange}
                 disabled={brandLoading}
               >
                 <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Choose car brand" />
+                  <SelectValue placeholder={t("brand.placeholder")} />
                 </SelectTrigger>
                 <SelectContent>
                   {brandLoading ? (
@@ -288,7 +314,7 @@ export default function UsedCarForm({ l }: Props) {
                     </div>
                   ) : (
                     <SelectGroup>
-                      {brand?.data.data.map((e, idx: number) => (
+                      {brand?.data.map((e, idx: number) => (
                         <SelectItem key={idx.toString()} value={e.AssetMerk}>
                           {toTitle(e.AssetMerkName ?? "")}
                         </SelectItem>
@@ -306,14 +332,14 @@ export default function UsedCarForm({ l }: Props) {
           control={control}
           render={({ field }) => (
             <div className="flex flex-col gap-3 w-full">
-              <Label>Car Model</Label>
+              <Label>{t("model.label")}</Label>
               <Select
                 value={field.value ? String(field.value) : undefined}
                 onValueChange={field.onChange}
                 disabled={!watch("brand") || modelLoading}
               >
                 <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Choose car model" />
+                  <SelectValue placeholder={t("model.placeholder")} />
                 </SelectTrigger>
                 <SelectContent>
                   {modelLoading ? (
@@ -322,7 +348,7 @@ export default function UsedCarForm({ l }: Props) {
                     </div>
                   ) : (
                     <SelectGroup>
-                      {model?.data.data.map((e, idx: number) => (
+                      {model?.data.map((e, idx: number) => (
                         <SelectItem key={idx.toString()} value={e.AssetModel}>
                           {hyphenToPascalCase(e.AssetModelName)}
                         </SelectItem>
@@ -342,14 +368,14 @@ export default function UsedCarForm({ l }: Props) {
           control={control}
           render={({ field }) => (
             <div className="flex flex-col gap-3 w-full">
-              <Label>Car Type</Label>
+              <Label>{t("type.label")}</Label>
               <Select
                 value={field.value ? String(field.value) : undefined}
                 onValueChange={field.onChange}
                 disabled={!watch("model") || typeLoading}
               >
                 <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Choose car type" />
+                  <SelectValue placeholder={t("type.placeholder")} />
                 </SelectTrigger>
                 <SelectContent>
                   {typeLoading ? (
@@ -358,7 +384,7 @@ export default function UsedCarForm({ l }: Props) {
                     </div>
                   ) : (
                     <SelectGroup>
-                      {type?.data.data.map((e, idx: number) => (
+                      {type?.data.map((e, idx: number) => (
                         <SelectItem
                           key={idx.toString()}
                           value={e.AssetType}
@@ -380,14 +406,14 @@ export default function UsedCarForm({ l }: Props) {
           control={control}
           render={({ field }) => (
             <div className="flex flex-col gap-3 w-full">
-              <Label>Car Year</Label>
+              <Label>{t("year.label")}</Label>
               <Select
                 value={field.value ? String(field.value) : undefined}
                 onValueChange={field.onChange}
                 disabled={!watch("type")}
               >
                 <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Choose car year" />
+                  <SelectValue placeholder={t("year.placeholder")} />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
@@ -410,7 +436,7 @@ export default function UsedCarForm({ l }: Props) {
         render={({ field }) => (
           <div className="flex flex-col gap-3">
             <div className="flex gap-2 items-center">
-              <Label>Tipe Asuransi</Label>
+              <Label>{t("insuranceType.label")}</Label>
               <TooltipProvider>
                 <Tooltip open={open} onOpenChange={setOpen}>
                   <TooltipTrigger asChild>
@@ -423,7 +449,9 @@ export default function UsedCarForm({ l }: Props) {
                   </TooltipTrigger>
                   <TooltipContent className="bg-white border">
                     <section className="flex flex-col gap-3 md:w-[20vw] w-full">
-                      <Text variant="body-sm-semi">Jenis Asuransi</Text>
+                      <Text variant="body-sm-semi">
+                        {t("insuranceType.tooltipTitle")}
+                      </Text>
                       {TOOLTIP_INSURANCE_TYPE.map(
                         (e: {
                           id: number;
@@ -449,7 +477,8 @@ export default function UsedCarForm({ l }: Props) {
                             className={`w-4 h-4 cursor-pointer ${tooltip > 1 ? "flex" : "hidden"}`}
                             onClick={previousTooltipHandler}
                           />
-                          {tooltip} dari {TOOLTIP_INSURANCE_TYPE.length}
+                          {tooltip} {t("pagination.of")}{" "}
+                          {TOOLTIP_INSURANCE_TYPE.length}
                           <ArrowRight
                             className={`w-4 h-4 cursor-pointer ${tooltip !== TOOLTIP_INSURANCE_TYPE.length ? "flex" : "hidden"}`}
                             onClick={nextTooltipHandler}
@@ -466,7 +495,7 @@ export default function UsedCarForm({ l }: Props) {
               onValueChange={field.onChange}
             >
               <SelectTrigger className="w-full">
-                <SelectValue placeholder="Choose insurance type" />
+                <SelectValue placeholder={t("insuranceType.placeholder")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
@@ -485,11 +514,11 @@ export default function UsedCarForm({ l }: Props) {
       />
 
       <div className="flex flex-col gap-3">
-        <Label>Car Price</Label>
+        <Label>{t("price.label")}</Label>
         <Input
           {...register("price")}
           value={displayAmount}
-          placeholder="Rp 2.000.000"
+          placeholder={t("price.placeholder")}
           className="w-full"
           onChange={handleAmountChange}
           onBlur={() => {
@@ -506,7 +535,9 @@ export default function UsedCarForm({ l }: Props) {
           Number(watch("price")) > 0 &&
           Number(watch("price")) < Number(minimumPrice?.data.value) && (
             <Text variant="caption-md-regular" color="error">
-              {`Harga mobil minimal ${formatCurrency(Number(minimumPrice?.data.value ?? 0))}`}
+              {t("validation.minCarPrice", {
+                amount: formatCurrency(Number(minimumPrice?.data.value ?? 0)),
+              })}
             </Text>
           )}
       </div>
@@ -517,7 +548,7 @@ export default function UsedCarForm({ l }: Props) {
         render={({ field }) => (
           <section className="flex w-full flex-col gap-3">
             <div className="flex items-center gap-2">
-              <Label>Jumlah Uang Muka</Label>
+              <Label>{t("downPayment.label")}</Label>
               <TooltipProvider>
                 <Tooltip open={openDP} onOpenChange={setOpenDP}>
                   <TooltipTrigger asChild>
@@ -556,7 +587,8 @@ export default function UsedCarForm({ l }: Props) {
                             className={`w-4 h-4 cursor-pointer ${tooltipDP > 1 ? "flex" : "hidden"}`}
                             onClick={previousTooltipHandlerDP}
                           />
-                          {tooltipDP} dari {DOWN_PAYMENT_TYPE.length}
+                          {tooltipDP} {t("pagination.of")}{" "}
+                          {DOWN_PAYMENT_TYPE.length}
                           <ArrowRight
                             className={`w-4 h-4 cursor-pointer ${tooltipDP !== DOWN_PAYMENT_TYPE.length ? "flex" : "hidden"}`}
                             onClick={nextTooltipHandlerDP}
@@ -574,7 +606,7 @@ export default function UsedCarForm({ l }: Props) {
                 onValueChange={field.onChange}
               >
                 <SelectTrigger className="w-full col-span-1">
-                  <SelectValue placeholder="Choose DP type" />
+                  <SelectValue placeholder={t("downPayment.typePlaceholder")} />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
@@ -596,7 +628,7 @@ export default function UsedCarForm({ l }: Props) {
               <Input
                 {...register("dpPrice")}
                 disabled={!watch("dpType")}
-                placeholder="Rp 5.000.000"
+                placeholder={t("downPayment.placeholder")}
                 value={displayAmountDP}
                 className="w-full col-span-2"
                 onChange={handleAmountDPChange}
@@ -617,11 +649,20 @@ export default function UsedCarForm({ l }: Props) {
 
       {Number(watch("dpPrice")) < Number(dpMinAmount.toFixed()) &&
         Number(watch("dpPrice")) < Number(watch("price")) && (
-          <Text
-            variant="caption-md-regular"
-            color="error"
-          >{`Uang muka minimal ${formatCurrency(dpMinAmount)}`}</Text>
+          <Text variant="caption-md-regular" color="error">
+            {t("validation.minDownPayment", {
+              amount: formatCurrency(dpMinAmount),
+            })}
+          </Text>
         )}
+
+      {Number(watch("dpPrice")) > Number(watch("price")) && (
+        <Text variant="caption-md-regular" color="error">
+          {t("validation.maxDownPayment", {
+            amount: formatCurrency(Number(watch("price"))),
+          })}
+        </Text>
+      )}
 
       {tdpLoading && dpLoading ? (
         <div className="w-full h-full flex justify-center items-center">
@@ -629,16 +670,23 @@ export default function UsedCarForm({ l }: Props) {
         </div>
       ) : watch("dpType") === "1" ? (
         <Text variant="caption-md-regular" color="muted">
-          {`Minimum uang muka sebanyak ${Number(dpPercentage?.data.value) * 100}% masukan jumlah sedikitnya ${formatCurrency(dpMinAmount)}`}
+          {t("validation.dpHintPercentage", {
+            percentage: Number(dpPercentage?.data.value),
+            amount: formatCurrency(dpMinAmount),
+          })}
         </Text>
       ) : (
         <Text variant="caption-md-regular" color="muted">
-          {`Silahkan masukkan uang muka minimum sebesar ${formatCurrency(dpMinAmount)}`}
+          {t("validation.dpHintFixed", { amount: formatCurrency(dpMinAmount) })}
         </Text>
       )}
       <div className="w-full flex justify-end">
-        <Button className="right-0" disabled={!isValid && !isFilled}>
-          Estimate Loan
+        <Button
+          className="right-0"
+          type="submit"
+          disabled={!(isFilled && isAmountFit)}
+        >
+          {t("submitButton")}
         </Button>
       </div>
     </form>

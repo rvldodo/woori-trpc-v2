@@ -60,10 +60,7 @@ export const createExcerpt = (htmlContent: string, maxSentences = 2) => {
 };
 
 export const formatCurrency = (amount: number) => {
-  const amounFormatter = amount.toLocaleString("en-US", {
-    maximumFractionDigits: 2,
-    maximumSignificantDigits: 2,
-  });
+  const amounFormatter = amount.toLocaleString("en-US");
 
   return `Rp ${amounFormatter}`;
 };

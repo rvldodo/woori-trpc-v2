@@ -15,6 +15,8 @@ export const ERROR_UPDATE_DATA = "Failed to update data";
 export const ERROR_DELETE_DATA = "Failed to delete data";
 export const ERROR_CONNECT_DB = "Failed to connect to database";
 
+export const LOAN_DATA_LOCAL_STORAGE = "loan_form_data";
+
 export const SLUGS_TO_REMOVE = ["home"];
 
 export const LOCALES: Record<
@@ -37,6 +39,20 @@ export const ICONS = {
   linkedin: "mdi:linkedin",
   instagram: "mdi:instagram",
 };
+
+export const TDP_TOOLTIP = [
+  {
+    id: 1,
+    title: {
+      en: "Total Down Payment",
+      id: "Total Uang Muka",
+    },
+    description: {
+      en: "The total amount paid upfront, including insurance and other related fees.",
+      id: "Jumlah keseluruhan yang dibayarkan di muka, termasuk asuransi, dan biaya terkait lainnya.",
+    },
+  },
+];
 
 export const TOOLTIP_INSURANCE_TYPE = [
   {

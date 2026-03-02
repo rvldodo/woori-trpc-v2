@@ -442,6 +442,62 @@
     "applyCarFinancing": "Ajukan Pembiayaan Mobil Sekarang",
     "startLoanSimulation": "Mulai Simulasi Pinjaman"
   },
+  "Form": {
+    "location": {
+      "label": "Lokasi Anda",
+      "placeholder": "Pilih lokasi Anda"
+    },
+    "branch": {
+      "label": "Lokasi Cabang",
+      "placeholder": "Pilih lokasi cabang"
+    },
+    "brand": {
+      "label": "Merek Kendaraan",
+      "placeholder": "Pilih merek kendaraan"
+    },
+    "model": {
+      "label": "Model Kendaraan",
+      "placeholder": "Pilih model kendaraan"
+    },
+    "type": {
+      "label": "Tipe Kendaraan",
+      "placeholder": "Pilih tipe kendaraan"
+    },
+    "year": {
+      "label": "Tahun Kendaraan",
+      "placeholder": "Pilih tahun kendaraan"
+    },
+    "insuranceType": {
+      "label": "Tipe Asuransi",
+      "placeholder": "Pilih tipe asuransi",
+      "tooltipTitle": "Jenis Asuransi"
+    },
+    "price": {
+      "label": "Harga Mobil",
+      "placeholder": "Rp 2.000.000"
+    },
+    "downPayment": {
+      "label": "Jumlah Uang Muka",
+      "placeholder": "Rp 5.000.000",
+      "typePlaceholder": "Pilih tipe DP"
+    },
+    "submitButton": "Estimasi Pinjaman",
+    "validation": {
+      "minCarPrice": "Harga mobil minimal {amount}",
+      "minDownPayment": "Uang muka minimal {amount}",
+      "maxDownPayment": "Uang muka melebihi {amount}",
+      "dpHintPercentage": "Minimum uang muka sebanyak {percentage}% masukan jumlah sedikitnya {amount}",
+      "dpHintFixed": "Silahkan masukkan uang muka minimum sebesar {amount}"
+    },
+    "pagination": {
+      "of": "dari"
+    },
+    "progressbar": {
+      "step1": "Form Simulasi",
+      "step2": "Hasil Simulasi",
+      "step3": "Pengajuan Pinjaman"
+    }
+  },
   "NotFound": {
     "title": "Halaman Tidak Ditemukan",
     "subtitle": "Sepertinya halaman yang Anda cari tidak terlihat.<br>Halaman tersebut mungkin telah dipindahkan atau dihapus.</br>",

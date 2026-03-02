@@ -442,6 +442,62 @@
     "applyCarFinancing": "Apply for Car Financing Now",
     "startLoanSimulation": "Start Loan Simulation"
   },
+  "Form": {
+    "location": {
+      "label": "Your Location",
+      "placeholder": "Choose your location"
+    },
+    "branch": {
+      "label": "Branch Location",
+      "placeholder": "Choose branch location"
+    },
+    "brand": {
+      "label": "Car Brand",
+      "placeholder": "Choose car brand"
+    },
+    "model": {
+      "label": "Car Model",
+      "placeholder": "Choose car model"
+    },
+    "type": {
+      "label": "Car Type",
+      "placeholder": "Choose car type"
+    },
+    "year": {
+      "label": "Car Year",
+      "placeholder": "Choose car year"
+    },
+    "insuranceType": {
+      "label": "Insurance Type",
+      "placeholder": "Choose insurance type",
+      "tooltipTitle": "Insurance Types"
+    },
+    "price": {
+      "label": "Car Price",
+      "placeholder": "Rp 2.000.000"
+    },
+    "downPayment": {
+      "label": "Down Payment Amount",
+      "placeholder": "Rp 5.000.000",
+      "typePlaceholder": "Choose DP type"
+    },
+    "submitButton": "Estimate Loan",
+    "validation": {
+      "minCarPrice": "Minimum car price is {amount}",
+      "minDownPayment": "Minimum down payment is {amount}",
+      "maxDownPayment": "Down payment exceeds {amount}",
+      "dpHintPercentage": "Minimum down payment is {percentage}% — enter at least {amount}",
+      "dpHintFixed": "Please enter a minimum down payment of {amount}"
+    },
+    "pagination": {
+      "of": "of"
+    },
+    "progressbar": {
+      "step1": "Simulation Form",
+      "step2": "Simulation Result",
+      "step3": "Loan Application"
+    }
+  },
   "NotFound": {
     "title": "Page Not Found",
     "subtitle": "Looks like the page you’re searching for is out of sight.<br>It might have been moved or deleted.</br>",

@@ -10,6 +10,7 @@ import {
 import { asc, sql } from "drizzle-orm";
 import { z } from "zod";
 import { env } from "@/env.mjs";
+import { CarBrand, CarModel, CarType, Tenor } from "@/types/loan";
 
 export const simulationLoanRouter = createTRPCRouter({
   create: publicProcedure
@@ -121,9 +122,8 @@ export const simulationLoanRouter = createTRPCRouter({
       throw new TRPCError({ message: ERROR_FETCH, code: "BAD_REQUEST" });
 
     const result = await data.json();
-    console.log(result);
 
-    return { data: result };
+    return { data: result.data as CarBrand[] };
   }),
 
   model: publicProcedure.input(schema.loan.model).query(async ({ input }) => {
@@ -140,7 +140,9 @@ export const simulationLoanRouter = createTRPCRouter({
     if (!data.ok)
       throw new TRPCError({ message: ERROR_FETCH, code: "BAD_REQUEST" });
 
-    return { data: await data.json() };
+    const result = await data.json();
+
+    return { data: result.data as CarModel[] };
   }),
 
   type: publicProcedure.input(schema.loan.type).query(async ({ input }) => {
@@ -157,45 +159,47 @@ export const simulationLoanRouter = createTRPCRouter({
     if (!data.ok)
       throw new TRPCError({ message: ERROR_FETCH, code: "BAD_REQUEST" });
 
-    return { data: await data.json() };
+    const result = await data.json();
+
+    return { data: result.data as CarType[] };
   }),
 
-  //   tenor: publicProcedure
-  //     .input(schema.shared.loan)
-  //     .mutation(async ({ input }) => {
-  //       const {
-  //         jenis,
-  //         cabang,
-  //         price,
-  //         dpPrice,
-  //         year,
-  //         dpType,
-  //         insuranceType,
-  //         model,
-  //       } = input;
-  //
-  //       const data = await fetch(`${env.MAXI_LOAN_URL}/api/loan/getTenure`, {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify({
-  //           cabang,
-  //           platwill: null,
-  //           tenor: 12,
-  //           thn_kndrn: Number(year),
-  //           model_kendaraan: model,
-  //           kondisi: jenis,
-  //           jenisDP: dpType,
-  //           asuransi_kendaraan: insuranceType,
-  //           totalDP: Number(dpPrice),
-  //           totalOtr: Number(price),
-  //         }),
-  //       });
-  //
-  //       if (!data.ok)
-  //         throw new TRPCError({ message: ERROR_FETCH, code: "BAD_REQUEST" });
-  //
-  //       return { data: await data.json() };
-  //     }),
+  tenor: publicProcedure.input(schema.form.loan).query(async ({ input }) => {
+    const {
+      jenis,
+      cabang,
+      price,
+      dpPrice,
+      year,
+      dpType,
+      insuranceType,
+      model,
+    } = input;
+
+    const data = await fetch(`${env.MAXI_LOAN_URL}/api/loan/getTenure`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        cabang,
+        platwill: null,
+        tenor: 12,
+        thn_kndrn: Number(year),
+        model_kendaraan: model,
+        kondisi: jenis,
+        jenisDP: dpType,
+        asuransi_kendaraan: insuranceType,
+        totalDP: Number(dpPrice),
+        totalOtr: Number(price),
+      }),
+    });
+
+    if (!data.ok)
+      throw new TRPCError({ message: ERROR_FETCH, code: "BAD_REQUEST" });
+
+    const result = await data.json();
+
+    return { data: result.data as Tenor[] };
+  }),
 });
