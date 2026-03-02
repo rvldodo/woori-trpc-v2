@@ -1,23 +1,27 @@
 "use client";
 
-import { Locale } from "next-intl";
+import { Locale, useTranslations } from "next-intl";
 import Progressbar from "../../../_components/progress-bar";
 import { Text } from "@/components/html/text";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { parseAsInteger, parseAsStringEnum, useQueryStates } from "nuqs";
-import { LOAN_DATA_LOCAL_STORAGE, TDP_TOOLTIP } from "@/lib/constants";
+import {
+  INSURANCE_TYPE,
+  LOAN_DATA_LOCAL_STORAGE,
+  TDP_TOOLTIP,
+  TOOLTIP_INSURANCE_TYPE,
+} from "@/lib/constants";
 import { schema } from "@/server/api/schema";
 import z from "zod";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { api } from "@/trpc/react";
 import { Spinner } from "@/components/ui/spinner";
 import TenorCard from "../_components/tenor-card";
-import { Info, Volume2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, Info, Volume2 } from "lucide-react";
 import {
   formatCurrency,
   hyphenToPascalCase,
-  toTitle,
   toTitleCase,
 } from "@/lib/formatter";
 import { Tenor } from "@/types/loan";
@@ -44,8 +48,20 @@ type Props = {
 type Schema = z.infer<typeof schema.form.loan>;
 
 export default function HasilSimulasiSection({ l, slug }: Props) {
+  const t = useTranslations();
+
   const [openTDP, setOpenTDP] = useState<boolean>(false);
+  const [openInsurance, setOpenInsurance] = useState<boolean>(false);
+  const [tooltip, setTooltip] = useState<number>(1);
   const [selectedTenor, setSelectedTenor] = useState<null | Tenor>(null);
+
+  const nextTooltipHandler = useCallback(() => {
+    setTooltip((prev) => Math.min(prev + 1, TOOLTIP_INSURANCE_TYPE.length));
+  }, []);
+
+  const previousTooltipHandler = useCallback(() => {
+    setTooltip((prev) => Math.max(prev - 1, 1));
+  }, []);
 
   // NOTE: AD -> ADDM (tenor - 1), AR -> ADDB (tenor)
   const [filter, setFilter] = useQueryStates({
@@ -280,83 +296,120 @@ export default function HasilSimulasiSection({ l, slug }: Props) {
                   <Text variant="display-sm">Detail Kendaraan</Text>
                 </AccordionTrigger>
                 <AccordionContent>
-                  <div className="flex justify-between items-center">
-                    <Text variant="body-md-regular">Merek Kendaraan</Text>
-                    <Text variant="body-md-medium">
-                      {hyphenToPascalCase(parsedData.brand ?? "")}
-                    </Text>
-                  </div>
-
-                  <div className="flex justify-between items-center">
-                    <Text variant="body-md-regular">Model Kendaraan</Text>
-                    <Text variant="body-md-medium">
-                      {hyphenToPascalCase(parsedData.model ?? "")}
-                    </Text>
-                  </div>
-
-                  <div className="flex justify-between items-center">
-                    <Text variant="body-md-regular">Tipe Kendaraan</Text>
-                    <Text variant="body-md-medium">{parsedData.type}</Text>
-                  </div>
-
-                  <div className="flex justify-between items-center">
-                    <Text variant="body-md-regular">Tahun Kendaraan</Text>
-                    <Text variant="body-md-medium">{parsedData.year}</Text>
-                  </div>
-
-                  <div className="flex justify-between items-center">
-                    <Text variant="body-md-regular">Tenor</Text>
-                    <Text variant="body-md-medium">{filter.tenor} bulan</Text>
-                  </div>
-
-                  <div className="flex justify-between items-center">
-                    <Text variant="body-md-regular">Tenor</Text>
-                    <Text variant="body-md-medium">{filter.tenor} bulan</Text>
-                  </div>
-
-                  <div className="flex justify-between items-center">
-                    <div className="flex gap-2 items-center">
-                      <Text variant="body-md-regular">Total Uang Muka</Text>
-                      <TooltipProvider>
-                        <Tooltip open={openTDP} onOpenChange={setOpenTDP}>
-                          <TooltipTrigger asChild>
-                            <button
-                              type="button"
-                              onClick={() => setOpenTDP((prev) => !prev)}
-                            >
-                              <Info className="w-4 h-4" />
-                            </button>
-                          </TooltipTrigger>
-                          <TooltipContent className="bg-white border">
-                            <section className="flex flex-col gap-3 md:w-[20vw] w-full">
-                              {TDP_TOOLTIP.map(
-                                (e: {
-                                  id: number;
-                                  title: LocaleContentOptional;
-                                  description: LocaleContentOptional;
-                                }) => (
-                                  <div
-                                    key={e.id}
-                                    className={`flex flex-col gap-2`}
-                                  >
-                                    <Text variant="body-sm-medium">
-                                      {e.title?.[l]}
-                                    </Text>
-                                    <Text variant="body-sm-regular">
-                                      {e.description?.[l] ?? ""}
-                                    </Text>
-                                  </div>
-                                ),
-                              )}
-                            </section>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
+                  <div className="flex flex-col">
+                    <div className="flex justify-between items-center">
+                      <Text variant="body-md-regular">Merek Kendaraan</Text>
+                      <Text variant="body-md-medium">
+                        {hyphenToPascalCase(parsedData.brand ?? "")}
+                      </Text>
                     </div>
 
-                    <Text variant="body-md-medium">
-                      {formatCurrency(Number(selectedTenor?.TDP))}
-                    </Text>
+                    <div className="flex justify-between items-center">
+                      <Text variant="body-md-regular">Model Kendaraan</Text>
+                      <Text variant="body-md-medium">
+                        {hyphenToPascalCase(parsedData.model ?? "")}
+                      </Text>
+                    </div>
+
+                    <div className="flex justify-between items-center">
+                      <Text variant="body-md-regular">Tipe Kendaraan</Text>
+                      <Text variant="body-md-medium">{parsedData.type}</Text>
+                    </div>
+
+                    <div className="flex justify-between items-center">
+                      <Text variant="body-md-regular">Tahun Kendaraan</Text>
+                      <Text variant="body-md-medium">{parsedData.year}</Text>
+                    </div>
+
+                    <div className="flex justify-between items-center">
+                      <Text variant="body-md-regular">Lokasi Anda</Text>
+                      <Text variant="body-md-medium">{parsedData.lokasi}</Text>
+                    </div>
+
+                    <div className="flex justify-between items-center">
+                      <Text variant="body-md-regular">Lokasi Cabang Anda</Text>
+                      <Text variant="body-md-medium">{parsedData.cabang}</Text>
+                    </div>
+
+                    <div className="flex justify-between items-center">
+                      <div className="flex gap-2 items-center">
+                        <Text variant="body-md-regular">Tipe Asuransi</Text>
+                        <TooltipProvider>
+                          <Tooltip
+                            open={openInsurance}
+                            onOpenChange={setOpenInsurance}
+                          >
+                            <TooltipTrigger asChild>
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  setOpenInsurance((prev) => !prev)
+                                }
+                              >
+                                <Info className="w-4 h-4" />
+                              </button>
+                            </TooltipTrigger>
+                            <TooltipContent className="bg-white border">
+                              <section className="flex flex-col gap-3 md:w-[20vw] w-full">
+                                <Text variant="body-sm-semi">
+                                  {t("Form.insuranceType.tooltipTitle")}
+                                </Text>
+                                {TOOLTIP_INSURANCE_TYPE.map(
+                                  (e: {
+                                    id: number;
+                                    title: LocaleContentOptional;
+                                    description: LocaleContentOptional;
+                                  }) => (
+                                    <div
+                                      key={e.id}
+                                      className={`flex-col gap-2 ${e.id === tooltip ? "flex" : "hidden"}`}
+                                    >
+                                      <Text variant="body-sm-medium">
+                                        {e.title?.[l] ?? ""}
+                                      </Text>
+                                      <Text variant="body-sm-regular">
+                                        {e.description?.[l] ?? ""}
+                                      </Text>
+                                    </div>
+                                  ),
+                                )}
+                                <div className="w-full flex justify-end">
+                                  <Text
+                                    variant="body-sm-regular"
+                                    className="flex gap-3"
+                                  >
+                                    <ArrowLeft
+                                      className={`w-4 h-4 cursor-pointer ${tooltip > 1 ? "flex" : "hidden"}`}
+                                      onClick={previousTooltipHandler}
+                                    />
+                                    {tooltip} {t("Form.pagination.of")}{" "}
+                                    {TOOLTIP_INSURANCE_TYPE.length}
+                                    <ArrowRight
+                                      className={`w-4 h-4 cursor-pointer ${tooltip !== TOOLTIP_INSURANCE_TYPE.length ? "flex" : "hidden"}`}
+                                      onClick={nextTooltipHandler}
+                                    />
+                                  </Text>
+                                </div>
+                              </section>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      </div>
+
+                      {INSURANCE_TYPE.filter(
+                        (e: { value: string; label: LocaleContentOptional }) =>
+                          e.value === parsedData.insuranceType,
+                      ).map(
+                        (
+                          e: { value: string; label: LocaleContentOptional },
+                          idx: number,
+                        ) => (
+                          <Text variant="body-md-medium" key={idx.toString()}>
+                            {e.label?.[l] ?? ""}
+                          </Text>
+                        ),
+                      )}
+                    </div>
                   </div>
                 </AccordionContent>
               </CardContent>
