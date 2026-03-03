@@ -39,10 +39,11 @@ import {
   LOAN_DATA_LOCAL_STORAGE,
   TOOLTIP_INSURANCE_TYPE,
 } from "@/lib/constants";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { LocaleContentOptional } from "@/types";
 import { redirect } from "next/navigation";
 import { PATHS } from "@/app/urls";
+import { getInitialValues } from "@/actions/initial-value";
 
 type Schema = z.infer<typeof schema.form.loan>;
 
@@ -52,6 +53,8 @@ type Props = {
 
 export default function UsedCarForm({ l }: Props) {
   const t = useTranslations("Form");
+  const isFirstRender = useRef(true);
+  const initialValues = getInitialValues();
 
   const {
     handleSubmit,
@@ -66,6 +69,7 @@ export default function UsedCarForm({ l }: Props) {
     resolver: zodResolver(schema.form.loan),
     defaultValues: {
       price: 10000000,
+      ...initialValues,
     },
   });
 
@@ -194,6 +198,11 @@ export default function UsedCarForm({ l }: Props) {
 
     const calculated = Math.round(percentage * price);
 
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
     setValue("dpPrice", calculated);
     setDisplayAmountDP(formatCurrency(calculated));
   }, [
@@ -229,8 +238,6 @@ export default function UsedCarForm({ l }: Props) {
     redirect(`${PATHS.home.pinjaman.mobilBekas}/hasil-simulasi`);
   };
 
-  console.log(errors);
-
   return (
     <form
       onSubmit={handleSubmit((e) => handleSubmitNext(e))}
@@ -244,7 +251,14 @@ export default function UsedCarForm({ l }: Props) {
             <Label>{t("location.label")}</Label>
             <Select
               value={field.value ? String(field.value) : undefined}
-              onValueChange={field.onChange}
+              onValueChange={(val) => {
+                const selected = location?.data.find(
+                  (e) => e.id.toString() === val,
+                );
+
+                setValue("lokasi_name", selected?.name ?? "");
+                field.onChange(val);
+              }}
               disabled={locationLoading}
             >
               <SelectTrigger className="w-full">
@@ -301,7 +315,12 @@ export default function UsedCarForm({ l }: Props) {
               <Label>{t("brand.label")}</Label>
               <Select
                 value={field.value ? String(field.value) : undefined}
-                onValueChange={field.onChange}
+                onValueChange={(val) => {
+                  const selected = brand?.data.find((e) => e.AssetMerk === val);
+
+                  setValue("brand_name", selected?.AssetMerkName ?? "");
+                  field.onChange(val);
+                }}
                 disabled={brandLoading}
               >
                 <SelectTrigger className="w-full">
@@ -335,7 +354,14 @@ export default function UsedCarForm({ l }: Props) {
               <Label>{t("model.label")}</Label>
               <Select
                 value={field.value ? String(field.value) : undefined}
-                onValueChange={field.onChange}
+                onValueChange={(val) => {
+                  const selected = model?.data.find(
+                    (e) => e.AssetModel === val,
+                  );
+
+                  setValue("model_name", selected?.AssetModelName ?? "");
+                  field.onChange(val);
+                }}
                 disabled={!watch("brand") || modelLoading}
               >
                 <SelectTrigger className="w-full">
@@ -371,7 +397,12 @@ export default function UsedCarForm({ l }: Props) {
               <Label>{t("type.label")}</Label>
               <Select
                 value={field.value ? String(field.value) : undefined}
-                onValueChange={field.onChange}
+                onValueChange={(val) => {
+                  const selected = type?.data.find((e) => e.AssetType === val);
+
+                  setValue("type_name", selected?.AssetTypeName ?? "");
+                  field.onChange(val);
+                }}
                 disabled={!watch("model") || typeLoading}
               >
                 <SelectTrigger className="w-full">

@@ -63,8 +63,6 @@ export default function LayananPelangganForm({ l }: Props) {
     },
   });
 
-  console.log(errors, isValid, " ========= errors ");
-
   return (
     <Fragment>
       <SuccessSendEmail

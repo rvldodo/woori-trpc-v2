@@ -1,7 +1,10 @@
+"use client";
+
 import { Text } from "@/components/html/text";
 import { Card, CardContent } from "@/components/ui/card";
 import { formatCurrency } from "@/lib/formatter";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 type Props = {
   isActive?: boolean;
@@ -16,6 +19,8 @@ export default function TenorCard({
   onClick,
   isActive = false,
 }: Props) {
+  const t = useTranslations("Common");
+
   return (
     <Card
       className={cn("border bg-muted hover:bg-hover-blue", {
@@ -42,10 +47,12 @@ export default function TenorCard({
           </div>
         </div>
         <div className="flex flex-col">
-          <Text variant="body-sm-regular">{month} bulan</Text>
+          <Text variant="body-sm-regular">
+            {month} {t("monthShort")}
+          </Text>
           <div className="flex gap-1 items-end">
             <Text variant="display-sm">{formatCurrency(amount)}</Text>
-            <Text variant="body-md-regular">/bln</Text>
+            <Text variant="body-md-regular">{t("perMonthShort")}</Text>
           </div>
         </div>
       </CardContent>

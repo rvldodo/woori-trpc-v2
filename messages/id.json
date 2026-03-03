@@ -8,6 +8,8 @@
     "detail": "Lihat Detail"
   },
   "Simulator": {
+    "title": "Simulasi Pinjaman Sesuai Kebutuhan Anda",
+    "subtitle": "Hitung Pembiayaan Sesuai Kebutuhan Anda",
     "trigger": {
       "newCar": "Mobil Baru",
       "usedCar": "Mobil Lama"
@@ -502,5 +504,49 @@
     "title": "Halaman Tidak Ditemukan",
     "subtitle": "Sepertinya halaman yang Anda cari tidak terlihat.<br>Halaman tersebut mungkin telah dipindahkan atau dihapus.</br>",
     "button": "Kembali ke Halaman Utama"
+  },
+  "HasilSimulasi": {
+    "title": "Hasil Simulasi",
+    "subtitle": "Pilih tenor dan jenis pembayaran yang Anda inginkan",
+
+    "tabs": {
+      "payInAdvanceTitle": "Bayar di Awal:",
+      "payInAdvanceDescription": "Angsuran pertama dibayarkan bersama DP, sehingga durasi Pembiayaan berkurang satu bulan.",
+      "payInEndTitle": "Bayar di Akhir:",
+      "payInEndDescription": "Angsuran pertama dibayarkan di akhir bulan, mengurangi TDP namun durasi pinjaman tetap sama."
+    },
+
+    "summary": {
+      "title": "Hasil Simulasi",
+      "estimationNote": "Estimasi ini dapat berubah tergantung pada keputusan akhir selama proses Pengajuan Pembiayaan.",
+      "vehiclePrice": "Harga Kendaraan",
+      "downPayment": "Uang Muka",
+      "totalDownPayment": "Total Uang Muka",
+      "tenor": "Tenor",
+      "month": "bulan",
+      "installmentPerMonth": "Angsuran per Bulan",
+      "installmentType": "Jenis Angsuran",
+      "financingType": "Jenis Pembiayaan"
+    },
+
+    "accordion": {
+      "vehicleDetail": "Detail Kendaraan",
+      "brand": "Merek Kendaraan",
+      "model": "Model Kendaraan",
+      "type": "Tipe Kendaraan",
+      "year": "Tahun Kendaraan",
+      "location": "Lokasi Anda",
+      "branchLocation": "Lokasi Cabang Anda",
+      "insuranceType": "Tipe Asuransi"
+    },
+
+    "buttons": {
+      "back": "Kembali",
+      "next": "Berikutnya"
+    }
+  },
+  "Common": {
+    "monthShort": "bulan",
+    "perMonthShort": "/bln"
   }
 }

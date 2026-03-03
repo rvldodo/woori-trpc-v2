@@ -8,6 +8,8 @@
     "detail": "See Detail"
   },
   "Simulator": {
+    "title": "Loan Simulation Based on Your Needs",
+    "subtitle": "Calculate Financing According to Your Needs",
     "trigger": {
       "newCar": "New Car",
       "usedCar": "Used Car"
@@ -502,5 +504,49 @@
     "title": "Page Not Found",
     "subtitle": "Looks like the page you’re searching for is out of sight.<br>It might have been moved or deleted.</br>",
     "button": "Go Back to Homepage"
+  },
+  "HasilSimulasi": {
+    "title": "Simulation Result",
+    "subtitle": "Choose your preferred tenor and payment type",
+
+    "tabs": {
+      "payInAdvanceTitle": "Pay in Advance:",
+      "payInAdvanceDescription": "The first installment is paid together with the down payment, reducing the financing duration by one month.",
+      "payInEndTitle": "Pay at the End:",
+      "payInEndDescription": "The first installment is paid at the end of the month, reducing the total down payment while keeping the loan duration the same."
+    },
+
+    "summary": {
+      "title": "Simulation Result",
+      "estimationNote": "This estimation may change depending on the final decision during the financing application process.",
+      "vehiclePrice": "Vehicle Price",
+      "downPayment": "Down Payment",
+      "totalDownPayment": "Total Down Payment",
+      "tenor": "Tenor",
+      "month": "months",
+      "installmentPerMonth": "Monthly Installment",
+      "installmentType": "Installment Type",
+      "financingType": "Financing Type"
+    },
+
+    "accordion": {
+      "vehicleDetail": "Vehicle Details",
+      "brand": "Vehicle Brand",
+      "model": "Vehicle Model",
+      "type": "Vehicle Type",
+      "year": "Vehicle Year",
+      "location": "Your Location",
+      "branchLocation": "Your Branch Location",
+      "insuranceType": "Insurance Type"
+    },
+
+    "buttons": {
+      "back": "Back",
+      "next": "Next"
+    }
+  },
+  "Common": {
+    "monthShort": "months",
+    "perMonthShort": "/mo"
   }
 }

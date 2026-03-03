@@ -1,6 +1,6 @@
 "use client";
 
-import { Locale, useTranslations } from "next-intl";
+import { type Locale, useTranslations } from "next-intl";
 import Progressbar from "../../../_components/progress-bar";
 import { Text } from "@/components/html/text";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
@@ -12,8 +12,8 @@ import {
   TDP_TOOLTIP,
   TOOLTIP_INSURANCE_TYPE,
 } from "@/lib/constants";
-import { schema } from "@/server/api/schema";
-import z from "zod";
+import type { schema } from "@/server/api/schema";
+import type z from "zod";
 import { useCallback, useEffect, useState } from "react";
 import { api } from "@/trpc/react";
 import { Spinner } from "@/components/ui/spinner";
@@ -24,7 +24,7 @@ import {
   hyphenToPascalCase,
   toTitleCase,
 } from "@/lib/formatter";
-import { Tenor } from "@/types/loan";
+import type { Tenor } from "@/types/loan";
 import { useDebounce } from "@uidotdev/usehooks";
 import {
   Tooltip,
@@ -32,13 +32,16 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { LocaleContentOptional } from "@/types";
+import type { LocaleContentOptional } from "@/types";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import { redirect } from "next/navigation";
+import { PATHS } from "@/app/urls";
 
 type Props = {
   l: Locale;
@@ -48,7 +51,8 @@ type Props = {
 type Schema = z.infer<typeof schema.form.loan>;
 
 export default function HasilSimulasiSection({ l, slug }: Props) {
-  const t = useTranslations();
+  const t = useTranslations("HasilSimulasi");
+  const p = useTranslations();
 
   const [openTDP, setOpenTDP] = useState<boolean>(false);
   const [openInsurance, setOpenInsurance] = useState<boolean>(false);
@@ -66,7 +70,7 @@ export default function HasilSimulasiSection({ l, slug }: Props) {
   // NOTE: AD -> ADDM (tenor - 1), AR -> ADDB (tenor)
   const [filter, setFilter] = useQueryStates({
     tipe_pembayaran: parseAsStringEnum(["AD", "AR"]).withDefault("AD"),
-    tenor: parseAsInteger.withDefault(12),
+    tenor: parseAsInteger.withDefault(11),
   });
 
   const [parsedData, setParsedData] = useState<Partial<Schema> | null>(null);
@@ -88,8 +92,6 @@ export default function HasilSimulasiSection({ l, slug }: Props) {
     (e) => e.FirstPayment === filter.tipe_pembayaran,
   );
 
-  console.log(filteredData, " ====== filtered data ");
-
   useEffect(() => {
     if (!data?.data) return;
     const found = data.data.find((e) =>
@@ -107,10 +109,8 @@ export default function HasilSimulasiSection({ l, slug }: Props) {
       <Progressbar progress={2} />
 
       <div className="w-full flex flex-col justify-center items-center">
-        <Text variant="display-md">Hasil Simulasi</Text>
-        <Text variant="body-md-regular">
-          Pilih tenor dan jenis pembayaran yang Anda inginkan
-        </Text>
+        <Text variant="display-md">{t("title")}</Text>
+        <Text variant="body-md-regular">{t("subtitle")}</Text>
       </div>
 
       <section className="grid grid-cols-5 gap-3 w-full">
@@ -156,9 +156,8 @@ export default function HasilSimulasiSection({ l, slug }: Props) {
                 <>
                   <TabsContent value="AD" className="flex flex-col gap-3">
                     <Text variant="body-md-regular">
-                      <strong>Bayar di Awal:</strong> Angsuran pertama
-                      dibayarkan bersama DP, sehingga durasi Pembiayaan
-                      berkurang satu bulan.
+                      <strong>{t("tabs.payInAdvanceTitle")}</strong>{" "}
+                      {t("tabs.payInAdvanceDescription")}
                     </Text>
                     {filteredData?.map((e, idx: number) => (
                       <TenorCard
@@ -173,9 +172,8 @@ export default function HasilSimulasiSection({ l, slug }: Props) {
 
                   <TabsContent value="AR" className="flex flex-col gap-3">
                     <Text variant="body-md-regular">
-                      <strong>Bayar di Akhir:</strong> Angsuran pertama
-                      dibayarkan di akhir bula, mengurangi TDP namun durasi
-                      pinjaman tetap sama.
+                      <strong>{t("tabs.payInEndTitle")}</strong>{" "}
+                      {t("tabs.payInEndDescription")}
                     </Text>
                     {filteredData?.map((e, idx: number) => (
                       <TenorCard
@@ -194,165 +192,188 @@ export default function HasilSimulasiSection({ l, slug }: Props) {
         </Card>
 
         <Card className="col-span-2">
-          <Accordion type="single">
-            <AccordionItem value="1">
-              <CardContent className="col-span-3 w-full flex flex-col gap-2">
-                <CardTitle>
-                  <Text variant="display-sm">Hasil Simulasi</Text>
-                  <div className="flex w-full items-center bg-background-hover gap-3 p-3 rounded-lg">
-                    <Volume2 className="w-7 h-7" />
-                    <Text variant="caption-md-regular">
-                      Estimasi ini dapat berubah tergantung pada keputusan akhir
-                      selama proses Pengajuan Pembiayaan.
-                    </Text>
-                  </div>
-                </CardTitle>
-                <div className="flex flex-col gap-3">
-                  <div className="flex justify-between items-center">
-                    <Text variant="body-md-regular">Harga Kendaraan</Text>
-                    <Text variant="body-md-medium">
-                      {formatCurrency(Number(selectedTenor?.OTR))}
-                    </Text>
-                  </div>
+          <CardContent className="col-span-3 w-full flex flex-col gap-2">
+            <CardTitle>
+              <Text variant="display-sm">{t("summary.title")}</Text>
+              <div className="flex w-full items-center bg-background-hover gap-3 p-3 rounded-lg">
+                <Volume2 className="w-7 h-7" />
+                <Text variant="caption-md-regular">
+                  {t("summary.estimationNote")}
+                </Text>
+              </div>
+            </CardTitle>
+            <div className="flex flex-col gap-3">
+              <div className="flex justify-between items-center">
+                <Text variant="body-md-regular">
+                  {t("summary.vehiclePrice")}
+                </Text>
+                <Text variant="body-md-medium">
+                  {formatCurrency(Number(selectedTenor?.OTR))}
+                </Text>
+              </div>
 
-                  <div className="flex justify-between items-center">
-                    <Text variant="body-md-regular">Uang Muka</Text>
-                    <Text variant="body-md-medium">
-                      {formatCurrency(Number(selectedTenor?.DP))}
-                    </Text>
-                  </div>
+              <div className="flex justify-between items-center">
+                <Text variant="body-md-regular">
+                  {t("summary.downPayment")}
+                </Text>
+                <Text variant="body-md-medium">
+                  {formatCurrency(Number(selectedTenor?.DP))}
+                </Text>
+              </div>
 
-                  <div className="flex justify-between items-center">
-                    <div className="flex gap-2 items-center">
-                      <Text variant="body-md-regular">Total Uang Muka</Text>
-                      <TooltipProvider>
-                        <Tooltip open={openTDP} onOpenChange={setOpenTDP}>
-                          <TooltipTrigger asChild>
-                            <button
-                              type="button"
-                              onClick={() => setOpenTDP((prev) => !prev)}
-                            >
-                              <Info className="w-4 h-4" />
-                            </button>
-                          </TooltipTrigger>
-                          <TooltipContent className="bg-white border">
-                            <section className="flex flex-col gap-3 md:w-[20vw] w-full">
-                              {TDP_TOOLTIP.map(
-                                (e: {
-                                  id: number;
-                                  title: LocaleContentOptional;
-                                  description: LocaleContentOptional;
-                                }) => (
-                                  <div
-                                    key={e.id}
-                                    className={`flex flex-col gap-2`}
-                                  >
-                                    <Text variant="body-sm-medium">
-                                      {e.title?.[l]}
-                                    </Text>
-                                    <Text variant="body-sm-regular">
-                                      {e.description?.[l] ?? ""}
-                                    </Text>
-                                  </div>
-                                ),
-                              )}
-                            </section>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
-                    </div>
-
-                    <Text variant="body-md-medium">
-                      {formatCurrency(Number(selectedTenor?.TDP))}
-                    </Text>
-                  </div>
-
-                  <div className="flex justify-between items-center">
-                    <Text variant="body-md-regular">Tenor</Text>
-                    <Text variant="body-md-medium">{filter.tenor} bulan</Text>
-                  </div>
-
-                  <div className="flex justify-between items-center">
-                    <Text variant="body-md-regular">Angsuran per Bulan</Text>
-                    <Text variant="body-md-medium">
-                      {formatCurrency(Number(selectedTenor?.Angsuran))}
-                    </Text>
-                  </div>
-
-                  <div className="flex justify-between items-center">
-                    <Text variant="body-md-regular">Jenis Angsuran</Text>
-                    <Text variant="body-md-medium">
-                      {filter.tipe_pembayaran === "AR" ? "ADDB" : "ADDM"}
-                    </Text>
-                  </div>
-
-                  <div className="flex justify-between items-center">
-                    <Text variant="body-md-regular">Jenis Pembiayaan</Text>
-                    <Text variant="body-md-medium">{toTitleCase(slug)}</Text>
-                  </div>
+              <div className="flex justify-between items-center">
+                <div className="flex gap-2 items-center">
+                  <Text variant="body-md-regular">
+                    {t("summary.totalDownPayment")}
+                  </Text>
+                  <TooltipProvider>
+                    <Tooltip open={openTDP} onOpenChange={setOpenTDP}>
+                      <TooltipTrigger asChild>
+                        <button
+                          type="button"
+                          onClick={() => setOpenTDP((prev) => !prev)}
+                        >
+                          <Info className="w-4 h-4" />
+                        </button>
+                      </TooltipTrigger>
+                      <TooltipContent className="bg-white border">
+                        <section className="flex flex-col gap-3 md:w-[20vw] w-full">
+                          {TDP_TOOLTIP.map(
+                            (e: {
+                              id: number;
+                              title: LocaleContentOptional;
+                              description: LocaleContentOptional;
+                            }) => (
+                              <div key={e.id} className={`flex flex-col gap-2`}>
+                                <Text variant="body-sm-medium">
+                                  {e.title?.[l]}
+                                </Text>
+                                <Text variant="body-sm-regular">
+                                  {e.description?.[l] ?? ""}
+                                </Text>
+                              </div>
+                            ),
+                          )}
+                        </section>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                 </div>
 
-                <AccordionTrigger className="flex items-center">
-                  <Text variant="display-sm">Detail Kendaraan</Text>
+                <Text variant="body-md-medium">
+                  {formatCurrency(Number(selectedTenor?.TDP))}
+                </Text>
+              </div>
+
+              <div className="flex justify-between items-center">
+                <Text variant="body-md-regular">{t("summary.tenor")}</Text>
+                <Text variant="body-md-medium">
+                  {filter.tenor} {t("summary.month")}
+                </Text>
+              </div>
+
+              <div className="flex justify-between items-center">
+                <Text variant="body-md-regular">
+                  {t("summary.installmentPerMonth")}
+                </Text>
+                <Text variant="body-md-medium">
+                  {formatCurrency(Number(selectedTenor?.Angsuran))}
+                </Text>
+              </div>
+
+              <div className="flex justify-between items-center">
+                <Text variant="body-md-regular">
+                  {t("summary.installmentType")}
+                </Text>
+                <Text variant="body-md-medium">
+                  {filter.tipe_pembayaran === "AR" ? "ADDB" : "ADDM"}
+                </Text>
+              </div>
+
+              <div className="flex justify-between items-center">
+                <Text variant="body-md-regular">
+                  {t("summary.financingType")}
+                </Text>
+                <Text variant="body-md-medium">{toTitleCase(slug)}</Text>
+              </div>
+            </div>
+
+            <Accordion type="single" defaultValue="1">
+              <AccordionItem value="1">
+                <AccordionTrigger className="flex items-center hover:no-underline">
+                  <Text variant="display-sm" color="primary">
+                    {t("accordion.vehicleDetail")}
+                  </Text>
                 </AccordionTrigger>
                 <AccordionContent>
-                  <div className="flex flex-col">
+                  <div className="flex flex-col gap-3">
                     <div className="flex justify-between items-center">
-                      <Text variant="body-md-regular">Merek Kendaraan</Text>
+                      <span className="leading-none text-[16px] font-normal">
+                        {t("accordion.brand")}
+                      </span>
                       <Text variant="body-md-medium">
-                        {hyphenToPascalCase(parsedData.brand ?? "")}
+                        {hyphenToPascalCase(parsedData.brand_name ?? "")}
                       </Text>
                     </div>
 
                     <div className="flex justify-between items-center">
-                      <Text variant="body-md-regular">Model Kendaraan</Text>
+                      <span className="leading-none text-[16px] font-normal">
+                        {t("accordion.model")}
+                      </span>
                       <Text variant="body-md-medium">
-                        {hyphenToPascalCase(parsedData.model ?? "")}
+                        {hyphenToPascalCase(parsedData.model_name ?? "")}
                       </Text>
                     </div>
 
                     <div className="flex justify-between items-center">
-                      <Text variant="body-md-regular">Tipe Kendaraan</Text>
-                      <Text variant="body-md-medium">{parsedData.type}</Text>
+                      <span className="leading-none text-[16px] font-normal">
+                        {t("accordion.type")}
+                      </span>
+                      <Text variant="body-md-medium">
+                        {parsedData.type_name}
+                      </Text>
                     </div>
 
                     <div className="flex justify-between items-center">
-                      <Text variant="body-md-regular">Tahun Kendaraan</Text>
+                      <span className="leading-none text-[16px] font-normal">
+                        {t("accordion.year")}
+                      </span>
                       <Text variant="body-md-medium">{parsedData.year}</Text>
                     </div>
 
                     <div className="flex justify-between items-center">
-                      <Text variant="body-md-regular">Lokasi Anda</Text>
-                      <Text variant="body-md-medium">{parsedData.lokasi}</Text>
+                      <span className="leading-none text-[16px] font-normal">
+                        {t("accordion.location")}
+                      </span>
+                      <Text variant="body-md-medium">
+                        {parsedData.lokasi_name}
+                      </Text>
                     </div>
 
                     <div className="flex justify-between items-center">
-                      <Text variant="body-md-regular">Lokasi Cabang Anda</Text>
+                      <span className="leading-none text-[16px] font-normal">
+                        {t("accordion.branchLocation")}
+                      </span>
                       <Text variant="body-md-medium">{parsedData.cabang}</Text>
                     </div>
 
                     <div className="flex justify-between items-center">
                       <div className="flex gap-2 items-center">
-                        <Text variant="body-md-regular">Tipe Asuransi</Text>
+                        <span className="leading-none text-[16px] font-normal">
+                          {t("accordion.insuranceType")}
+                        </span>
                         <TooltipProvider>
                           <Tooltip
                             open={openInsurance}
                             onOpenChange={setOpenInsurance}
                           >
-                            <TooltipTrigger asChild>
-                              <button
-                                type="button"
-                                onClick={() =>
-                                  setOpenInsurance((prev) => !prev)
-                                }
-                              >
-                                <Info className="w-4 h-4" />
-                              </button>
+                            <TooltipTrigger>
+                              <Info className="w-4 h-4" />
                             </TooltipTrigger>
                             <TooltipContent className="bg-white border">
                               <section className="flex flex-col gap-3 md:w-[20vw] w-full">
                                 <Text variant="body-sm-semi">
-                                  {t("Form.insuranceType.tooltipTitle")}
+                                  {p("Form.insuranceType.tooltipTitle")}
                                 </Text>
                                 {TOOLTIP_INSURANCE_TYPE.map(
                                   (e: {
@@ -382,7 +403,7 @@ export default function HasilSimulasiSection({ l, slug }: Props) {
                                       className={`w-4 h-4 cursor-pointer ${tooltip > 1 ? "flex" : "hidden"}`}
                                       onClick={previousTooltipHandler}
                                     />
-                                    {tooltip} {t("Form.pagination.of")}{" "}
+                                    {tooltip} {p("Form.pagination.of")}{" "}
                                     {TOOLTIP_INSURANCE_TYPE.length}
                                     <ArrowRight
                                       className={`w-4 h-4 cursor-pointer ${tooltip !== TOOLTIP_INSURANCE_TYPE.length ? "flex" : "hidden"}`}
@@ -412,10 +433,23 @@ export default function HasilSimulasiSection({ l, slug }: Props) {
                     </div>
                   </div>
                 </AccordionContent>
-              </CardContent>
-            </AccordionItem>
-          </Accordion>
+              </AccordionItem>
+            </Accordion>
+          </CardContent>
         </Card>
+      </section>
+
+      <section className="w-full flex items-center justify-between">
+        <Button
+          type="button"
+          variant="woori_outline"
+          onClick={() => {
+            redirect(`${PATHS.home.pinjaman.base}/${slug}`);
+          }}
+        >
+          {t("buttons.back")}
+        </Button>
+        <Button>{t("buttons.next")}</Button>
       </section>
     </article>
   );
