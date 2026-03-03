@@ -1,6 +1,6 @@
 import { getMetadata } from "@/app/metadata";
 import { PATHS } from "@/app/urls";
-import { toTitle } from "@/lib/formatter";
+import { hyphenToPascalCase, toTitle } from "@/lib/formatter";
 import type { Metadata } from "next";
 import type { Locale } from "next-intl";
 import HasilSimulasiSection from "./_sections/hasil-simulasi-section";
@@ -13,7 +13,7 @@ export const generateMetadata = async (
   return await getMetadata({
     path: `${PATHS.home.pinjaman.base}/tenor/${slug}`,
     locale,
-    title: `Hasil Simulasi | ${toTitle(slug)}`,
+    title: `Hasil Simulasi | ${hyphenToPascalCase(slug)}`,
   });
 };
 

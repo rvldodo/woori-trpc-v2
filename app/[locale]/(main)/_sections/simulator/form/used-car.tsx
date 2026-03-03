@@ -53,7 +53,6 @@ type Props = {
 
 export default function UsedCarForm({ l }: Props) {
   const t = useTranslations("Form");
-  const isFirstRender = useRef(true);
   const initialValues = getInitialValues();
 
   const {
@@ -102,12 +101,12 @@ export default function UsedCarForm({ l }: Props) {
 
   const { data: tdpPercentage, isLoading: tdpLoading } =
     api.main.globalParams.getByKey.useQuery({
-      key: "TDP Percentage",
+      key: "TDP percentage",
     });
 
   const { data: dpPercentage, isLoading: dpLoading } =
     api.main.globalParams.getByKey.useQuery({
-      key: "DP Percentage",
+      key: "DP percentage",
     });
 
   const { data: brand, isLoading: brandLoading } = api.main.loan.brand.useQuery(
@@ -198,12 +197,7 @@ export default function UsedCarForm({ l }: Props) {
 
     const calculated = Math.round(percentage * price);
 
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
-
-    setValue("dpPrice", calculated);
+    setValue("dpPrice", calculated, { shouldValidate: true });
     setDisplayAmountDP(formatCurrency(calculated));
   }, [
     dpPercentage,
@@ -702,7 +696,7 @@ export default function UsedCarForm({ l }: Props) {
       ) : watch("dpType") === "1" ? (
         <Text variant="caption-md-regular" color="muted">
           {t("validation.dpHintPercentage", {
-            percentage: Number(dpPercentage?.data.value),
+            percentage: Number(dpPercentage?.data.value) * 100,
             amount: formatCurrency(dpMinAmount),
           })}
         </Text>

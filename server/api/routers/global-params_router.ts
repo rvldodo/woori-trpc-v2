@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 import { globalParams } from "@/drizzle/migrations/schema";
-import { eq, ilike, like } from "drizzle-orm";
+import { ilike } from "drizzle-orm";
 import { TRPCError } from "@trpc/server";
 import { ERROR_FETCH } from "@/lib/constants";
 
