@@ -100,7 +100,7 @@ export interface TextProps
     VariantProps<typeof textVariant> {
   asChild?: boolean;
   html?: string;
-  as?: "p" | "span" | "div" | "label" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+  as?: React.ElementType;
 }
 
 const Text = React.forwardRef<HTMLElement, TextProps>(

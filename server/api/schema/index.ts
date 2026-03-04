@@ -11,6 +11,11 @@ export class schema {
 
   static form = {
     loan: z.object({
+      user_type: z.enum(["INDIVIDU", "KORPORAT"]).optional(),
+      checkbox: z.boolean().optional(),
+      user_name: z.string().optional(),
+      phone_number: z.string().optional(),
+      company_name: z.string().optional(),
       jenis: z.string().optional(),
       lokasi: z.string().nullable(),
       lokasi_name: z.string().optional(),
@@ -26,6 +31,12 @@ export class schema {
       year: z.string().nullable(),
       price: z.number().nullable(),
       dpType: z.string().nullable(),
+      jenis_angsuran: z.string().optional(),
+      jenis_pembiayaan: z.string().optional(),
+      tenor: z.number().optional(),
+      uang_muka: z.number().optional(),
+      total_uang_muka: z.number().optional(),
+      angsuran_per_bulan: z.number().optional(),
     }),
   };
 

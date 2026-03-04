@@ -548,5 +548,51 @@
   "Common": {
     "monthShort": "bulan",
     "perMonthShort": "/bln"
+  },
+  "PengajuanPinjaman": {
+    "title": "Pengajuan Pembiayaan",
+    "subtitle": "Masukkan informasi pribadi Anda sebelum mengajukan Pembiayaan.",
+    "summary": {
+      "title": "Hasil Simulasi",
+      "estimationNote": "Estimasi ini dapat berubah tergantung pada keputusan akhir selama proses Pengajuan Pembiayaan.",
+      "vehiclePrice": "Harga Kendaraan",
+      "downPayment": "Uang Muka",
+      "totalDownPayment": "Total Uang Muka",
+      "tenor": "Tenor",
+      "month": "bulan",
+      "installmentPerMonth": "Angsuran per Bulan",
+      "installmentType": "Jenis Angsuran",
+      "financingType": "Jenis Pembiayaan"
+    },
+
+    "accordion": {
+      "vehicleDetail": "Detail Kendaraan",
+      "brand": "Merek Kendaraan",
+      "model": "Model Kendaraan",
+      "type": "Tipe Kendaraan",
+      "year": "Tahun Kendaraan",
+      "location": "Lokasi Anda",
+      "branchLocation": "Lokasi Cabang Anda",
+      "insuranceType": "Tipe Asuransi"
+    },
+
+    "form": {
+      "applyLoan": "Ajukan Pinjaman",
+      "individu": "Individu",
+      "corporate": "Korporat",
+      "customerName": "Nama Nasabah",
+      "companyName": "Nama Perusahaan",
+      "phoneNumber": "Nomor Telepon",
+      "namePlaceholder": "Masukkan nama Anda...",
+      "companyPlaceholder": "Masukkan nama perusahaan...",
+      "phonePlaceholder": "Masukkan nomor telepon...",
+      "privacyText": "Woori akan mengumpulkan data Anda untuk keperluan verifikasi. Data Anda tidak akan dibagikan kepada pihak atau organisasi lain. Lihat Kebijakan Privasi kami",
+      "privacyLink": "di sini"
+    },
+
+    "buttons": {
+      "back": "Kembali",
+      "next": "Ajukan Pembiayaan"
+    }
   }
 }

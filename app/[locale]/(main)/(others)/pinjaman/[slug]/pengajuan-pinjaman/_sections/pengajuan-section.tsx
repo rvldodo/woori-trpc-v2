@@ -1,47 +1,48 @@
 "use client";
 
-import { type Locale, useTranslations } from "next-intl";
+import { Locale, useTranslations } from "next-intl";
 import Progressbar from "../../../_components/progress-bar";
 import { Text } from "@/components/html/text";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { parseAsInteger, parseAsStringEnum, useQueryStates } from "nuqs";
-import {
-  INSURANCE_TYPE,
-  LOAN_DATA_LOCAL_STORAGE,
-  TDP_TOOLTIP,
-  TOOLTIP_INSURANCE_TYPE,
-} from "@/lib/constants";
-import type { schema } from "@/server/api/schema";
-import type z from "zod";
-import { useCallback, useEffect, useState } from "react";
-import { api } from "@/trpc/react";
-import { Spinner } from "@/components/ui/spinner";
-import TenorCard from "../_components/tenor-card";
 import { ArrowLeft, ArrowRight, Info, Volume2 } from "lucide-react";
 import {
   formatCurrency,
   hyphenToPascalCase,
   toTitleCase,
 } from "@/lib/formatter";
-import type { Tenor } from "@/types/loan";
-import { useDebounce } from "@uidotdev/usehooks";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import type { LocaleContentOptional } from "@/types";
+import {
+  INSURANCE_TYPE,
+  LOAN_DATA_LOCAL_STORAGE,
+  TDP_TOOLTIP,
+  TOOLTIP_INSURANCE_TYPE,
+} from "@/lib/constants";
+import { LocaleContentOptional } from "@/types";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
+import { useCallback, useEffect, useState } from "react";
+import { schema } from "@/server/api/schema";
+import z from "zod";
 import { redirect } from "next/navigation";
 import { PATHS } from "@/app/urls";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { parseAsString, useQueryStates } from "nuqs";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
+import Link from "next/link";
 
 type Props = {
   l: Locale;
@@ -50,14 +51,22 @@ type Props = {
 
 type Schema = z.infer<typeof schema.form.loan>;
 
-export default function HasilSimulasiSection({ l, slug }: Props) {
-  const t = useTranslations("HasilSimulasi");
+export default function PengajuanPinjamanSection({ l, slug }: Props) {
+  const t = useTranslations("PengajuanPinjaman");
   const p = useTranslations();
 
   const [openTDP, setOpenTDP] = useState<boolean>(false);
   const [openInsurance, setOpenInsurance] = useState<boolean>(false);
   const [tooltip, setTooltip] = useState<number>(1);
-  const [selectedTenor, setSelectedTenor] = useState<null | Tenor>(null);
+
+  const [filter, setFilter] = useQueryStates({
+    user_type: parseAsString.withDefault("individu"),
+  });
+
+  const { handleSubmit, setValue, register, watch, control } = useForm<Schema>({
+    mode: "all",
+    resolver: zodResolver(schema.form.loan),
+  });
 
   const nextTooltipHandler = useCallback(() => {
     setTooltip((prev) => Math.min(prev + 1, TOOLTIP_INSURANCE_TYPE.length));
@@ -69,76 +78,29 @@ export default function HasilSimulasiSection({ l, slug }: Props) {
 
   const [parsedData, setParsedData] = useState<Partial<Schema> | null>(null);
 
-  // NOTE: AD -> ADDM (tenor - 1), AR -> ADDB (tenor)
-  const [filter, setFilter] = useQueryStates({
-    tipe_pembayaran: parseAsStringEnum(["AD", "AR"]).withDefault("AD"),
-    tenor: parseAsInteger.withDefault(
-      parsedData?.tenor ? parsedData.tenor : 11,
-    ),
-  });
-
   useEffect(() => {
     const saved = localStorage.getItem(LOAN_DATA_LOCAL_STORAGE);
     if (!saved) return;
     setParsedData(JSON.parse(saved));
   }, []);
 
-  const debounce = useDebounce(parsedData, 1000);
+  const isFilled =
+    !!watch("user_name") &&
+    !!watch("phone_number") &&
+    watch("checkbox") === true;
 
-  const { data, isLoading } = api.main.loan.tenor.useQuery(debounce as Schema, {
-    enabled: !!debounce,
-    refetchOnWindowFocus: false,
-  });
-
-  const filteredData = data?.data.filter(
-    (e) => e.FirstPayment === filter.tipe_pembayaran,
-  );
-
-  useEffect(() => {
-    if (!data?.data) return;
-    const found = data.data.find((e) =>
-      filter.tipe_pembayaran === "AD"
-        ? e.Tenor - 1 === filter.tenor
-        : e.Tenor === filter.tenor,
-    );
-    setSelectedTenor(found ?? data.data[0] ?? null);
-  }, [data, filter.tenor, filter.tipe_pembayaran]);
-
-  if (!parsedData) return null;
-
-  const handleNext = () => {
-    if (!parsedData || !selectedTenor) return;
-
-    const updatedLoan = {
-      ...parsedData,
-
-      // installment type (ADDM / ADDB)
-      jenis_angsuran: filter.tipe_pembayaran === "AR" ? "ADDB" : "ADDM",
-
-      // financing type (slug)
-      jenis_pembiayaan: slug,
-
-      // selected tenor
-      tenor: filter.tenor,
-
-      // down payment
-      uang_muka: Number(selectedTenor?.DP) ?? null,
-
-      // total down payment
-      total_uang_muka: Number(selectedTenor?.TDP) ?? null,
-
-      // installment per month
-      angsuran_per_bulan: Number(selectedTenor?.Angsuran) ?? null,
-    };
-
-    localStorage.setItem(LOAN_DATA_LOCAL_STORAGE, JSON.stringify(updatedLoan));
-
-    redirect(`${PATHS.home.pinjaman.base}/${slug}/pengajuan-pinjaman`);
-  };
+  const isFilledCompany =
+    !!watch("user_name") &&
+    !!watch("phone_number") &&
+    !!watch("company_name") &&
+    watch("checkbox") === true;
 
   return (
-    <article className="py-8 w-full flex justify-center items-center flex-col gap-5 main-padding-x">
-      <Progressbar progress={2} />
+    <form
+      onSubmit={handleSubmit((e) => {})}
+      className="py-8 w-full flex justify-center items-center flex-col gap-5 main-padding-x"
+    >
+      <Progressbar progress={3} />
 
       <div className="w-full flex flex-col justify-center items-center">
         <Text variant="display-md">{t("title")}</Text>
@@ -146,83 +108,6 @@ export default function HasilSimulasiSection({ l, slug }: Props) {
       </div>
 
       <section className="grid grid-cols-5 gap-3 w-full">
-        <Card className="col-span-3">
-          <CardContent className="col-span-3 w-full">
-            <CardTitle></CardTitle>
-            <Tabs
-              defaultValue={filter.tipe_pembayaran}
-              onValueChange={(e) => {
-                setFilter({ tipe_pembayaran: e as "AD" | "AR" });
-                const found = data?.data.find((e) =>
-                  filter.tipe_pembayaran === "AD"
-                    ? e.Tenor - 1 === filter.tenor
-                    : e.Tenor === filter.tenor,
-                );
-                setSelectedTenor(found ?? null);
-              }}
-            >
-              <TabsList
-                className="flex rounded-none border-b-2 border-b-muted w-full bg-transparent"
-                defaultValue="AD"
-              >
-                <TabsTrigger
-                  value="AD"
-                  className="data-[state=active]:border-b-primary w-full flex rounded-none justify-center items-center data-[state=active]:text-primary-blue"
-                >
-                  ADDM
-                </TabsTrigger>
-
-                <TabsTrigger
-                  value="AR"
-                  className="data-[state=active]:border-b-primary w-full flex rounded-none justify-center items-center data-[state=active]:text-primary-blue"
-                >
-                  ADDB
-                </TabsTrigger>
-              </TabsList>
-
-              {isLoading ? (
-                <div className="w-full h-full flex justify-center items-center">
-                  <Spinner />
-                </div>
-              ) : (
-                <>
-                  <TabsContent value="AD" className="flex flex-col gap-3">
-                    <Text variant="body-md-regular">
-                      <strong>{t("tabs.payInAdvanceTitle")}</strong>{" "}
-                      {t("tabs.payInAdvanceDescription")}
-                    </Text>
-                    {filteredData?.map((e, idx: number) => (
-                      <TenorCard
-                        key={idx.toString()}
-                        month={e.Tenor - 1}
-                        amount={e.Angsuran}
-                        onClick={() => setFilter({ tenor: e.Tenor - 1 })}
-                        isActive={filter.tenor === e.Tenor - 1}
-                      />
-                    ))}
-                  </TabsContent>
-
-                  <TabsContent value="AR" className="flex flex-col gap-3">
-                    <Text variant="body-md-regular">
-                      <strong>{t("tabs.payInEndTitle")}</strong>{" "}
-                      {t("tabs.payInEndDescription")}
-                    </Text>
-                    {filteredData?.map((e, idx: number) => (
-                      <TenorCard
-                        key={idx.toString()}
-                        month={e.Tenor}
-                        amount={e.Angsuran}
-                        onClick={() => setFilter({ tenor: e.Tenor })}
-                        isActive={filter.tenor === e.Tenor}
-                      />
-                    ))}
-                  </TabsContent>
-                </>
-              )}
-            </Tabs>
-          </CardContent>
-        </Card>
-
         <Card className="col-span-2">
           <CardContent className="col-span-3 w-full flex flex-col gap-2">
             <CardTitle>
@@ -240,7 +125,7 @@ export default function HasilSimulasiSection({ l, slug }: Props) {
                   {t("summary.vehiclePrice")}
                 </Text>
                 <Text variant="body-md-medium">
-                  {formatCurrency(Number(selectedTenor?.OTR))}
+                  {formatCurrency(Number(parsedData?.price))}
                 </Text>
               </div>
 
@@ -249,7 +134,7 @@ export default function HasilSimulasiSection({ l, slug }: Props) {
                   {t("summary.downPayment")}
                 </Text>
                 <Text variant="body-md-medium">
-                  {formatCurrency(Number(selectedTenor?.DP))}
+                  {formatCurrency(Number(parsedData?.uang_muka))}
                 </Text>
               </div>
 
@@ -293,14 +178,14 @@ export default function HasilSimulasiSection({ l, slug }: Props) {
                 </div>
 
                 <Text variant="body-md-medium">
-                  {formatCurrency(Number(selectedTenor?.TDP))}
+                  {formatCurrency(Number(parsedData?.total_uang_muka))}
                 </Text>
               </div>
 
               <div className="flex justify-between items-center">
                 <Text variant="body-md-regular">{t("summary.tenor")}</Text>
                 <Text variant="body-md-medium">
-                  {filter.tenor} {t("summary.month")}
+                  {parsedData?.tenor} {t("summary.month")}
                 </Text>
               </div>
 
@@ -309,7 +194,7 @@ export default function HasilSimulasiSection({ l, slug }: Props) {
                   {t("summary.installmentPerMonth")}
                 </Text>
                 <Text variant="body-md-medium">
-                  {formatCurrency(Number(selectedTenor?.Angsuran))}
+                  {formatCurrency(Number(parsedData?.angsuran_per_bulan))}
                 </Text>
               </div>
 
@@ -318,7 +203,7 @@ export default function HasilSimulasiSection({ l, slug }: Props) {
                   {t("summary.installmentType")}
                 </Text>
                 <Text variant="body-md-medium">
-                  {filter.tipe_pembayaran === "AR" ? "ADDB" : "ADDM"}
+                  {parsedData?.jenis_angsuran}
                 </Text>
               </div>
 
@@ -326,7 +211,9 @@ export default function HasilSimulasiSection({ l, slug }: Props) {
                 <Text variant="body-md-regular">
                   {t("summary.financingType")}
                 </Text>
-                <Text variant="body-md-medium">{toTitleCase(slug)}</Text>
+                <Text variant="body-md-medium">
+                  {hyphenToPascalCase(parsedData?.jenis_pembiayaan ?? "")}
+                </Text>
               </div>
             </div>
 
@@ -337,56 +224,51 @@ export default function HasilSimulasiSection({ l, slug }: Props) {
                     {t("accordion.vehicleDetail")}
                   </Text>
                 </AccordionTrigger>
-                <AccordionContent>
+                <AccordionContent className="h-full">
                   <div className="flex flex-col gap-3">
                     <div className="flex justify-between items-center">
                       <span className="leading-none text-[16px] font-normal">
                         {t("accordion.brand")}
                       </span>
                       <Text variant="body-md-medium">
-                        {hyphenToPascalCase(parsedData.brand_name ?? "")}
+                        {hyphenToPascalCase(parsedData?.brand_name ?? "")}
                       </Text>
                     </div>
-
                     <div className="flex justify-between items-center">
                       <span className="leading-none text-[16px] font-normal">
                         {t("accordion.model")}
                       </span>
                       <Text variant="body-md-medium">
-                        {hyphenToPascalCase(parsedData.model_name ?? "")}
+                        {hyphenToPascalCase(parsedData?.model_name ?? "")}
                       </Text>
                     </div>
-
                     <div className="flex justify-between items-center">
                       <span className="leading-none text-[16px] font-normal">
                         {t("accordion.type")}
                       </span>
                       <Text variant="body-md-medium" className="text-end">
-                        {parsedData.type_name}
+                        {parsedData?.type_name}
                       </Text>
                     </div>
-
                     <div className="flex justify-between items-center">
                       <span className="leading-none text-[16px] font-normal">
                         {t("accordion.year")}
                       </span>
-                      <Text variant="body-md-medium">{parsedData.year}</Text>
+                      <Text variant="body-md-medium">{parsedData?.year}</Text>
                     </div>
-
                     <div className="flex justify-between items-center">
                       <span className="leading-none text-[16px] font-normal">
                         {t("accordion.location")}
                       </span>
                       <Text variant="body-md-medium">
-                        {parsedData.lokasi_name}
+                        {parsedData?.lokasi_name}
                       </Text>
                     </div>
-
                     <div className="flex justify-between items-center">
                       <span className="leading-none text-[16px] font-normal">
                         {t("accordion.branchLocation")}
                       </span>
-                      <Text variant="body-md-medium">{parsedData.cabang}</Text>
+                      <Text variant="body-md-medium">{parsedData?.cabang}</Text>
                     </div>
 
                     <div className="flex justify-between items-center">
@@ -451,7 +333,7 @@ export default function HasilSimulasiSection({ l, slug }: Props) {
 
                       {INSURANCE_TYPE.filter(
                         (e: { value: string; label: LocaleContentOptional }) =>
-                          e.value === parsedData.insuranceType,
+                          e.value === parsedData?.insuranceType,
                       ).map(
                         (
                           e: { value: string; label: LocaleContentOptional },
@@ -469,6 +351,142 @@ export default function HasilSimulasiSection({ l, slug }: Props) {
             </Accordion>
           </CardContent>
         </Card>
+
+        <Card className="col-span-3">
+          <CardContent className="flex flex-col gap-3 w-full h-full justify-center items-start">
+            <CardTitle>
+              <Text variant="display-sm">{t("form.applyLoan")}</Text>
+            </CardTitle>
+            <Tabs
+              defaultValue={filter.user_type}
+              onValueChange={(e) => {
+                setValue(
+                  "user_type",
+                  filter.user_type.toUpperCase() as "INDIVIDU" | "KORPORAT",
+                );
+                setFilter({ user_type: e });
+              }}
+            >
+              <TabsList className="w-full bg-transparent border-b">
+                <TabsTrigger
+                  value="individu"
+                  className="bg-none data-[state=active]:border-b-primary-blue rounded-none data-[state=active]:text-primary-blue text-[16px]"
+                >
+                  {t("form.individu")}
+                </TabsTrigger>
+                <TabsTrigger
+                  value="korporat"
+                  className="bg-none data-[state=active]:border-b-primary-blue rounded-none data-[state=active]:text-primary-blue text-[16px]"
+                >
+                  {t("form.corporate")}
+                </TabsTrigger>
+              </TabsList>
+              <TabsContent value="individu" className="flex flex-col gap-5">
+                <div className="flex flex-col gap-3">
+                  <Label>
+                    {t("form.customerName")}{" "}
+                    <span className="text-red-600">*</span>
+                  </Label>
+                  <Input
+                    {...register("user_name")}
+                    placeholder={t("form.namePlaceholder")}
+                  />
+                </div>
+
+                <div className="flex flex-col gap-3">
+                  <Label>
+                    {t("form.phoneNumber")}{" "}
+                    <span className="text-red-600">*</span>
+                  </Label>
+                  <Input
+                    {...register("phone_number")}
+                    placeholder={t("form.phonePlaceholder")}
+                  />
+                </div>
+
+                <Controller
+                  name="checkbox"
+                  control={control}
+                  render={({ field }) => (
+                    <div className="flex gap-3 items-center justify-start">
+                      <Checkbox
+                        id="text"
+                        checked={field.value}
+                        onCheckedChange={(checked) => field.onChange(checked)}
+                      />
+                      <Text variant="body-sm-regular">
+                        {t("form.privacyText")}{" "}
+                        <Link
+                          href={PATHS.kebijakanPrivasi}
+                          className="text-primary-blue underline"
+                        >
+                          {t("form.privacyLink")}
+                        </Link>
+                      </Text>
+                    </div>
+                  )}
+                />
+              </TabsContent>
+              <TabsContent value="korporat" className="flex flex-col gap-5">
+                <div className="flex flex-col gap-3">
+                  <Label>
+                    {t("form.customerName")}{" "}
+                    <span className="text-red-600">*</span>
+                  </Label>
+                  <Input
+                    {...register("user_name")}
+                    placeholder={t("form.namePlaceholder")}
+                  />
+                </div>
+
+                <div className="flex flex-col gap-3">
+                  <Label>
+                    {t("form.companyName")}{" "}
+                    <span className="text-red-600">*</span>
+                  </Label>
+                  <Input
+                    {...register("company_name")}
+                    placeholder={t("form.companyPlaceholder")}
+                  />
+                </div>
+
+                <div className="flex flex-col gap-3">
+                  <Label>
+                    {t("form.phoneNumber")}{" "}
+                    <span className="text-red-600">*</span>
+                  </Label>
+                  <Input
+                    {...register("phone_number")}
+                    placeholder={t("form.phonePlaceholder")}
+                  />
+                </div>
+
+                <Controller
+                  name="checkbox"
+                  control={control}
+                  render={({ field }) => (
+                    <div className="flex gap-3 items-center justify-start">
+                      <Checkbox
+                        id="text"
+                        checked={field.value}
+                        onCheckedChange={(checked) => field.onChange(checked)}
+                      />
+                      <Text variant="body-sm-regular">
+                        {t("form.privacyText")}{" "}
+                        <Link
+                          href={PATHS.kebijakanPrivasi}
+                          className="text-primary-blue underline"
+                        >
+                          {t("form.privacyLink")}
+                        </Link>
+                      </Text>
+                    </div>
+                  )}
+                />
+              </TabsContent>
+            </Tabs>
+          </CardContent>
+        </Card>
       </section>
 
       <section className="w-full flex items-center justify-between">
@@ -476,15 +494,19 @@ export default function HasilSimulasiSection({ l, slug }: Props) {
           type="button"
           variant="woori_outline"
           onClick={() => {
-            redirect(`${PATHS.home.pinjaman.base}/${slug}`);
+            redirect(`${PATHS.home.pinjaman.base}/${slug}/hasil-simulasi`);
           }}
         >
           {t("buttons.back")}
         </Button>
-        <Button type="button" onClick={() => handleNext()}>
+        <Button
+          type="button"
+          onClick={() => {}}
+          disabled={!isFilled || !isFilledCompany}
+        >
           {t("buttons.next")}
         </Button>
       </section>
-    </article>
+    </form>
   );
 }

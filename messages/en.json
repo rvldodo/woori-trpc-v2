@@ -539,14 +539,59 @@
       "branchLocation": "Your Branch Location",
       "insuranceType": "Insurance Type"
     },
-
     "buttons": {
-      "back": "Back",
+      "back": "Previous",
       "next": "Next"
     }
   },
   "Common": {
     "monthShort": "months",
     "perMonthShort": "/mo"
+  },
+  "PengajuanPinjaman": {
+    "title": "Loan Application",
+    "subtitle": "Enter your personal details before applying for our loan.",
+    "summary": {
+      "title": "Simulation Result",
+      "estimationNote": "This estimation may change depending on the final decision during the financing application process.",
+      "vehiclePrice": "Vehicle Price",
+      "downPayment": "Down Payment",
+      "totalDownPayment": "Total Down Payment",
+      "tenor": "Tenor",
+      "month": "months",
+      "installmentPerMonth": "Monthly Installment",
+      "installmentType": "Installment Type",
+      "financingType": "Financing Type"
+    },
+
+    "accordion": {
+      "vehicleDetail": "Vehicle Details",
+      "brand": "Vehicle Brand",
+      "model": "Vehicle Model",
+      "type": "Vehicle Type",
+      "year": "Vehicle Year",
+      "location": "Your Location",
+      "branchLocation": "Your Branch Location",
+      "insuranceType": "Insurance Type"
+    },
+
+    "form": {
+      "applyLoan": "Apply Loan",
+      "individu": "Individual",
+      "corporate": "Corporate",
+      "customerName": "Customer Name",
+      "companyName": "Company Name",
+      "phoneNumber": "Phone Number",
+      "namePlaceholder": "Input your name...",
+      "companyPlaceholder": "Input company name...",
+      "phonePlaceholder": "Input your phone number...",
+      "privacyText": "Woori will collect your data for verification purpose. Your data will not be shared to other party or organization. See our Privacy Policy",
+      "privacyLink": "here"
+    },
+
+    "buttons": {
+      "back": "Previous",
+      "next": "Apply For Loan"
+    }
   }
 }
