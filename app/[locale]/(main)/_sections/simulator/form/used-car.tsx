@@ -280,7 +280,14 @@ export default function UsedCarForm({ l }: Props) {
             <Label>{t("branch.label")}</Label>
             <Select
               value={field.value ? String(field.value) : undefined}
-              onValueChange={field.onChange}
+              onValueChange={(val) => {
+                const selected = branch?.data.find(
+                  (e) => e.id.toString() === val,
+                );
+
+                setValue("cabang_name", selected?.name?.[l]);
+                field.onChange(val);
+              }}
               disabled={!watch("lokasi") || branchLoading}
             >
               <SelectTrigger className="w-full">
@@ -289,7 +296,7 @@ export default function UsedCarForm({ l }: Props) {
               <SelectContent>
                 <SelectGroup>
                   {branch?.data.map((e) => (
-                    <SelectItem key={e.id.toString()} value={e.name![l]}>
+                    <SelectItem key={e.id.toString()} value={e.id.toString()}>
                       {e.name?.[l] ?? ""}
                     </SelectItem>
                   ))}

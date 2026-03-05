@@ -79,7 +79,7 @@ export default function HasilSimulasiSection({ l, slug }: Props) {
 
   useEffect(() => {
     const saved = localStorage.getItem(LOAN_DATA_LOCAL_STORAGE);
-    if (!saved) return;
+    if (!saved) redirect(PATHS.home.base);
     setParsedData(JSON.parse(saved));
   }, []);
 
@@ -135,6 +135,8 @@ export default function HasilSimulasiSection({ l, slug }: Props) {
 
     redirect(`${PATHS.home.pinjaman.base}/${slug}/pengajuan-pinjaman`);
   };
+
+  console.log(parsedData);
 
   return (
     <article className="py-8 w-full flex justify-center items-center flex-col gap-5 main-padding-x">
@@ -386,7 +388,9 @@ export default function HasilSimulasiSection({ l, slug }: Props) {
                       <span className="leading-none text-[16px] font-normal">
                         {t("accordion.branchLocation")}
                       </span>
-                      <Text variant="body-md-medium">{parsedData.cabang}</Text>
+                      <Text variant="body-md-medium">
+                        {parsedData.cabang_name}
+                      </Text>
                     </div>
 
                     <div className="flex justify-between items-center">

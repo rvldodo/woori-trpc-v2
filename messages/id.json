@@ -594,5 +594,11 @@
       "back": "Kembali",
       "next": "Ajukan Pembiayaan"
     }
+  },
+  "Verifikasi": {
+    "title": "Verifikasi Nomor Telepon",
+    "subtitle": "Kami telah mengirimkan kode OTP ke {phoneNumber}.<br>Masukkan kode dibawah ini untuk memverifikasi nomor telepon Anda.</br>",
+    "notGetOTP": "Tidak Mendapatkan kode?",
+    "sendAgain": "Kirim ulang OTP"
   }
 }

@@ -20,6 +20,7 @@ export class schema {
       lokasi: z.string().nullable(),
       lokasi_name: z.string().optional(),
       cabang: z.string().nullable(),
+      cabang_name: z.string().optional(),
       brand: z.string().nullable(),
       brand_name: z.string().nullable(),
       model: z.string().nullable(),

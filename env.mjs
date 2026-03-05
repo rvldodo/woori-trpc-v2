@@ -12,6 +12,7 @@ export const env = createEnv({
       .enum(["testing", "production", "development", "test"])
       .default("testing"),
     DATABASE_URL: z.string().url(),
+    REDIS_URL: z.string().url(),
     MOBILE_SERVER_URL: z.string().url(),
     MAXI_LOAN_URL: z.string().url(),
     SANDEZA: z.string().url(),
@@ -39,6 +40,7 @@ export const env = createEnv({
    */
   runtimeEnv: {
     DATABASE_URL: process.env.DATABASE_URL,
+    REDIS_URL: process.env.REDIS_URL,
     MOBILE_SERVER_URL: process.env.MOBILE_SERVER_URL,
     NODE_ENV: process.env.NODE_ENV,
     NEXT_PUBLIC_SITEKEY: process.env.NEXT_PUBLIC_SITEKEY,

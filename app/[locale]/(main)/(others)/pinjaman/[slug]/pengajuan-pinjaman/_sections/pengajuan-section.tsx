@@ -1,15 +1,11 @@
 "use client";
 
-import { Locale, useTranslations } from "next-intl";
+import { type Locale, useTranslations } from "next-intl";
 import Progressbar from "../../../_components/progress-bar";
 import { Text } from "@/components/html/text";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { ArrowLeft, ArrowRight, Info, Volume2 } from "lucide-react";
-import {
-  formatCurrency,
-  hyphenToPascalCase,
-  toTitleCase,
-} from "@/lib/formatter";
+import { formatCurrency, hyphenToPascalCase } from "@/lib/formatter";
 import {
   Tooltip,
   TooltipContent,
@@ -22,7 +18,7 @@ import {
   TDP_TOOLTIP,
   TOOLTIP_INSURANCE_TYPE,
 } from "@/lib/constants";
-import { LocaleContentOptional } from "@/types";
+import type { LocaleContentOptional } from "@/types";
 import {
   Accordion,
   AccordionContent,
@@ -31,7 +27,7 @@ import {
 } from "@/components/ui/accordion";
 import { useCallback, useEffect, useState } from "react";
 import { schema } from "@/server/api/schema";
-import z from "zod";
+import type z from "zod";
 import { redirect } from "next/navigation";
 import { PATHS } from "@/app/urls";
 import { Button } from "@/components/ui/button";
@@ -43,6 +39,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
+import { api } from "@/trpc/react";
 
 type Props = {
   l: Locale;
@@ -63,10 +60,11 @@ export default function PengajuanPinjamanSection({ l, slug }: Props) {
     user_type: parseAsString.withDefault("individu"),
   });
 
-  const { handleSubmit, setValue, register, watch, control } = useForm<Schema>({
-    mode: "all",
-    resolver: zodResolver(schema.form.loan),
-  });
+  const { handleSubmit, setValue, register, watch, control, reset } =
+    useForm<Schema>({
+      mode: "all",
+      resolver: zodResolver(schema.form.loan),
+    });
 
   const nextTooltipHandler = useCallback(() => {
     setTooltip((prev) => Math.min(prev + 1, TOOLTIP_INSURANCE_TYPE.length));
@@ -80,9 +78,19 @@ export default function PengajuanPinjamanSection({ l, slug }: Props) {
 
   useEffect(() => {
     const saved = localStorage.getItem(LOAN_DATA_LOCAL_STORAGE);
-    if (!saved) return;
+    if (!saved) redirect(PATHS.home.base);
     setParsedData(JSON.parse(saved));
   }, []);
+
+  useEffect(() => {
+    if (parsedData) {
+      reset({
+        ...parsedData,
+      });
+    }
+  }, [parsedData, reset]);
+
+  const { mutate, isPending } = api.main.user.sendOTP.useMutation();
 
   const isFilled =
     !!watch("user_name") &&
@@ -95,9 +103,31 @@ export default function PengajuanPinjamanSection({ l, slug }: Props) {
     !!watch("company_name") &&
     watch("checkbox") === true;
 
+  const onSubmit = (e: Schema) => {
+    if (!parsedData) return;
+
+    const updatedLoan: Partial<Schema> = {
+      ...parsedData,
+
+      user_type: filter.user_type.toUpperCase() as "INDIVIDU" | "KORPORAT",
+
+      user_name: e.user_name,
+      phone_number: e.phone_number,
+      company_name: e.company_name || "",
+    };
+
+    console.log(parsedData, updatedLoan);
+
+    mutate({ phone: e.phone_number ?? "" });
+
+    localStorage.setItem(LOAN_DATA_LOCAL_STORAGE, JSON.stringify(updatedLoan));
+
+    redirect(`${PATHS.home.pinjaman.base}/${slug}/verifikasi`);
+  };
+
   return (
     <form
-      onSubmit={handleSubmit((e) => {})}
+      onSubmit={handleSubmit((e) => onSubmit(e))}
       className="py-8 w-full flex justify-center items-center flex-col gap-5 main-padding-x"
     >
       <Progressbar progress={3} />
@@ -268,7 +298,9 @@ export default function PengajuanPinjamanSection({ l, slug }: Props) {
                       <span className="leading-none text-[16px] font-normal">
                         {t("accordion.branchLocation")}
                       </span>
-                      <Text variant="body-md-medium">{parsedData?.cabang}</Text>
+                      <Text variant="body-md-medium">
+                        {parsedData?.cabang_name}
+                      </Text>
                     </div>
 
                     <div className="flex justify-between items-center">
@@ -500,9 +532,8 @@ export default function PengajuanPinjamanSection({ l, slug }: Props) {
           {t("buttons.back")}
         </Button>
         <Button
-          type="button"
-          onClick={() => {}}
-          disabled={!isFilled || !isFilledCompany}
+          type="submit"
+          disabled={!(isFilled || isFilledCompany) || isPending}
         >
           {t("buttons.next")}
         </Button>

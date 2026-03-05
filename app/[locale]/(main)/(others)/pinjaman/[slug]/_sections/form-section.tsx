@@ -10,6 +10,7 @@ import Image from "next/image";
 import usedCarIcon from "@/public/assets/icons/used_car.png";
 import newCarIcon from "@/public/assets/icons/new_car.png";
 import Progressbar from "../../_components/progress-bar";
+import { parseAsString, useQueryStates } from "nuqs";
 
 type Props = {
   l: Locale;
@@ -18,6 +19,10 @@ type Props = {
 
 export default function FormSectionMainPage({ l, slug }: Props) {
   const t = useTranslations("Simulator");
+
+  const [filter, setFilter] = useQueryStates({
+    loan_type: parseAsString.withDefault(slug),
+  });
 
   return (
     <article className="py-8 w-full flex justify-center items-center flex-col gap-5 main-padding-x">
@@ -28,7 +33,11 @@ export default function FormSectionMainPage({ l, slug }: Props) {
         <Text variant="body-md-regular">{t("subtitle")}</Text>
       </div>
 
-      <Tabs defaultValue={slug} className="w-full">
+      <Tabs
+        defaultValue={filter.loan_type}
+        className="w-full"
+        onValueChange={(val) => setFilter({ loan_type: val })}
+      >
         <div className="flex flex-col md:px-20">
           <Card className="h-auto md:px-[24px] px-[12px] shadow-xl w-full bg-[#ffffff] pt-12">
             <CardContent>

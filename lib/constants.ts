@@ -3,6 +3,8 @@ import type { Locale } from "next-intl";
 export const PAGINATION_LIMIT = 10;
 export const PAGINATION_LIMITS = [PAGINATION_LIMIT, 50, 100];
 
+export const USER_OTP = "user_otp";
+
 export const MAIN_TITLE = "Woorifinance Indonesia";
 export const MAIN_DESCRIPTION = "PT Woorifinance Indonesia Tbk";
 

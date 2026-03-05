@@ -24,10 +24,10 @@ export const ProductCard = ({ icon, title, description, path = "" }: Props) => {
         <Text variant="caption-md-medium">{description}</Text>
       </div>
       <Link href={path || "/"} className="flex gap-3 items-center">
-        <Text variant="caption-md-regular" className="text-blue">
+        <Text variant="caption-md-regular" color="primary">
           {t("OurProductHome.detail")}
         </Text>
-        <ArrowRight className="h-4 w-4" />
+        <ArrowRight className="h-4 w-4 text-primary" />
       </Link>
     </Card>
   );

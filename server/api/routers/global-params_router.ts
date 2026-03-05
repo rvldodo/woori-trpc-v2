@@ -10,7 +10,6 @@ export const globalParamsRouter = createTRPCRouter({
     .input(z.object({ key: z.string() }))
     .query(async ({ ctx, input }) => {
       const { key } = input;
-      console.log(key);
 
       const [data] = await ctx.db
         .select()

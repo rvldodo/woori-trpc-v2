@@ -20,6 +20,7 @@ import { template3Router } from "./template3_router";
 import { template4Router } from "./template4_router";
 import { template6Router } from "./template6_router";
 import { template7Router } from "./template7_router";
+import { userRouter } from "./user_router";
 import { uspRouter } from "./usp_router";
 import { visiMisiRouter } from "./visi-misi_router";
 
@@ -48,4 +49,5 @@ export const main = {
   boards: boardsRouter,
   aboutUs: aboutUsRouter,
   loan: simulationLoanRouter,
+  user: userRouter,
 };

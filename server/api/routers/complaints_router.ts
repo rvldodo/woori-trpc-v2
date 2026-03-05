@@ -9,8 +9,6 @@ export const complaintsRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const { name, email, type, message } = input;
 
-      console.log(type);
-
       const [data] = await ctx.db
         .insert(complaints)
         .values({

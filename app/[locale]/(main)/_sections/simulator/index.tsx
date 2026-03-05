@@ -17,6 +17,7 @@ import usedCarIcon from "@/public/assets/icons/used_car.png";
 import newCarIcon from "@/public/assets/icons/new_car.png";
 import { api } from "@/trpc/react";
 import { USPCards } from "@/server/api/routers/usp_router";
+import { parseAsString, useQueryStates } from "nuqs";
 
 type Props = {
   l: Locale;
@@ -44,13 +45,21 @@ const transitionVariants = {
 
 export default function SimulatorSection({ l }: Props) {
   const t = useTranslations("Simulator");
+
+  const [filter, setFilter] = useQueryStates({
+    loan_type: parseAsString.withDefault("used-car"),
+  });
+
   const { data, isLoading } = api.main.usp.list.useQuery();
   const mobilBaruUsp = data?.data.find((e) => e.type === "Mobil Baru");
   const mobilBekasUsp = data?.data.find((e) => e.type === "Mobil Bekas");
 
   return (
     <section className="main-padding-x flex flex-col gap-3 py-8 relative overflow-hidden">
-      <Tabs defaultValue="used-car">
+      <Tabs
+        defaultValue={filter.loan_type}
+        onValueChange={(val) => setFilter({ loan_type: val })}
+      >
         <div className="grid md:grid-cols-2 grid-cols-1 gap-5 md:px-20">
           <TabsContent
             value="used-car"

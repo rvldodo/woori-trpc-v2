@@ -4,9 +4,10 @@ import { initTRPC, TRPCError } from "@trpc/server";
 import { ZodError } from "zod";
 import { decryptAES } from "../lib/encrypt";
 import { env } from "@/env.mjs";
+import { redis } from "../redis";
 
 export const createTRPCContext = async (opts: { headers: Headers }) => {
-  return { db, ...opts };
+  return { redis, db, ...opts };
 };
 
 const t = initTRPC.context<typeof createTRPCContext>().create({

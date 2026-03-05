@@ -593,5 +593,11 @@
       "back": "Previous",
       "next": "Apply For Loan"
     }
+  },
+  "Verifikasi": {
+    "title": "Phone Number Verification",
+    "subtitle": "We have sent an OTP code to {phoneNumber}.<br>Please enter the code below to verify your phone number.</br>",
+    "notGetOTP": "Didn't receive the code?",
+    "sendAgain": "Resend OTP"
   }
 }

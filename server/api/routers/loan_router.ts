@@ -6,35 +6,49 @@ import {
   branches,
   coordinates,
   loanSimulations,
+  loanTypes,
 } from "@/drizzle/migrations/schema";
-import { asc, sql } from "drizzle-orm";
+import { asc, eq, sql } from "drizzle-orm";
 import { z } from "zod";
 import { env } from "@/env.mjs";
 import { CarBrand, CarModel, CarType, Tenor } from "@/types/loan";
+import { hyphenToPascalCase } from "@/lib/formatter";
 
 export const simulationLoanRouter = createTRPCRouter({
   create: publicProcedure
-    .input(schema.loan.create)
+    .input(schema.form.loan)
     .mutation(async ({ ctx, input }) => {
-      const data = await ctx.db.insert(loanSimulations).values({
-        userType: input.user_type,
-        email: input.email,
-        phoneNumber: input.phone_number,
-        companyName: input.company_name,
-        loanTypeId: input.loan_type_id,
-        carPrice: input.car_price,
-        clientLocation: input.client_location,
-        carBrand: input.car_brand,
-        carModel: input.car_model,
-        carType: input.car_type,
-        carYear: input.car_year,
-        insuranceType: input.insurance_type,
-        tdpPrice: input.tdp_price,
-        dpPrice: input.dp_price,
-        tenorMonth: input.tenor_month,
-        name: input.name,
-        branchId: input.branch_id,
-      });
+      console.log(input);
+
+      const [loanType] = await ctx.db
+        .select()
+        .from(loanTypes)
+        .where(
+          eq(loanTypes.name, hyphenToPascalCase(input.jenis_pembiayaan ?? "")),
+        );
+
+      const [data] = await ctx.db
+        .insert(loanSimulations)
+        .values({
+          userType: input.user_type as "INDIVIDU" | "KORPORAT",
+          email: input.user_name,
+          phoneNumber: input.phone_number,
+          companyName: input.company_name,
+          loanTypeId: Number(loanType.id),
+          carPrice: input.price,
+          clientLocation: input.lokasi_name,
+          carBrand: input.brand_name,
+          carModel: input.model_name,
+          carType: input.type_name,
+          carYear: input.year ? Number(input.year) : null,
+          insuranceType: input.insuranceType,
+          tdpPrice: input.total_uang_muka,
+          dpPrice: input.uang_muka,
+          tenorMonth: input.tenor,
+          name: input.user_name,
+          branchId: Number(input.cabang),
+        })
+        .returning();
 
       if (!data)
         throw new TRPCError({

@@ -1,9 +1,7 @@
-"use client";
-
 import { schema } from "@/server/api/schema";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import z from "zod";
+import type z from "zod";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -15,7 +13,34 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Locale } from "next-intl";
+import { api } from "@/trpc/react";
+import {
+  formatCurrency,
+  hyphenToPascalCase,
+  toTitle,
+  toTitleCase,
+} from "@/lib/formatter";
+import { useTranslations, type Locale } from "next-intl";
+import { Spinner } from "@/components/ui/spinner";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { ArrowLeft, ArrowRight, Info } from "lucide-react";
+import { Text } from "@/components/html/text";
+import {
+  DOWN_PAYMENT_TYPE,
+  INSURANCE_TYPE,
+  LOAN_DATA_LOCAL_STORAGE,
+  TOOLTIP_INSURANCE_TYPE,
+} from "@/lib/constants";
+import { useCallback, useEffect, useRef, useState } from "react";
+import type { LocaleContentOptional } from "@/types";
+import { redirect } from "next/navigation";
+import { PATHS } from "@/app/urls";
+import { getInitialValues } from "@/actions/initial-value";
 
 type Schema = z.infer<typeof schema.form.loan>;
 
@@ -24,29 +49,217 @@ type Props = {
 };
 
 export default function NewCarForm({ l }: Props) {
-  const { handleSubmit, control, register } = useForm<Schema>({
-    mode: "all",
-    resolver: zodResolver(schema.form.loan),
-  });
+  const t = useTranslations("Form");
+  const initialValues = getInitialValues();
+
+  const { handleSubmit, control, register, watch, getValues, setValue, reset } =
+    useForm<Schema>({
+      mode: "all",
+      resolver: zodResolver(schema.form.loan),
+      defaultValues: {
+        price: 10000000,
+        ...initialValues,
+      },
+    });
+
+  const [open, setOpen] = useState<boolean>(false);
+  const [openDP, setOpenDP] = useState<boolean>(false);
+  const [tooltip, setTooltip] = useState<number>(1);
+  const [tooltipDP, setTooltipDP] = useState<number>(1);
+  const [displayAmount, setDisplayAmount] = useState(
+    formatCurrency(Number(getValues("price"))),
+  );
+  const [displayAmountDP, setDisplayAmountDP] = useState(
+    formatCurrency(Number(getValues("dpPrice"))),
+  );
+
+  const { data: location, isLoading: locationLoading } =
+    api.main.loan.location.useQuery();
+
+  const { data: branch, isLoading: branchLoading } =
+    api.main.loan.branches.useQuery(
+      {
+        coordinateId: Number(watch("lokasi")),
+      },
+      { enabled: !!watch("lokasi") },
+    );
+
+  const { data: minimumPrice, isLoading: isLoadingMinPrice } =
+    api.main.globalParams.getByKey.useQuery({
+      key: "Car Minimum Price",
+    });
+
+  const { data: tdpPercentage, isLoading: tdpLoading } =
+    api.main.globalParams.getByKey.useQuery({
+      key: "TDP percentage",
+    });
+
+  const { data: dpPercentage, isLoading: dpLoading } =
+    api.main.globalParams.getByKey.useQuery({
+      key: "DP percentage",
+    });
+
+  const { data: brand, isLoading: brandLoading } = api.main.loan.brand.useQuery(
+    { AssetType: "mobil" },
+  );
+
+  const { data: model, isLoading: modelLoading } = api.main.loan.model.useQuery(
+    {
+      AssetType: "mobil",
+      PMerk: watch("brand") || "",
+    },
+    {
+      enabled: !!watch("brand"),
+    },
+  );
+
+  const { data: type, isLoading: typeLoading } = api.main.loan.type.useQuery(
+    {
+      AssetType: "mobil",
+      PMerk: watch("brand") || "",
+      PModel: watch("model") || "",
+    },
+    {
+      enabled: !!watch("model"),
+    },
+  );
+
+  const nextTooltipHandler = useCallback(() => {
+    setTooltip((prev) => Math.min(prev + 1, TOOLTIP_INSURANCE_TYPE.length));
+  }, []);
+
+  const previousTooltipHandler = useCallback(() => {
+    setTooltip((prev) => Math.max(prev - 1, 1));
+  }, []);
+
+  const nextTooltipHandlerDP = useCallback(() => {
+    setTooltipDP((prev) => Math.min(prev + 1, DOWN_PAYMENT_TYPE.length));
+  }, []);
+
+  const previousTooltipHandlerDP = useCallback(() => {
+    setTooltipDP((prev) => Math.max(prev - 1, 1));
+  }, []);
+
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const input = e.target.value;
+    // Only allow numbers (no decimal point for IDR)
+    const numericOnly = input.replace(/[^0-9]/g, "");
+
+    if (numericOnly === "") {
+      setDisplayAmount("");
+      return;
+    }
+
+    setDisplayAmount(numericOnly);
+    setValue("price", Number(numericOnly));
+  };
+
+  const handleAmountDPChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const input = e.target.value;
+    // Only allow numbers (no decimal point for IDR)
+    const numericOnly = input.replace(/[^0-9]/g, "");
+
+    if (numericOnly === "") {
+      setDisplayAmountDP("");
+      return;
+    }
+
+    setDisplayAmountDP(numericOnly);
+    setValue("dpPrice", Number(numericOnly));
+  };
+
+  const dpMinAmount =
+    watch("dpType") === "1"
+      ? Number(dpPercentage?.data.value) * Number(watch("price"))
+      : Number(tdpPercentage?.data.value) * Number(watch("price"));
+
+  const dpType = watch("dpType");
+  const price = watch("price");
+
+  useEffect(() => {
+    if (!dpType || !price) return;
+    if (dpLoading || tdpLoading) return;
+
+    const percentage =
+      dpType === "1"
+        ? Number(dpPercentage?.data.value)
+        : Number(tdpPercentage?.data.value);
+
+    const calculated = Math.round(percentage * price);
+
+    setValue("dpPrice", calculated, { shouldValidate: true });
+    setDisplayAmountDP(formatCurrency(calculated));
+  }, [
+    dpPercentage,
+    tdpPercentage,
+    tdpLoading,
+    dpLoading,
+    setValue,
+    dpType,
+    price,
+  ]);
+
+  const isFilled =
+    !!watch("lokasi") &&
+    !!watch("cabang") &&
+    !!watch("brand") &&
+    !!watch("model") &&
+    !!watch("type") &&
+    !!watch("insuranceType") &&
+    !!watch("price") &&
+    !!watch("dpType") &&
+    !!watch("dpPrice");
+
+  const isAmountFit =
+    Number(Number(watch("dpPrice")).toFixed()) >=
+      Number(dpMinAmount.toFixed()) &&
+    Number(Number(watch("dpPrice")).toFixed()) <
+      Number(watch("price")?.toFixed());
+
+  const handleSubmitNext = (e: Schema) => {
+    localStorage.setItem(LOAN_DATA_LOCAL_STORAGE, JSON.stringify(e));
+    redirect(`${PATHS.home.pinjaman.mobilBaru}/hasil-simulasi`);
+  };
+
+  useEffect(() => {
+    const year = new Date().getFullYear();
+
+    setValue("year", year.toString());
+  }, [setValue]);
 
   return (
-    <form onSubmit={() => {}} className="w-full pt-10 flex flex-col gap-5">
+    <form
+      onSubmit={handleSubmit((e) => handleSubmitNext(e))}
+      className="w-full pt-10 flex flex-col gap-5"
+    >
       <Controller
         name="lokasi"
         control={control}
         render={({ field }) => (
           <div className="flex flex-col gap-3">
-            <Label>Your Location</Label>
+            <Label>{t("location.label")}</Label>
             <Select
-              value={field.value?.toString()}
-              onValueChange={field.onChange}
+              value={field.value ? String(field.value) : undefined}
+              onValueChange={(val) => {
+                const selected = location?.data.find(
+                  (e) => e.id.toString() === val,
+                );
+
+                setValue("lokasi_name", selected?.name ?? "");
+                field.onChange(val);
+              }}
+              disabled={locationLoading}
             >
               <SelectTrigger className="w-full">
-                <SelectValue placeholder="Choose you location" />
+                <SelectValue placeholder={t("location.placeholder")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="ambon">Ambon</SelectItem>
+                  {location?.data.map((e) => (
+                    <SelectItem key={e.id.toString()} value={e.id.toString()}>
+                      {toTitleCase(e.name ?? "")}
+                    </SelectItem>
+                  ))}
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -59,17 +272,29 @@ export default function NewCarForm({ l }: Props) {
         control={control}
         render={({ field }) => (
           <div className="flex flex-col gap-3">
-            <Label>Branch Location</Label>
+            <Label>{t("branch.label")}</Label>
             <Select
-              value={field.value?.toString()}
-              onValueChange={field.onChange}
+              value={field.value ? String(field.value) : undefined}
+              onValueChange={(val) => {
+                const selected = branch?.data.find(
+                  (e) => e.id.toString() === val,
+                );
+
+                setValue("cabang_name", selected?.name?.[l]);
+                field.onChange(val);
+              }}
+              disabled={!watch("lokasi") || branchLoading}
             >
               <SelectTrigger className="w-full">
-                <SelectValue placeholder="Choose branch location" />
+                <SelectValue placeholder={t("branch.placeholder")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="ambon">Ambon</SelectItem>
+                  {branch?.data.map((e) => (
+                    <SelectItem key={e.id.toString()} value={e.id.toString()}>
+                      {e.name?.[l] ?? ""}
+                    </SelectItem>
+                  ))}
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -77,24 +302,40 @@ export default function NewCarForm({ l }: Props) {
         )}
       />
 
-      <div className="flex md:flex-row flex-col items-center gap-3">
+      <div className="grid md:grid-cols-2 grid-cols-1 items-center gap-3">
         <Controller
-          name="cabang"
+          name="brand"
           control={control}
           render={({ field }) => (
             <div className="flex flex-col gap-3 w-full">
-              <Label>Branch Location</Label>
+              <Label>{t("brand.label")}</Label>
               <Select
-                value={field.value?.toString()}
-                onValueChange={field.onChange}
+                value={field.value ? String(field.value) : undefined}
+                onValueChange={(val) => {
+                  const selected = brand?.data.find((e) => e.AssetMerk === val);
+
+                  setValue("brand_name", selected?.AssetMerkName ?? "");
+                  field.onChange(val);
+                }}
+                disabled={brandLoading}
               >
                 <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Choose branch location" />
+                  <SelectValue placeholder={t("brand.placeholder")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectGroup>
-                    <SelectItem value="ambon">Ambon</SelectItem>
-                  </SelectGroup>
+                  {brandLoading ? (
+                    <div className="w-full h-full flex justify-center items-center">
+                      <Spinner />
+                    </div>
+                  ) : (
+                    <SelectGroup>
+                      {brand?.data.map((e, idx: number) => (
+                        <SelectItem key={idx.toString()} value={e.AssetMerk}>
+                          {toTitle(e.AssetMerkName ?? "")}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  )}
                 </SelectContent>
               </Select>
             </div>
@@ -102,22 +343,40 @@ export default function NewCarForm({ l }: Props) {
         />
 
         <Controller
-          name="cabang"
+          name="model"
           control={control}
           render={({ field }) => (
             <div className="flex flex-col gap-3 w-full">
-              <Label>Branch Location</Label>
+              <Label>{t("model.label")}</Label>
               <Select
-                value={field.value?.toString()}
-                onValueChange={field.onChange}
+                value={field.value ? String(field.value) : undefined}
+                onValueChange={(val) => {
+                  const selected = model?.data.find(
+                    (e) => e.AssetModel === val,
+                  );
+
+                  setValue("model_name", selected?.AssetModelName ?? "");
+                  field.onChange(val);
+                }}
+                disabled={!watch("brand") || modelLoading}
               >
                 <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Choose branch location" />
+                  <SelectValue placeholder={t("model.placeholder")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectGroup>
-                    <SelectItem value="ambon">Ambon</SelectItem>
-                  </SelectGroup>
+                  {modelLoading ? (
+                    <div className="w-full h-full flex justify-center items-center">
+                      <Spinner />
+                    </div>
+                  ) : (
+                    <SelectGroup>
+                      {model?.data.map((e, idx: number) => (
+                        <SelectItem key={idx.toString()} value={e.AssetModel}>
+                          {hyphenToPascalCase(e.AssetModelName)}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  )}
                 </SelectContent>
               </Select>
             </div>
@@ -126,22 +385,42 @@ export default function NewCarForm({ l }: Props) {
       </div>
 
       <Controller
-        name="cabang"
+        name="type"
         control={control}
         render={({ field }) => (
           <div className="flex flex-col gap-3 w-full">
-            <Label>Branch Location</Label>
+            <Label>{t("type.label")}</Label>
             <Select
-              value={field.value?.toString()}
-              onValueChange={field.onChange}
+              value={field.value ? String(field.value) : undefined}
+              onValueChange={(val) => {
+                const selected = type?.data.find((e) => e.AssetType === val);
+
+                setValue("type_name", selected?.AssetTypeName ?? "");
+                field.onChange(val);
+              }}
+              disabled={!watch("model") || typeLoading}
             >
               <SelectTrigger className="w-full">
-                <SelectValue placeholder="Choose branch location" />
+                <SelectValue placeholder={t("type.placeholder")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectGroup>
-                  <SelectItem value="ambon">Ambon</SelectItem>
-                </SelectGroup>
+                {typeLoading ? (
+                  <div className="w-full h-full flex justify-center items-center">
+                    <Spinner />
+                  </div>
+                ) : (
+                  <SelectGroup>
+                    {type?.data.map((e, idx: number) => (
+                      <SelectItem
+                        key={idx.toString()}
+                        value={e.AssetType}
+                        className="truncate"
+                      >
+                        {e.AssetTypeName ?? ""}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                )}
               </SelectContent>
             </Select>
           </div>
@@ -149,21 +428,81 @@ export default function NewCarForm({ l }: Props) {
       />
 
       <Controller
-        name="cabang"
+        name="insuranceType"
         control={control}
         render={({ field }) => (
           <div className="flex flex-col gap-3">
-            <Label>Branch Location</Label>
+            <div className="flex gap-2 items-center">
+              <Label>{t("insuranceType.label")}</Label>
+              <TooltipProvider>
+                <Tooltip open={open} onOpenChange={setOpen}>
+                  <TooltipTrigger asChild>
+                    <button
+                      type="button"
+                      onClick={() => setOpen((prev) => !prev)}
+                    >
+                      <Info className="w-4 h-4" />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent className="bg-white border">
+                    <section className="flex flex-col gap-3 md:w-[20vw] w-full">
+                      <Text variant="body-sm-semi">
+                        {t("insuranceType.tooltipTitle")}
+                      </Text>
+                      {TOOLTIP_INSURANCE_TYPE.map(
+                        (e: {
+                          id: number;
+                          title: LocaleContentOptional;
+                          description: LocaleContentOptional;
+                        }) => (
+                          <div
+                            key={e.id}
+                            className={`flex-col gap-2 ${e.id === tooltip ? "flex" : "hidden"}`}
+                          >
+                            <Text variant="body-sm-medium">
+                              {e.title?.[l] ?? ""}
+                            </Text>
+                            <Text variant="body-sm-regular">
+                              {e.description?.[l] ?? ""}
+                            </Text>
+                          </div>
+                        ),
+                      )}
+                      <div className="w-full flex justify-end">
+                        <Text variant="body-sm-regular" className="flex gap-3">
+                          <ArrowLeft
+                            className={`w-4 h-4 cursor-pointer ${tooltip > 1 ? "flex" : "hidden"}`}
+                            onClick={previousTooltipHandler}
+                          />
+                          {tooltip} {t("pagination.of")}{" "}
+                          {TOOLTIP_INSURANCE_TYPE.length}
+                          <ArrowRight
+                            className={`w-4 h-4 cursor-pointer ${tooltip !== TOOLTIP_INSURANCE_TYPE.length ? "flex" : "hidden"}`}
+                            onClick={nextTooltipHandler}
+                          />
+                        </Text>
+                      </div>
+                    </section>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
             <Select
-              value={field.value?.toString()}
+              value={field.value ? String(field.value) : undefined}
               onValueChange={field.onChange}
             >
               <SelectTrigger className="w-full">
-                <SelectValue placeholder="Choose branch location" />
+                <SelectValue placeholder={t("insuranceType.placeholder")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="ambon">Ambon</SelectItem>
+                  {INSURANCE_TYPE.map(
+                    (e: { value: string; label: LocaleContentOptional }) => (
+                      <SelectItem key={e.value} value={e.value}>
+                        {e.label?.[l]}
+                      </SelectItem>
+                    ),
+                  )}
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -172,42 +511,180 @@ export default function NewCarForm({ l }: Props) {
       />
 
       <div className="flex flex-col gap-3">
-        <Label>Branch Location</Label>
-        <Input placeholder="Contoh" className="w-full" />
+        <Label>{t("price.label")}</Label>
+        <Input
+          {...register("price")}
+          value={displayAmount}
+          placeholder={t("price.placeholder")}
+          className="w-full"
+          onChange={handleAmountChange}
+          onBlur={() => {
+            if (displayAmount) {
+              setDisplayAmount(formatCurrency(Number(displayAmount)));
+            }
+          }}
+          onFocus={() => {
+            const raw = displayAmount.replace(/[^0-9]/g, "");
+            setDisplayAmount(raw);
+          }}
+        />
+        {!isLoadingMinPrice &&
+          Number(watch("price")) > 0 &&
+          Number(watch("price")) < Number(minimumPrice?.data.value) && (
+            <Text variant="caption-md-regular" color="error">
+              {t("validation.minCarPrice", {
+                amount: formatCurrency(Number(minimumPrice?.data.value ?? 0)),
+              })}
+            </Text>
+          )}
       </div>
 
-      <div className="grid md:grid-cols-3 grid-cols-1 gap-3">
-        <Controller
-          name="cabang"
-          control={control}
-          render={({ field }) => (
-            <div className="col-span-1 flex flex-col gap-3">
-              <Label>Branch Location</Label>
+      <Controller
+        name="dpType"
+        control={control}
+        render={({ field }) => (
+          <section className="flex w-full flex-col gap-3">
+            <div className="flex items-center gap-2">
+              <Label>{t("downPayment.label")}</Label>
+              <TooltipProvider>
+                <Tooltip open={openDP} onOpenChange={setOpenDP}>
+                  <TooltipTrigger asChild>
+                    <button
+                      type="button"
+                      onClick={() => setOpenDP((prev) => !prev)}
+                    >
+                      <Info className="w-4 h-4" />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent className="bg-white border">
+                    <section className="flex flex-col gap-3 md:w-[20vw] w-full">
+                      {DOWN_PAYMENT_TYPE.map(
+                        (e: {
+                          value: string;
+                          label: LocaleContentOptional;
+                          title: LocaleContentOptional;
+                          description: LocaleContentOptional;
+                        }) => (
+                          <div
+                            key={e.value}
+                            className={`flex-col gap-2 ${Number(e.value) === tooltipDP ? "flex" : "hidden"}`}
+                          >
+                            <Text variant="body-sm-medium">
+                              {e.title?.[l] ?? ""} ({e.label?.[l]})
+                            </Text>
+                            <Text variant="body-sm-regular">
+                              {e.description?.[l] ?? ""}
+                            </Text>
+                          </div>
+                        ),
+                      )}
+                      <div className="w-full flex justify-end">
+                        <Text variant="body-sm-regular" className="flex gap-3">
+                          <ArrowLeft
+                            className={`w-4 h-4 cursor-pointer ${tooltipDP > 1 ? "flex" : "hidden"}`}
+                            onClick={previousTooltipHandlerDP}
+                          />
+                          {tooltipDP} {t("pagination.of")}{" "}
+                          {DOWN_PAYMENT_TYPE.length}
+                          <ArrowRight
+                            className={`w-4 h-4 cursor-pointer ${tooltipDP !== DOWN_PAYMENT_TYPE.length ? "flex" : "hidden"}`}
+                            onClick={nextTooltipHandlerDP}
+                          />
+                        </Text>
+                      </div>
+                    </section>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+            <div className="grid md:grid-cols-3 grid-cols-1 gap-3">
               <Select
-                value={field.value?.toString()}
+                value={field.value ? String(field.value) : undefined}
                 onValueChange={field.onChange}
               >
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Choose branch location" />
+                <SelectTrigger className="w-full col-span-1">
+                  <SelectValue placeholder={t("downPayment.typePlaceholder")} />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    <SelectItem value="ambon">Ambon</SelectItem>
+                    {DOWN_PAYMENT_TYPE.map(
+                      (e: { value: string; label: LocaleContentOptional }) => (
+                        <SelectItem
+                          key={e.value}
+                          value={e.value}
+                          className="w-72"
+                        >
+                          {e.label?.[l]}
+                        </SelectItem>
+                      ),
+                    )}
                   </SelectGroup>
                 </SelectContent>
               </Select>
+
+              <Input
+                {...register("dpPrice")}
+                disabled={!watch("dpType")}
+                placeholder={t("downPayment.placeholder")}
+                value={displayAmountDP}
+                className="w-full col-span-2"
+                onChange={handleAmountDPChange}
+                onBlur={() => {
+                  if (displayAmountDP) {
+                    setDisplayAmountDP(formatCurrency(Number(displayAmountDP)));
+                  }
+                }}
+                onFocus={() => {
+                  const raw = displayAmountDP.replace(/[^0-9]/g, "");
+                  setDisplayAmountDP(raw);
+                }}
+              />
             </div>
-          )}
-        />
+          </section>
+        )}
+      />
 
-        <div className="col-span-2 flex flex-col gap-3">
-          <Label>Branch Location</Label>
-          <Input placeholder="Contoh" className="w-full" />
+      {Number(watch("dpPrice")) < Number(dpMinAmount.toFixed()) &&
+        Number(watch("dpPrice")) < Number(watch("price")) && (
+          <Text variant="caption-md-regular" color="error">
+            {t("validation.minDownPayment", {
+              amount: formatCurrency(dpMinAmount),
+            })}
+          </Text>
+        )}
+
+      {Number(watch("dpPrice")) > Number(watch("price")) && (
+        <Text variant="caption-md-regular" color="error">
+          {t("validation.maxDownPayment", {
+            amount: formatCurrency(Number(watch("price"))),
+          })}
+        </Text>
+      )}
+
+      {tdpLoading && dpLoading ? (
+        <div className="w-full h-full flex justify-center items-center">
+          <Spinner />
         </div>
-      </div>
-
+      ) : watch("dpType") === "1" ? (
+        <Text variant="caption-md-regular" color="muted">
+          {t("validation.dpHintPercentage", {
+            percentage: Number(dpPercentage?.data.value) * 100,
+            amount: formatCurrency(dpMinAmount),
+          })}
+        </Text>
+      ) : (
+        <Text variant="caption-md-regular" color="muted">
+          {t("validation.dpHintFixed", { amount: formatCurrency(dpMinAmount) })}
+        </Text>
+      )}
       <div className="w-full flex justify-end">
-        <Button className="right-0">Estimate Loan</Button>
+        <Button
+          className="right-0"
+          type="submit"
+          disabled={!(isFilled && isAmountFit)}
+        >
+          {t("submitButton")}
+        </Button>
       </div>
     </form>
   );

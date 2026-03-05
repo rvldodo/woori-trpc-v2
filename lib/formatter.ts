@@ -64,3 +64,15 @@ export const formatCurrency = (amount: number) => {
 
   return `Rp ${amounFormatter}`;
 };
+
+export const phoneNumberAnonymous = (phoneNumber: string) => {
+  const startNum = phoneNumber.split("").slice(0, 5).join("");
+
+  const endNum = phoneNumber
+    .split("")
+    .slice(5, -1)
+    .map((e) => e.replace(e, "x"))
+    .join("");
+
+  return startNum + endNum;
+};
