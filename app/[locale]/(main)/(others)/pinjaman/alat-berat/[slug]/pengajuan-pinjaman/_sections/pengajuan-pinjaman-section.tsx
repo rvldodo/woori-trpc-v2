@@ -4,7 +4,7 @@ import { type Locale, useTranslations } from "next-intl";
 import Progressbar from "../../../_components/progress-bar";
 import { Text } from "@/components/html/text";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, ArrowRight, Info, Volume2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, Info } from "lucide-react";
 import { formatCurrency, hyphenToPascalCase } from "@/lib/formatter";
 import {
   Tooltip,
@@ -14,17 +14,10 @@ import {
 } from "@/components/ui/tooltip";
 import {
   INSURANCE_TYPE,
-  LOAN_DATA_LOCAL_STORAGE,
-  TDP_TOOLTIP,
+  LOAN_DATA_HE_LOCAL_STORAGE,
   TOOLTIP_INSURANCE_TYPE,
 } from "@/lib/constants";
 import type { LocaleContentOptional } from "@/types";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import { schema } from "@/server/api/schema";
 import type z from "zod";
@@ -40,8 +33,8 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
 import { api } from "@/trpc/react";
-import OTPBanned from "../otp-banned";
 import { useModalState } from "@/hooks/useModalState";
+import OTPBanned from "../../../../[slug]/pengajuan-pinjaman/otp-banned";
 
 type Props = {
   l: Locale;
@@ -51,10 +44,9 @@ type Props = {
 type Schema = z.infer<typeof schema.form.loan>;
 
 export default function PengajuanPinjamanSection({ l, slug }: Props) {
-  const t = useTranslations("PengajuanPinjaman");
+  const t = useTranslations("PengajuanPinjamanHE");
   const p = useTranslations();
 
-  const [openTDP, setOpenTDP] = useState<boolean>(false);
   const [openInsurance, setOpenInsurance] = useState<boolean>(false);
   const [tooltip, setTooltip] = useState<number>(1);
 
@@ -79,7 +71,7 @@ export default function PengajuanPinjamanSection({ l, slug }: Props) {
   const [parsedData, setParsedData] = useState<Partial<Schema> | null>(null);
 
   useEffect(() => {
-    const saved = localStorage.getItem(LOAN_DATA_LOCAL_STORAGE);
+    const saved = localStorage.getItem(LOAN_DATA_HE_LOCAL_STORAGE);
     if (!saved) redirect(PATHS.home.base);
     setParsedData(JSON.parse(saved));
   }, []);
@@ -87,6 +79,7 @@ export default function PengajuanPinjamanSection({ l, slug }: Props) {
   useEffect(() => {
     if (parsedData) {
       reset({
+        year: parsedData.year?.toString(),
         ...parsedData,
       });
     }
@@ -117,10 +110,14 @@ export default function PengajuanPinjamanSection({ l, slug }: Props) {
 
     const updatedLoan: Partial<Schema> = {
       ...parsedData,
+
       user_type: filter.user_type.toUpperCase() as "INDIVIDU" | "KORPORAT",
       user_name: e.user_name,
       phone_number: e.phone_number,
       company_name: e.company_name || "",
+      jenis_pembiayaan:
+        slug === "bekas" ? "Alat Berat Bekas" : "Alat Berat Baru",
+      uang_muka: Number(parsedData.dpPrice),
     };
 
     findUserByPhone(
@@ -136,11 +133,13 @@ export default function PengajuanPinjamanSection({ l, slug }: Props) {
             sendOTP({ phone: e.phone_number ?? "" });
 
             localStorage.setItem(
-              LOAN_DATA_LOCAL_STORAGE,
+              LOAN_DATA_HE_LOCAL_STORAGE,
               JSON.stringify(updatedLoan),
             );
 
-            redirect(`${PATHS.home.pinjaman.base}/${slug}/verifikasi`);
+            redirect(
+              `${PATHS.home.pinjaman.alatBerat.base}/${slug}/verifikasi`,
+            );
             return;
           }
 
@@ -153,11 +152,13 @@ export default function PengajuanPinjamanSection({ l, slug }: Props) {
             sendOTP({ phone: e.phone_number ?? "" });
 
             localStorage.setItem(
-              LOAN_DATA_LOCAL_STORAGE,
+              LOAN_DATA_HE_LOCAL_STORAGE,
               JSON.stringify(updatedLoan),
             );
 
-            redirect(`${PATHS.home.pinjaman.base}/${slug}/verifikasi`);
+            redirect(
+              `${PATHS.home.pinjaman.alatBerat.base}/${slug}/verifikasi`,
+            );
           } else {
             onChangeModal("banned", true);
           }
@@ -168,11 +169,11 @@ export default function PengajuanPinjamanSection({ l, slug }: Props) {
           sendOTP({ phone: e.phone_number ?? "" });
 
           localStorage.setItem(
-            LOAN_DATA_LOCAL_STORAGE,
+            LOAN_DATA_HE_LOCAL_STORAGE,
             JSON.stringify(updatedLoan),
           );
 
-          redirect(`${PATHS.home.pinjaman.base}/${slug}/verifikasi`);
+          redirect(`${PATHS.home.pinjaman.alatBerat.base}/${slug}/verifikasi`);
         },
       },
     );
@@ -198,23 +199,114 @@ export default function PengajuanPinjamanSection({ l, slug }: Props) {
           <Text variant="body-md-regular">{t("subtitle")}</Text>
         </div>
 
-        <section className="grid grid-cols-5 gap-3 w-full">
-          <Card className="col-span-2">
+        <section className="grid grid-cols-7 gap-3 w-full">
+          <Card className="col-span-3">
             <CardContent className="col-span-3 w-full flex flex-col gap-2">
               <CardTitle>
                 <Text variant="display-sm">{t("summary.title")}</Text>
-                <div className="flex w-full items-center bg-background-hover gap-3 p-3 rounded-lg">
-                  <Volume2 className="w-7 h-7" />
-                  <Text variant="caption-md-regular">
-                    {t("summary.estimationNote")}
-                  </Text>
-                </div>
               </CardTitle>
               <div className="flex flex-col gap-3">
                 <div className="flex justify-between items-center">
-                  <Text variant="body-md-regular">
-                    {t("summary.vehiclePrice")}
+                  <Text variant="body-md-regular">{t("summary.brand")}</Text>
+                  <Text variant="body-md-medium">
+                    {hyphenToPascalCase(parsedData?.brand_name ?? "")}
                   </Text>
+                </div>
+
+                <div className="flex justify-between items-center">
+                  <Text variant="body-md-regular">{t("summary.model")}</Text>
+                  <Text variant="body-md-medium">
+                    {hyphenToPascalCase(parsedData?.model_name ?? "")}
+                  </Text>
+                </div>
+
+                <div className="flex justify-between items-center">
+                  <Text variant="body-md-regular">{t("summary.type")}</Text>
+                  <Text variant="body-md-medium">{parsedData?.type_name}</Text>
+                </div>
+
+                <div className="flex justify-between items-center">
+                  <Text variant="body-md-regular">{t("summary.year")}</Text>
+                  <Text variant="body-md-medium">{parsedData?.year}</Text>
+                </div>
+
+                <div className="flex justify-between items-center">
+                  <div className="flex gap-2 items-center">
+                    <Text variant="body-md-regular">
+                      {t("summary.insuranceType")}
+                    </Text>
+                    <TooltipProvider>
+                      <Tooltip
+                        open={openInsurance}
+                        onOpenChange={setOpenInsurance}
+                      >
+                        <TooltipTrigger>
+                          <Info className="w-4 h-4" />
+                        </TooltipTrigger>
+                        <TooltipContent className="bg-white border">
+                          <section className="flex flex-col gap-3 md:w-[20vw] w-full">
+                            <Text variant="body-sm-semi">
+                              {p("Form.insuranceType.tooltipTitle")}
+                            </Text>
+                            {TOOLTIP_INSURANCE_TYPE.map(
+                              (e: {
+                                id: number;
+                                title: LocaleContentOptional;
+                                description: LocaleContentOptional;
+                              }) => (
+                                <div
+                                  key={e.id}
+                                  className={`flex-col gap-2 ${e.id === tooltip ? "flex" : "hidden"}`}
+                                >
+                                  <Text variant="body-sm-medium">
+                                    {e.title?.[l] ?? ""}
+                                  </Text>
+                                  <Text variant="body-sm-regular">
+                                    {e.description?.[l] ?? ""}
+                                  </Text>
+                                </div>
+                              ),
+                            )}
+                            <div className="w-full flex justify-end">
+                              <Text
+                                variant="body-sm-regular"
+                                className="flex gap-3"
+                              >
+                                <ArrowLeft
+                                  className={`w-4 h-4 cursor-pointer ${tooltip > 1 ? "flex" : "hidden"}`}
+                                  onClick={previousTooltipHandler}
+                                />
+                                {tooltip} {p("Form.pagination.of")}{" "}
+                                {TOOLTIP_INSURANCE_TYPE.length}
+                                <ArrowRight
+                                  className={`w-4 h-4 cursor-pointer ${tooltip !== TOOLTIP_INSURANCE_TYPE.length ? "flex" : "hidden"}`}
+                                  onClick={nextTooltipHandler}
+                                />
+                              </Text>
+                            </div>
+                          </section>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </div>
+
+                  {INSURANCE_TYPE.filter(
+                    (e: { value: string; label: LocaleContentOptional }) =>
+                      e.value === parsedData?.insuranceType,
+                  ).map(
+                    (
+                      e: { value: string; label: LocaleContentOptional },
+                      idx: number,
+                    ) => (
+                      <Text variant="body-md-medium" key={idx.toString()}>
+                        {e.label?.[l] ?? ""}
+                      </Text>
+                    ),
+                  )}
+                </div>
+
+                <div className="flex justify-between items-center">
+                  <Text variant="body-md-regular">{t("summary.price")}</Text>
                   <Text variant="body-md-medium">
                     {formatCurrency(Number(parsedData?.price))}
                   </Text>
@@ -225,232 +317,37 @@ export default function PengajuanPinjamanSection({ l, slug }: Props) {
                     {t("summary.downPayment")}
                   </Text>
                   <Text variant="body-md-medium">
-                    {formatCurrency(Number(parsedData?.uang_muka))}
+                    {formatCurrency(Number(parsedData?.dpPrice))}
                   </Text>
                 </div>
 
                 <div className="flex justify-between items-center">
-                  <div className="flex gap-2 items-center">
-                    <Text variant="body-md-regular">
-                      {t("summary.totalDownPayment")}
-                    </Text>
-                    <TooltipProvider>
-                      <Tooltip open={openTDP} onOpenChange={setOpenTDP}>
-                        <TooltipTrigger asChild>
-                          <button
-                            type="button"
-                            onClick={() => setOpenTDP((prev) => !prev)}
-                          >
-                            <Info className="w-4 h-4" />
-                          </button>
-                        </TooltipTrigger>
-                        <TooltipContent className="bg-white border">
-                          <section className="flex flex-col gap-3 md:w-[20vw] w-full">
-                            {TDP_TOOLTIP.map(
-                              (e: {
-                                id: number;
-                                title: LocaleContentOptional;
-                                description: LocaleContentOptional;
-                              }) => (
-                                <div
-                                  key={e.id}
-                                  className={`flex flex-col gap-2`}
-                                >
-                                  <Text variant="body-sm-medium">
-                                    {e.title?.[l]}
-                                  </Text>
-                                  <Text variant="body-sm-regular">
-                                    {e.description?.[l] ?? ""}
-                                  </Text>
-                                </div>
-                              ),
-                            )}
-                          </section>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  </div>
-
+                  <Text variant="body-md-regular">{t("summary.loanType")}</Text>
                   <Text variant="body-md-medium">
-                    {formatCurrency(Number(parsedData?.total_uang_muka))}
+                    {t(`summary.loanTypeValue.${slug}`)}
                   </Text>
                 </div>
 
                 <div className="flex justify-between items-center">
-                  <Text variant="body-md-regular">{t("summary.tenor")}</Text>
+                  <Text variant="body-md-regular">{t("summary.location")}</Text>
                   <Text variant="body-md-medium">
-                    {parsedData?.tenor} {t("summary.month")}
+                    {parsedData?.lokasi_name}
                   </Text>
                 </div>
 
                 <div className="flex justify-between items-center">
                   <Text variant="body-md-regular">
-                    {t("summary.installmentPerMonth")}
+                    {t("summary.branchLocation")}
                   </Text>
                   <Text variant="body-md-medium">
-                    {formatCurrency(Number(parsedData?.angsuran_per_bulan))}
-                  </Text>
-                </div>
-
-                <div className="flex justify-between items-center">
-                  <Text variant="body-md-regular">
-                    {t("summary.installmentType")}
-                  </Text>
-                  <Text variant="body-md-medium">
-                    {parsedData?.jenis_angsuran}
-                  </Text>
-                </div>
-
-                <div className="flex justify-between items-center">
-                  <Text variant="body-md-regular">
-                    {t("summary.financingType")}
-                  </Text>
-                  <Text variant="body-md-medium">
-                    {hyphenToPascalCase(parsedData?.jenis_pembiayaan ?? "")}
+                    {parsedData?.cabang_name}
                   </Text>
                 </div>
               </div>
-
-              <Accordion type="single" defaultValue="1">
-                <AccordionItem value="1">
-                  <AccordionTrigger className="flex items-center hover:no-underline">
-                    <Text variant="display-sm" color="primary">
-                      {t("accordion.vehicleDetail")}
-                    </Text>
-                  </AccordionTrigger>
-                  <AccordionContent className="h-full">
-                    <div className="flex flex-col gap-3">
-                      <div className="flex justify-between items-center">
-                        <span className="leading-none text-[16px] font-normal">
-                          {t("accordion.brand")}
-                        </span>
-                        <Text variant="body-md-medium">
-                          {hyphenToPascalCase(parsedData?.brand_name ?? "")}
-                        </Text>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="leading-none text-[16px] font-normal">
-                          {t("accordion.model")}
-                        </span>
-                        <Text variant="body-md-medium">
-                          {hyphenToPascalCase(parsedData?.model_name ?? "")}
-                        </Text>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="leading-none text-[16px] font-normal">
-                          {t("accordion.type")}
-                        </span>
-                        <Text variant="body-md-medium" className="text-end">
-                          {parsedData?.type_name}
-                        </Text>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="leading-none text-[16px] font-normal">
-                          {t("accordion.year")}
-                        </span>
-                        <Text variant="body-md-medium">{parsedData?.year}</Text>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="leading-none text-[16px] font-normal">
-                          {t("accordion.location")}
-                        </span>
-                        <Text variant="body-md-medium">
-                          {parsedData?.lokasi_name}
-                        </Text>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="leading-none text-[16px] font-normal">
-                          {t("accordion.branchLocation")}
-                        </span>
-                        <Text variant="body-md-medium">
-                          {parsedData?.cabang_name}
-                        </Text>
-                      </div>
-
-                      <div className="flex justify-between items-center">
-                        <div className="flex gap-2 items-center">
-                          <span className="leading-none text-[16px] font-normal">
-                            {t("accordion.insuranceType")}
-                          </span>
-                          <TooltipProvider>
-                            <Tooltip
-                              open={openInsurance}
-                              onOpenChange={setOpenInsurance}
-                            >
-                              <TooltipTrigger>
-                                <Info className="w-4 h-4" />
-                              </TooltipTrigger>
-                              <TooltipContent className="bg-white border">
-                                <section className="flex flex-col gap-3 md:w-[20vw] w-full">
-                                  <Text variant="body-sm-semi">
-                                    {p("Form.insuranceType.tooltipTitle")}
-                                  </Text>
-                                  {TOOLTIP_INSURANCE_TYPE.map(
-                                    (e: {
-                                      id: number;
-                                      title: LocaleContentOptional;
-                                      description: LocaleContentOptional;
-                                    }) => (
-                                      <div
-                                        key={e.id}
-                                        className={`flex-col gap-2 ${e.id === tooltip ? "flex" : "hidden"}`}
-                                      >
-                                        <Text variant="body-sm-medium">
-                                          {e.title?.[l] ?? ""}
-                                        </Text>
-                                        <Text variant="body-sm-regular">
-                                          {e.description?.[l] ?? ""}
-                                        </Text>
-                                      </div>
-                                    ),
-                                  )}
-                                  <div className="w-full flex justify-end">
-                                    <Text
-                                      variant="body-sm-regular"
-                                      className="flex gap-3"
-                                    >
-                                      <ArrowLeft
-                                        className={`w-4 h-4 cursor-pointer ${tooltip > 1 ? "flex" : "hidden"}`}
-                                        onClick={previousTooltipHandler}
-                                      />
-                                      {tooltip} {p("Form.pagination.of")}{" "}
-                                      {TOOLTIP_INSURANCE_TYPE.length}
-                                      <ArrowRight
-                                        className={`w-4 h-4 cursor-pointer ${tooltip !== TOOLTIP_INSURANCE_TYPE.length ? "flex" : "hidden"}`}
-                                        onClick={nextTooltipHandler}
-                                      />
-                                    </Text>
-                                  </div>
-                                </section>
-                              </TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
-                        </div>
-
-                        {INSURANCE_TYPE.filter(
-                          (e: {
-                            value: string;
-                            label: LocaleContentOptional;
-                          }) => e.value === parsedData?.insuranceType,
-                        ).map(
-                          (
-                            e: { value: string; label: LocaleContentOptional },
-                            idx: number,
-                          ) => (
-                            <Text variant="body-md-medium" key={idx.toString()}>
-                              {e.label?.[l] ?? ""}
-                            </Text>
-                          ),
-                        )}
-                      </div>
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
             </CardContent>
           </Card>
 
-          <Card className="col-span-3">
+          <Card className="col-span-4">
             <CardContent className="flex flex-col gap-3 w-full h-full justify-center items-start">
               <CardTitle>
                 <Text variant="display-sm">{t("form.applyLoan")}</Text>
@@ -592,7 +489,7 @@ export default function PengajuanPinjamanSection({ l, slug }: Props) {
             type="button"
             variant="woori_outline"
             onClick={() => {
-              redirect(`${PATHS.home.pinjaman.base}/${slug}/hasil-simulasi`);
+              redirect(`${PATHS.home.pinjaman.alatBerat.base}`);
             }}
           >
             {t("buttons.back")}

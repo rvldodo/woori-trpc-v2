@@ -7,6 +7,7 @@ export const useModalState = () => {
     update: parseAsString,
     delete: parseAsString,
     detail_manajemen: parseAsString,
+    banned: parseAsBoolean.withDefault(false),
   });
 
   const onChangeModal = (

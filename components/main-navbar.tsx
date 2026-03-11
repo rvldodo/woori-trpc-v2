@@ -13,7 +13,10 @@ import logo from "@/public/assets/logo.svg";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { Skeleton } from "./ui/skeleton";
-import { LOAN_DATA_LOCAL_STORAGE } from "@/lib/constants";
+import {
+  LOAN_DATA_HE_LOCAL_STORAGE,
+  LOAN_DATA_LOCAL_STORAGE,
+} from "@/lib/constants";
 
 export default function Navbar() {
   const path = usePathname();
@@ -33,6 +36,7 @@ export default function Navbar() {
   const handleClickImage = () => {
     setActiveTab(undefined);
     localStorage.removeItem(LOAN_DATA_LOCAL_STORAGE);
+    localStorage.removeItem(LOAN_DATA_HE_LOCAL_STORAGE);
     router.push("/");
   };
 

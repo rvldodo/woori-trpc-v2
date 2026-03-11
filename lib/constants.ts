@@ -18,6 +18,7 @@ export const ERROR_DELETE_DATA = "Failed to delete data";
 export const ERROR_CONNECT_DB = "Failed to connect to database";
 
 export const LOAN_DATA_LOCAL_STORAGE = "loan_form_data";
+export const LOAN_DATA_HE_LOCAL_STORAGE = "loan_he_form_data";
 
 export const SLUGS_TO_REMOVE = ["home"];
 
@@ -148,3 +149,10 @@ export const DOWN_PAYMENT_TYPE = [
     },
   },
 ];
+
+export const COUNTDOWN: Record<number, number> = {
+  1: 1 * 60,
+  2: 3 * 60,
+  3: 5 * 60,
+  4: 24 * 60 * 60,
+};

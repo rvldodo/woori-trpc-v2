@@ -3,7 +3,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Text } from "@/components/html/text";
-import { Locale } from "next-intl";
+import type { Locale } from "next-intl";
 import { parseAsString, useQueryStates } from "nuqs";
 import { api } from "@/trpc/react";
 import { Spinner } from "@/components/ui/spinner";
@@ -40,8 +40,6 @@ export default function PaymentMethods({ l }: Props) {
       }
     }
   }, [data?.data, filter.method, setFilter]);
-
-  console.log({ data: data });
 
   return (
     <article className="relative w-full py-3 flex flex-col gap-6 overflow-hidden z-10">

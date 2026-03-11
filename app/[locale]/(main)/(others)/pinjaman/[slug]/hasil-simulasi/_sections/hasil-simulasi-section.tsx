@@ -136,8 +136,6 @@ export default function HasilSimulasiSection({ l, slug }: Props) {
     redirect(`${PATHS.home.pinjaman.base}/${slug}/pengajuan-pinjaman`);
   };
 
-  console.log(parsedData);
-
   return (
     <article className="py-8 w-full flex justify-center items-center flex-col gap-5 main-padding-x">
       <Progressbar progress={2} />

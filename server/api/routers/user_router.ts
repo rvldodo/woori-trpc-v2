@@ -243,7 +243,7 @@ export const userRouter = createTRPCRouter({
       //     code: "NOT_FOUND",
       //   });
 
-      return data;
+      return data ?? { counter: 0 };
     }),
 
   counterUpdate: publicProcedure

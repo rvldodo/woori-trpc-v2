@@ -15,6 +15,14 @@
       "usedCar": "Used Car"
     }
   },
+  "SimulatorHE": {
+    "title": "Heavy Equipment Loan Application",
+    "subtitle": "Fill in details regarding your Heavy Equipment <br>Loan Application</br>",
+    "trigger": {
+      "newHE": "New Heavy Equipment",
+      "usedHE": "Used Heavy Equipment"
+    }
+  },
   "Promo": {
     "title": "Promotions",
     "seeAll": "See All Promotions",
@@ -500,6 +508,62 @@
       "step3": "Loan Application"
     }
   },
+  "FormHE": {
+    "location": {
+      "label": "Your Location",
+      "placeholder": "Choose your location"
+    },
+    "branch": {
+      "label": "Branch Location",
+      "placeholder": "Choose branch location"
+    },
+    "brand": {
+      "label": "Heavy Equipment Brand",
+      "placeholder": "Choose heavy equipment brand"
+    },
+    "model": {
+      "label": "Heavy Equipment Model",
+      "placeholder": "Choose heavy equipment model"
+    },
+    "type": {
+      "label": "Heavy Equipment Type",
+      "placeholder": "Choose heavy equipment type"
+    },
+    "year": {
+      "label": "Heavy Equipment Year",
+      "placeholder": "Choose heavy equipment year"
+    },
+    "insuranceType": {
+      "label": "Insurance Type",
+      "placeholder": "Choose insurance type",
+      "tooltipTitle": "Insurance Types"
+    },
+    "price": {
+      "label": "Heavy Equipment Price",
+      "placeholder": "Rp 2.000.000"
+    },
+    "downPayment": {
+      "label": "Down Payment Amount",
+      "placeholder": "Rp 5.000.000",
+      "typePlaceholder": "Choose DP type"
+    },
+    "submitButton": "Estimate Loan",
+    "validation": {
+      "minCarPrice": "Minimum car price is {amount}",
+      "minDownPayment": "Minimum down payment is {amount}",
+      "maxDownPayment": "Down payment exceeds {amount}",
+      "dpHintPercentage": "Minimum down payment is {percentage}% — enter at least {amount}",
+      "dpHintFixed": "Please enter a minimum down payment of {amount}"
+    },
+    "warning": "Please enter minimum down payment of {amount}",
+    "pagination": {
+      "of": "of"
+    },
+    "progressbar": {
+      "step1": "Form Details",
+      "step2": "Loan Application"
+    }
+  },
   "NotFound": {
     "title": "Page Not Found",
     "subtitle": "Looks like the page you’re searching for is out of sight.<br>It might have been moved or deleted.</br>",
@@ -593,6 +657,67 @@
       "back": "Previous",
       "next": "Apply For Loan"
     }
+  },
+  "PengajuanPinjamanHE": {
+    "title": "Loan Application",
+    "subtitle": "Enter your personal details before applying for our loan.",
+    "summary": {
+      "title": "Application Summary",
+      "brand": "Heavy Equipment Brand",
+      "model": "Heavy Equipment Model",
+      "type": "Heavy Equipment Type",
+      "year": "Heavy Equipment Year",
+      "insuranceType": "Insurance Type",
+      "price": "Heavy Equipment Price",
+      "downPayment": "Down Payment",
+      "loanType": "Loan Type",
+      "loanTypeValue": {
+        "bekas": "Used Heavy Equipment",
+        "baru": "New Heavy Equipment"
+      },
+      "location": "Your Location",
+      "branchLocation": "Branch Location"
+    },
+
+    "form": {
+      "applyLoan": "Apply Loan",
+      "individu": "Individual",
+      "corporate": "Corporate",
+      "customerName": "Customer Name",
+      "companyName": "Company Name",
+      "phoneNumber": "Phone Number",
+      "namePlaceholder": "Input your name...",
+      "companyPlaceholder": "Input company name...",
+      "phonePlaceholder": "Input your phone number...",
+      "privacyText": "Woori will collect your data for verification purpose. Your data will not be shared to other party or organization. See our Privacy Policy",
+      "privacyLink": "here"
+    },
+
+    "buttons": {
+      "back": "Previous",
+      "next": "Apply For Loan"
+    }
+  },
+  "PengajuanSukses": {
+    "title": {
+      "mobil-baru": "New Car Loan <br>Application Submitted!</br>",
+      "mobil-bekas": "Used Car Loan <br>Application Submitted!</br>"
+    },
+    "subtitle": "We will contact you through your registered phone number on working days within 24 hours!",
+    "button": "Back to Homepage"
+  },
+  "PengajuanSuksesHE": {
+    "title": {
+      "baru": "New Heavy Equipment Loan <br>Application Submitted!</br>",
+      "bekas": "Used Heavy Equipment Loan <br>Application Submitted!</br>"
+    },
+    "subtitle": "We will contact you through your registered phone number on working days within 24 hours!",
+    "button": "Back to Homepage"
+  },
+  "OTPBanned": {
+    "title": "You Have Reached the OTP Request Limit",
+    "subtitle": "Please wait for 24 hours before applying for another loan",
+    "button": "Back to Homepage"
   },
   "Verifikasi": {
     "title": "Phone Number Verification",

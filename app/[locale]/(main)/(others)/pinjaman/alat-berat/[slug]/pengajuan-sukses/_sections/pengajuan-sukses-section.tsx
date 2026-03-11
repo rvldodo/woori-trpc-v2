@@ -14,7 +14,7 @@ type Props = {
 };
 
 export default function PengajuanSuksesSection({ l, slug }: Props) {
-  const t = useTranslations("PengajuanSukses");
+  const t = useTranslations("PengajuanSuksesHE");
   const router = useRouter();
 
   const onBack = () => {
@@ -25,18 +25,18 @@ export default function PengajuanSuksesSection({ l, slug }: Props) {
     <section className="py-8 w-full flex justify-center items-center flex-col gap-5 main-padding-x">
       <Card className="w-full bg-transparent border-2 border-white shadow-md backdrop-blur-xl">
         <CardTitle></CardTitle>
-        <CardContent className="flex flex-col gap-3 justify-center items-center">
-          <div className="flex justify-center items-center flex-col gap-1">
+        <CardContent className="flex flex-col gap-3 justify-center items-center w-full">
+          <div className="flex justify-center items-center flex-col gap-1 w-full">
             <Text
               as="div"
               variant="display-md"
-              className="justify-center items-center flex flex-col text-center"
+              className="flex justify-center items-center w-full text-center"
             >
               {t.rich(`title.${slug}`, {
-                br: (chunks) => (
+                br: (val) => (
                   <>
                     <br />
-                    {chunks}
+                    {val}
                   </>
                 ),
               })}

@@ -51,8 +51,8 @@ export default function SimulatorSection({ l }: Props) {
   });
 
   const { data, isLoading } = api.main.usp.list.useQuery();
-  const mobilBaruUsp = data?.data.find((e) => e.type === "Mobil Baru");
-  const mobilBekasUsp = data?.data.find((e) => e.type === "Mobil Bekas");
+  const mobilBaruUsp = data?.data.find((e) => e.type === "Mobil baru");
+  const mobilBekasUsp = data?.data.find((e) => e.type === "Mobil bekas");
 
   return (
     <section className="main-padding-x flex flex-col gap-3 py-8 relative overflow-hidden">
@@ -65,7 +65,7 @@ export default function SimulatorSection({ l }: Props) {
             value="used-car"
             className="md:w-xl h-full flex md:justify-start justify-center items-center"
           >
-            {isLoading || !data || !mobilBekasUsp ? (
+            {isLoading || !data ? (
               <Skeleton className="w-full h-15" />
             ) : (
               <div className="flex flex-col gap-3">
@@ -75,7 +75,7 @@ export default function SimulatorSection({ l }: Props) {
                   speedSegment={0.5}
                   as="p"
                 >
-                  {mobilBekasUsp.title![l]}
+                  {mobilBekasUsp?.title?.[l] ?? ""}
                 </TextEffect>
                 <TextEffect
                   variant="body-md-regular"
@@ -83,11 +83,11 @@ export default function SimulatorSection({ l }: Props) {
                   speedSegment={0.5}
                   as="p"
                 >
-                  {mobilBekasUsp.description![l]}
+                  {mobilBekasUsp?.description?.[l] ?? ""}
                 </TextEffect>
 
                 <div className="flex flex-col gap-3 md:items-start items-center">
-                  {mobilBekasUsp.cards!.map((e: USPCards, idx: number) => (
+                  {mobilBekasUsp?.cards?.map((e: USPCards, idx: number) => (
                     <AnimatedGroup
                       key={idx.toString()}
                       variants={{
@@ -135,7 +135,7 @@ export default function SimulatorSection({ l }: Props) {
             value="new-car"
             className="md:w-xl h-full flex md:justify-start justify-center items-center"
           >
-            {isLoading || !data || !mobilBaruUsp ? (
+            {isLoading || !data ? (
               <Skeleton className="w-full h-15" />
             ) : (
               <div className="flex flex-col gap-3">
@@ -145,7 +145,7 @@ export default function SimulatorSection({ l }: Props) {
                   speedSegment={0.5}
                   as="p"
                 >
-                  {mobilBaruUsp.title![l]}
+                  {mobilBaruUsp?.title?.[l] ?? ""}
                 </TextEffect>
                 <TextEffect
                   variant="body-md-regular"
@@ -153,11 +153,11 @@ export default function SimulatorSection({ l }: Props) {
                   speedSegment={0.5}
                   as="p"
                 >
-                  {mobilBaruUsp.description![l]}
+                  {mobilBaruUsp?.description?.[l] ?? ""}
                 </TextEffect>
 
                 <div className="flex flex-col gap-3 md:items-start items-center">
-                  {mobilBaruUsp.cards!.map((e: USPCards, idx: number) => (
+                  {mobilBaruUsp?.cards?.map((e: USPCards, idx: number) => (
                     <AnimatedGroup
                       key={idx.toString()}
                       variants={{

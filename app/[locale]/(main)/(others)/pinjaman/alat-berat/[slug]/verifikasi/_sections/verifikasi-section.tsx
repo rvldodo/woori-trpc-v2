@@ -4,7 +4,7 @@ import { Locale, useTranslations } from "next-intl";
 import Progressbar from "../../../_components/progress-bar";
 import { Text } from "@/components/html/text";
 import { Fragment, useEffect, useState } from "react";
-import { COUNTDOWN, LOAN_DATA_LOCAL_STORAGE } from "@/lib/constants";
+import { COUNTDOWN, LOAN_DATA_HE_LOCAL_STORAGE } from "@/lib/constants";
 import z from "zod";
 import { schema } from "@/server/api/schema";
 import { formatTime, phoneNumberAnonymous } from "@/lib/formatter";
@@ -17,9 +17,9 @@ import {
 import { api } from "@/trpc/react";
 import { PATHS } from "@/app/urls";
 import { redirect, useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import OTPBanned from "../../pengajuan-pinjaman/otp-banned";
 import { useModalState } from "@/hooks/useModalState";
+import OTPBanned from "../../../../[slug]/pengajuan-pinjaman/otp-banned";
+import { Button } from "@/components/ui/button";
 
 type Props = {
   l: Locale;
@@ -33,9 +33,9 @@ export default function VerifikasiSection({ l, slug }: Props) {
   const router = useRouter();
 
   const [parsedData, setParsedData] = useState<Partial<Schema> | null>(null);
-  const [otpCheck, setOTPCheck] = useState<string>("");
   const [invalid, setInvalid] = useState<boolean>(false);
   const [countdown, setCountdown] = useState<number>(0);
+  const [otpCheck, setOTPCheck] = useState<string>("");
   const [canResend, setCanResend] = useState(false);
 
   const { mutate: createLoan } = api.main.loan.create.useMutation();
@@ -92,7 +92,7 @@ export default function VerifikasiSection({ l, slug }: Props) {
 
       router.push(`${PATHS.home.pinjaman.base}/${slug}/pengajuan-sukses`);
 
-      localStorage.removeItem(LOAN_DATA_LOCAL_STORAGE);
+      localStorage.removeItem(LOAN_DATA_HE_LOCAL_STORAGE);
     },
     onError: () => {
       setInvalid(true);
@@ -108,7 +108,7 @@ export default function VerifikasiSection({ l, slug }: Props) {
     });
 
   useEffect(() => {
-    const saved = localStorage.getItem(LOAN_DATA_LOCAL_STORAGE);
+    const saved = localStorage.getItem(LOAN_DATA_HE_LOCAL_STORAGE);
 
     if (!saved) redirect(PATHS.home.base);
     setParsedData(JSON.parse(saved));
@@ -163,8 +163,8 @@ export default function VerifikasiSection({ l, slug }: Props) {
   return (
     <Fragment>
       <OTPBanned
-        close={() => onChangeModal("banned", false)}
         show={modal.banned}
+        close={() => onChangeModal("banned", false)}
       />
 
       <article className="py-8 w-full flex justify-center items-center flex-col gap-5 main-padding-x">
@@ -230,11 +230,6 @@ export default function VerifikasiSection({ l, slug }: Props) {
             />
           </InputOTPGroup>
         </InputOTP>
-        {invalid && (
-          <Text variant="caption-md-regular" color="error">
-            Kode OTP yang Anda masukan Salah. Silahkan coba lagi!
-          </Text>
-        )}
 
         <section className="flex flex-col gap-3 justify-center items-center">
           <Text variant="body-md-regular">

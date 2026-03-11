@@ -48,7 +48,7 @@ export default function CabangPenyediaTabs({ l }: Props) {
     : locationsData;
 
   return (
-    <section className="relative w-full py-3 flex flex-col overflow-hidden z-10">
+    <section className="relative w-full py-3 flex flex-col overflow-hidden z-10 gap-3">
       <Text variant="display-md">{t("title")}</Text>
       {isLoadingCabang ? (
         <div className="w-full h-full flex justify-center items-center">

@@ -1,16 +1,14 @@
 "use client";
 
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Text } from "@/components/html/text";
-import { Locale } from "next-intl";
+import type { Locale } from "next-intl";
 import { parseAsString, useQueryStates } from "nuqs";
 import { api } from "@/trpc/react";
 import { Spinner } from "@/components/ui/spinner";
-import { Button } from "@/components/ui/button";
 import { TextHTML } from "@/components/html/text-html";
 import { useEffect } from "react";
-import DOMPurify from "dompurify";
 
 type Props = {
   l: Locale;
@@ -42,8 +40,6 @@ export default function PaymentMethods({ l }: Props) {
       }
     }
   }, [data?.data, filter.method, setFilter]);
-
-  console.log({ data: data });
 
   return (
     <article className="relative w-full py-3 flex flex-col gap-6 overflow-hidden z-10">

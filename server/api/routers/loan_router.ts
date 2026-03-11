@@ -8,7 +8,7 @@ import {
   loanSimulations,
   loanTypes,
 } from "@/drizzle/migrations/schema";
-import { asc, eq, sql } from "drizzle-orm";
+import { and, asc, eq, sql, SQLWrapper } from "drizzle-orm";
 import { z } from "zod";
 import { env } from "@/env.mjs";
 import { CarBrand, CarModel, CarType, Tenor } from "@/types/loan";
@@ -18,8 +18,6 @@ export const simulationLoanRouter = createTRPCRouter({
   create: publicProcedure
     .input(schema.form.loan)
     .mutation(async ({ ctx, input }) => {
-      console.log(input);
-
       const [loanType] = await ctx.db
         .select()
         .from(loanTypes)
@@ -105,6 +103,24 @@ export const simulationLoanRouter = createTRPCRouter({
     return { data };
   }),
 
+  location_he: publicProcedure.query(async ({ ctx }) => {
+    const data = await ctx.db
+      .select({
+        id: coordinates.id,
+        name: coordinates.title,
+        id_location: coordinates.idLocation,
+      })
+      .from(coordinates)
+      .innerJoin(
+        branches,
+        sql`${coordinates.id} = ANY(${branches.coordinateId})`,
+      )
+      .where(eq(branches.type, "HE"))
+      .orderBy(asc(coordinates.id));
+
+    return { data };
+  }),
+
   branches: publicProcedure
     .input(z.object({ coordinateId: z.number() }))
     .query(async ({ input, ctx }) => {
@@ -114,6 +130,25 @@ export const simulationLoanRouter = createTRPCRouter({
         .select()
         .from(branches)
         .where(sql`${coordinateId} = ANY(${branches.coordinateId})`);
+
+      if (!data)
+        throw new TRPCError({ message: ERROR_FETCH, code: "NOT_FOUND" });
+
+      return { data };
+    }),
+
+  branches_he: publicProcedure
+    .input(z.object({ coordinateId: z.number() }))
+    .query(async ({ input, ctx }) => {
+      const conditions: (SQLWrapper | undefined)[] = [
+        sql`${input.coordinateId} = ANY(${branches.coordinateId})`,
+        eq(branches.type, "HE"),
+      ];
+
+      const data = await ctx.db
+        .select()
+        .from(branches)
+        .where(and(...conditions));
 
       if (!data)
         throw new TRPCError({ message: ERROR_FETCH, code: "NOT_FOUND" });

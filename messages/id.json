@@ -15,6 +15,14 @@
       "usedCar": "Mobil Lama"
     }
   },
+  "SimulatorHE": {
+    "title": "Pengajuan Pembiayaan Alat Berat",
+    "subtitle": "Isi detail informasi untuk <br>pengajuan pembiayaan alat berat</br>",
+    "trigger": {
+      "newHE": "Alat Berat Baru",
+      "usedHE": "Alat Berat Lama"
+    }
+  },
   "Promo": {
     "title": "Promosi",
     "seeAll": "Lihat Semua Promosi",
@@ -500,6 +508,62 @@
       "step3": "Pengajuan Pinjaman"
     }
   },
+  "FormHE": {
+    "location": {
+      "label": "Lokasi Anda",
+      "placeholder": "Pilih lokasi Anda"
+    },
+    "branch": {
+      "label": "Lokasi Cabang",
+      "placeholder": "Pilih lokasi cabang"
+    },
+    "brand": {
+      "label": "Merek Alat Berat",
+      "placeholder": "Pilih merek alat berat"
+    },
+    "model": {
+      "label": "Model Alat Berat",
+      "placeholder": "Pilih model alat berat"
+    },
+    "type": {
+      "label": "Tipe Alat Berat",
+      "placeholder": "Pilih tipe alat berat"
+    },
+    "year": {
+      "label": "Tahun Alat Berat",
+      "placeholder": "Pilih tahun alat berat"
+    },
+    "insuranceType": {
+      "label": "Tipe Asuransi",
+      "placeholder": "Pilih tipe asuransi",
+      "tooltipTitle": "Jenis Asuransi"
+    },
+    "price": {
+      "label": "Harga Alat Berat",
+      "placeholder": "Rp 2.000.000"
+    },
+    "downPayment": {
+      "label": "Jumlah Uang Muka",
+      "placeholder": "Rp 5.000.000",
+      "typePlaceholder": "Pilih tipe DP"
+    },
+    "submitButton": "Estimasi Pinjaman",
+    "validation": {
+      "minCarPrice": "Harga mobil minimal {amount}",
+      "minDownPayment": "Uang muka minimal {amount}",
+      "maxDownPayment": "Uang muka melebihi {amount}",
+      "dpHintPercentage": "Minimum uang muka sebanyak {percentage}% masukan jumlah sedikitnya {amount}",
+      "dpHintFixed": "Silahkan masukkan uang muka minimum sebesar {amount}"
+    },
+    "warning": "Silahkan masukkan uang muka minimum sebesar {amount}",
+    "pagination": {
+      "of": "dari"
+    },
+    "progressbar": {
+      "step1": "Detail Form",
+      "step2": "Pengajuan Pinjaman"
+    }
+  },
   "NotFound": {
     "title": "Halaman Tidak Ditemukan",
     "subtitle": "Sepertinya halaman yang Anda cari tidak terlihat.<br>Halaman tersebut mungkin telah dipindahkan atau dihapus.</br>",
@@ -594,6 +658,67 @@
       "back": "Kembali",
       "next": "Ajukan Pembiayaan"
     }
+  },
+  "PengajuanPinjamanHE": {
+    "title": "Pengajuan Pinjaman",
+    "subtitle": "Masukkan informasi pribadi Anda sebelum mengajukan pinjaman",
+    "summary": {
+      "title": "Detail Pengajuan",
+      "brand": "Merek Alat Berat",
+      "model": "Model Alat Berat",
+      "type": "Tipe Alat Berat",
+      "year": "Tahun Alat Berat",
+      "insuranceType": "Tipe Asuransi",
+      "price": "Harga Alat Berat",
+      "downPayment": "Uang Muka",
+      "loanType": "Jenis Pembiayaan",
+      "loanTypeValue": {
+        "bekas": "Alat Berat Bekas",
+        "baru": "Alat Berat Baru"
+      },
+      "location": "Lokasi Anda",
+      "branchLocation": "Lokasi Cabang"
+    },
+
+    "form": {
+      "applyLoan": "Ajukan Pinjaman",
+      "individu": "Individu",
+      "corporate": "Korporat",
+      "customerName": "Nama Nasabah",
+      "companyName": "Nama Perusahaan",
+      "phoneNumber": "Nomor Telepon",
+      "namePlaceholder": "Masukkan nama Anda...",
+      "companyPlaceholder": "Masukkan nama perusahaan...",
+      "phonePlaceholder": "Masukkan nomor telepon...",
+      "privacyText": "Woori akan mengumpulkan data Anda untuk keperluan verifikasi. Data Anda tidak akan dibagikan kepada pihak atau organisasi lain. Lihat Kebijakan Privasi kami",
+      "privacyLink": "di sini"
+    },
+
+    "buttons": {
+      "back": "Kembali",
+      "next": "Ajukan Pembiayaan"
+    }
+  },
+  "PengajuanSukses": {
+    "title": {
+      "mobil-baru": "Pembiayaan Mobil Baru <br>Telah Diajukan!</br>",
+      "mobil-bekas": "Pembiayaan Mobil Bekas<br>Telah Diajukan!</br>"
+    },
+    "subtitle": "Kami akan menghubungi Anda melalui nomor telepon terdaftar pada hari kerja dalam waktu 24 jam!",
+    "button": "Kembali ke Halaman Utama"
+  },
+  "PengajuanSuksesHE": {
+    "title": {
+      "baru": "Pinjaman Alat Berat Baru <br>Telah Diajukan!</br>",
+      "bekas": "Pinjaman Alat Berat Bekas<br>Telah Diajukan!</br>"
+    },
+    "subtitle": "Kami akan menghubungi Anda melalui nomor telepon terdaftar pada hari kerja dalam waktu 24 jam!",
+    "button": "Kembali ke Halaman Utama"
+  },
+  "OTPBanned": {
+    "title": "Anda Telah Mencapai Batas Permintaan OTP",
+    "subtitle": "Silakan menunggu selama 24 jam sebelum mengajukan pinjaman kembali",
+    "button": "Kembali ke Halaman Utama"
   },
   "Verifikasi": {
     "title": "Verifikasi Nomor Telepon",
