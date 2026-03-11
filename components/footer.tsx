@@ -133,7 +133,7 @@ const Footer = (props: FooterProps) => {
               <Separator className="bg-black" orientation="vertical" />
               <Link href={PATHS.syaratDanKetentuan}>
                 <Text
-                  className="flex justify-center md:w-full items-center underline text-primary hover:text-background-tertiary"
+                  className="flex justify-center md:w-full items-center text-blue underline text-primary"
                   variant="caption-md-regular"
                 >
                   {t("termsCondition")}

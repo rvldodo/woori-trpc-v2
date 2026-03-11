@@ -6,6 +6,7 @@ import { complaintsRouter } from "./complaints_router";
 import { faqRouter } from "./faqs_router";
 import { globalParamsRouter } from "./global-params_router";
 import { heroRouter } from "./hero_router";
+import { lawRouter } from "./law_router";
 import { simulationLoanRouter } from "./loan_router";
 import { menusRouter } from "./menus_router";
 import { milestonesRouter } from "./milestone_router";
@@ -50,4 +51,5 @@ export const main = {
   aboutUs: aboutUsRouter,
   loan: simulationLoanRouter,
   user: userRouter,
+  law: lawRouter,
 };
