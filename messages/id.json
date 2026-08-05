@@ -12,7 +12,7 @@
     "subtitle": "Hitung Pembiayaan Sesuai Kebutuhan Anda",
     "trigger": {
       "newCar": "Mobil Baru",
-      "usedCar": "Mobil Lama"
+      "usedCar": "Mobil Bekas"
     }
   },
   "SimulatorHE": {

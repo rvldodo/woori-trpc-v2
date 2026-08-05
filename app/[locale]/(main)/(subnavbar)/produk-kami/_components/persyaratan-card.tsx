@@ -10,7 +10,7 @@ type Props = {
 
 export function PersyaratanCard({ image, title, description }: Props) {
   return (
-    <section className="flex flex-col gap-5 h-[30vh] justify-center items-center">
+    <section className="flex flex-col gap-5 h-[30vh] justify-start items-center">
       <Img
         src={image}
         alt={title}
@@ -24,7 +24,7 @@ export function PersyaratanCard({ image, title, description }: Props) {
         </Text>
         <Text
           variant="body-md-regular"
-          className="text-center md:w-full w-[50vw]"
+          className="text-center md:w-full w-[30vw] flex justify-center items-center"
         >
           {description}
         </Text>

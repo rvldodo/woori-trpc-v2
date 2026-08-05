@@ -33,21 +33,21 @@ export default function FAQSection({ l }: Props) {
     api.main.faqs.category.useQuery();
 
   return (
-    <section className="main-padding-x py-8 flex flex-col justify-start items-center gap-3">
-      <section className="flex flex-col justify-center items-center w-full gap-3">
+    <section className="main-padding-x py-8 flex flex-col justify-start items-center gap-3 overflow-hidden">
+      <section className="flex flex-col justify-center items-center md:w-full gap-3">
         <Text variant="display-md">{t("title")}</Text>
-        <div className="flex items-center px-3 w-[600px] border py-1 rounded-lg bg-white">
+        <div className="flex items-center px-3 md:w-[600px] w-[200px] border py-1 rounded-lg bg-white">
           <Search className="w-5 h-5 text-gray-500" />
           <Input
             value={filter.key}
             onChange={(e) => setFilter({ key: e.target.value })}
             placeholder={t("placeholder")}
-            className="w-full border-none placeholder:text-[14px]"
+            className="md:w-full border-none placeholder:text-[14px]"
           />
         </div>
       </section>
 
-      <section className="grid grid-cols-4 w-full gap-5 pt-5">
+      <section className="grid md:grid-cols-4 grid-cols-1 w-full gap-5 pt-5">
         {categoryLoading ? (
           <div className="w-full h-full flex justify-center items-center">
             <Spinner />

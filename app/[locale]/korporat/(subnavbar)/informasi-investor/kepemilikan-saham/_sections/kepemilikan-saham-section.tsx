@@ -31,8 +31,8 @@ export default function KepemilikanSahamSection({ l }: Props) {
     api.main.aboutUs.kepemilikanSaham.useQuery(debounce);
 
   return (
-    <article className="main-padding-x grid grid-cols-6 gap-5 py-8">
-      <section className="col-span-2 flex flex-col gap-3">
+    <article className="main-padding-x grid md:grid-cols-6 grid-cols-1 gap-5 py-8">
+      <section className="md:col-span-2 flex flex-col gap-3">
         <Text variant="body-lg-semi">Categories</Text>
         <Separator />
         {categoriesLoading || !categories?.data ? (
@@ -62,7 +62,7 @@ export default function KepemilikanSahamSection({ l }: Props) {
         )}
       </section>
 
-      <ScrollArea className="main-padding-x col-span-4 flex flex-col justify-between gap-3 max-h-125">
+      <ScrollArea className="main-padding-x md:col-span-4 flex flex-col justify-between gap-3 max-h-125">
         {isLoading ? (
           <div className="w-full h-full flex justify-center items-center">
             <Spinner />

@@ -29,7 +29,7 @@ export default function KemitraanLogos() {
       <Card className="shadow-none w-full z-10">
         <CardContent className="w-full flex flex-col justify-center items-center p-5 bg-[#ffffff] border-none z-10 mb-8 shadow-none">
           <Text variant="display-lg">{t("showroom")}</Text>
-          <div className="grid md:grid-cols-3 grid-cols-3 gap-2 pt-5 w-full place-items-center">
+          <div className="grid md:grid-cols-3 grid-cols-2 gap-2 pt-5 w-full place-items-center">
             <Img alt="img1" src={showroom1} width={150} />
             <Img alt="img2" src={showroom2} width={150} />
             <Img alt="img3" src={showroom3} width={150} />
@@ -37,7 +37,7 @@ export default function KemitraanLogos() {
           <Text variant="display-lg" className="pt-16">
             {t("insurance")}
           </Text>
-          <div className="grid md:grid-cols-4 grid-cols-3 gap-2 w-full place-items-center">
+          <div className="grid md:grid-cols-4 grid-cols-2 gap-2 w-full place-items-center">
             <Img alt="img1" src={insurance1} width={150} />
             <Img alt="img2" src={insurance2} width={150} />
             <Img alt="img3" src={insurance3} width={150} />
@@ -49,7 +49,7 @@ export default function KemitraanLogos() {
           <Text variant="display-lg" className="pt-16">
             {t("bank")}
           </Text>
-          <div className="grid md:grid-cols-4 grid-cols-3 gap-14 pt-5 w-full place-items-center">
+          <div className="grid md:grid-cols-4 grid-cols-2 gap-14 pt-5 w-full place-items-center">
             {/* <Img alt="img1" src={bank1} width={150} /> */}
             {/* <Img alt="img2" src={bank2} width={150} /> */}
             <Img alt="img3" src={bank3} width={150} />

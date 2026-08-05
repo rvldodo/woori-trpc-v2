@@ -15,6 +15,7 @@ import Navbar from "@/components/main-navbar";
 import { Footer } from "@/components/footer";
 import ScrollToTop from "@/components/scroll-to-top";
 import ReduxProvider from "@/store/provider";
+import { MobileMenuProvider } from "@/context/mobil-menu-context";
 
 export const dynamic = "force-dynamic";
 
@@ -52,14 +53,16 @@ export default async function LocaleLayout(props: LayoutProps<"/[locale]">) {
         <NextIntlClientProvider locale={locale}>
           <TRPCReactProvider>
             <NuqsAdapter>
-              <article className="min-h-screen min-w-screen">
-                <Navbar />
-                <ScrollToTop />
-                <Suspense>
-                  <ReduxProvider>{props.children}</ReduxProvider>
-                </Suspense>
-                <Footer className="w-full md:mb-0 mb-32" />
-              </article>
+              <MobileMenuProvider>
+                <article className="min-h-screen min-w-screen">
+                  <Navbar />
+                  <ScrollToTop />
+                  <Suspense>
+                    <ReduxProvider>{props.children}</ReduxProvider>
+                  </Suspense>
+                  <Footer className="w-full md:mb-0 mb-32" />
+                </article>
+              </MobileMenuProvider>
             </NuqsAdapter>
           </TRPCReactProvider>
         </NextIntlClientProvider>

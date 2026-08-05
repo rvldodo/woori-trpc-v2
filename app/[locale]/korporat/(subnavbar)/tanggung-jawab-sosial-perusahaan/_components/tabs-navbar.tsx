@@ -25,7 +25,7 @@ export default function TabsNavbar({ l, children, activeTab }: Props) {
     <article className="flex flex-col gap-3">
       <nav
         className={cn(
-          "sticky top-[114px] bg-background-primary py-0 w-full flex border-b z-50",
+          "sticky md:top-[114px] top-[80px] bg-background-primary py-0 w-full flex border-b md:z-50 z-10",
         )}
       >
         <div className="w-full overflow-x-auto no-scrollbar">

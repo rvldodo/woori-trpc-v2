@@ -137,7 +137,7 @@ export default function HasilSimulasiSection({ l, slug }: Props) {
   };
 
   return (
-    <article className="py-8 w-full flex justify-center items-center flex-col gap-5 main-padding-x">
+    <article className="py-8 w-full flex justify-center items-center flex-col gap-5 md:main-padding-x">
       <Progressbar progress={2} />
 
       <div className="w-full flex flex-col justify-center items-center">
@@ -145,7 +145,7 @@ export default function HasilSimulasiSection({ l, slug }: Props) {
         <Text variant="body-md-regular">{t("subtitle")}</Text>
       </div>
 
-      <section className="grid grid-cols-5 gap-3 w-full">
+      <section className="grid md:grid-cols-5 grid-cols-1 gap-3 w-full">
         <Card className="col-span-3">
           <CardContent className="col-span-3 w-full">
             <CardTitle></CardTitle>

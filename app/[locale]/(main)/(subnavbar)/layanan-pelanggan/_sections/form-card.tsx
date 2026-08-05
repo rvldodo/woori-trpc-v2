@@ -93,7 +93,7 @@ export default function LayananPelangganForm({ l }: Props) {
             ) : (
               <form
                 onSubmit={handleSubmit((e) => mutate(e))}
-                className="main-padding-x flex flex-col gap-3"
+                className="md:main-padding-x flex flex-col gap-3"
               >
                 <div className="flex flex-col gap-3">
                   <Label>{t("form.name.label")}</Label>

@@ -29,7 +29,7 @@ export default function TabsContentSection({ activeTab, l }: Props) {
           <Spinner />
         </div>
       ) : (
-        <section className="grid grid-cols-4 gap-5 w-full">
+        <section className="grid md:grid-cols-4 grid-cols-1 gap-5 w-full">
           {data?.data.map((e) => (
             <div className="flex flex-col gap-3" key={e.id.toString()}>
               <div className="relative h-52 w-full">

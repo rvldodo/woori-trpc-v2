@@ -23,7 +23,7 @@ export default function PenghargaanSection({ l }: Props) {
           ))}
         </div>
       ) : (
-        <section className="grid grid-cols-3 gap-5 items-start">
+        <section className="grid md:grid-cols-3 grid-cols-1 gap-5 items-start">
           {data?.data.map((e) => (
             <div
               className="w-full flex flex-col gap-3 items-center justify-center"

@@ -56,7 +56,7 @@ export default function PaymentMethods({ l }: Props) {
               className="w-full"
             >
               <TabsList
-                className={`grid rounded-none border-b-2 border-b-muted w-full bg-transparent gap-3 grid-cols-5`}
+                className={`grid rounded-none border-b-2 border-b-muted w-full bg-transparent gap-3 md:grid-cols-5 grid-cols-1 overflow-y-auto`}
               >
                 {type?.data.map((e, idx: number) => (
                   <TabsTrigger
@@ -89,7 +89,7 @@ export default function PaymentMethods({ l }: Props) {
                       className="w-full flex flex-row items-start gap-4"
                     >
                       <TabsList
-                        className={`grid grid-cols-${data?.data.length || 2} justify-start gap-2 bg-transparent h-auto p-0 shrink-0`}
+                        className={`grid md:grid-cols-${data?.data.length || 2} grid-cols-1 justify-start gap-2 bg-transparent h-auto p-0 shrink-0`}
                         style={{ flexDirection: "column" }}
                         aria-orientation="vertical"
                       >

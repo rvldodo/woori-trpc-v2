@@ -1,7 +1,7 @@
 import { createTRPCRouter, publicProcedure } from "../trpc";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { and, eq, ilike, or, sql, SQLWrapper } from "drizzle-orm";
+import { and, eq, ilike, isNull, or, sql, SQLWrapper } from "drizzle-orm";
 import { branches, coordinates } from "@/drizzle/migrations/schema";
 
 export const branchesRouter = createTRPCRouter({
@@ -14,7 +14,9 @@ export const branchesRouter = createTRPCRouter({
     )
     .query(async ({ ctx, input }) => {
       const { key, area } = input;
-      const conditions: (SQLWrapper | undefined)[] = [];
+      const conditions: (SQLWrapper | undefined)[] = [
+        isNull(branches.deletedTime),
+      ];
 
       if (key) {
         conditions.push(
@@ -60,7 +62,10 @@ export const branchesRouter = createTRPCRouter({
     )
     .query(async ({ ctx, input }) => {
       const { key, area } = input;
-      const conditions: (SQLWrapper | undefined)[] = [eq(branches.type, "HE")];
+      const conditions: (SQLWrapper | undefined)[] = [
+        eq(branches.type, "HE"),
+        isNull(branches.deletedTime),
+      ];
 
       if (key) {
         conditions.push(

@@ -189,16 +189,18 @@ export default function PengajuanPinjamanSection({ l, slug }: Props) {
 
       <form
         onSubmit={handleSubmit((e) => onSubmit(e))}
-        className="py-8 w-full flex justify-center items-center flex-col gap-5 main-padding-x"
+        className="py-8 w-full flex justify-center items-center flex-col gap-5 md:main-padding-x"
       >
         <Progressbar progress={3} />
 
         <div className="w-full flex flex-col justify-center items-center">
           <Text variant="display-md">{t("title")}</Text>
-          <Text variant="body-md-regular">{t("subtitle")}</Text>
+          <Text variant="body-md-regular" className="text-center">
+            {t("subtitle")}
+          </Text>
         </div>
 
-        <section className="grid grid-cols-5 gap-3 w-full">
+        <section className="grid md:grid-cols-5 grid-cols-1 gap-3 w-full">
           <Card className="col-span-2">
             <CardContent className="col-span-3 w-full flex flex-col gap-2">
               <CardTitle>

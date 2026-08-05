@@ -51,8 +51,8 @@ export default function SimulatorSection({ l }: Props) {
   });
 
   const { data, isLoading } = api.main.usp.list.useQuery();
-  const mobilBaruUsp = data?.data.find((e) => e.type === "Mobil baru");
-  const mobilBekasUsp = data?.data.find((e) => e.type === "Mobil bekas");
+  const mobilBaruUsp = data?.data.find((e) => e.type === "Mobil Baru");
+  const mobilBekasUsp = data?.data.find((e) => e.type === "Mobil Bekas");
 
   return (
     <section className="main-padding-x flex flex-col gap-3 py-8 relative overflow-hidden">

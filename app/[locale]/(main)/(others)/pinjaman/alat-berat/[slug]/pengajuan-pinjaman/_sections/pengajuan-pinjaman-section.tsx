@@ -190,7 +190,7 @@ export default function PengajuanPinjamanSection({ l, slug }: Props) {
 
       <form
         onSubmit={handleSubmit((e) => onSubmit(e))}
-        className="py-8 w-full flex justify-center items-center flex-col gap-5 main-padding-x"
+        className="py-8 w-full flex justify-center items-center flex-col gap-5 md:main-padding-x"
       >
         <Progressbar progress={3} />
 
@@ -199,7 +199,7 @@ export default function PengajuanPinjamanSection({ l, slug }: Props) {
           <Text variant="body-md-regular">{t("subtitle")}</Text>
         </div>
 
-        <section className="grid grid-cols-7 gap-3 w-full">
+        <section className="grid md:grid-cols-7 grid-cols-1 gap-3 w-full">
           <Card className="col-span-3">
             <CardContent className="col-span-3 w-full flex flex-col gap-2">
               <CardTitle>
@@ -222,7 +222,9 @@ export default function PengajuanPinjamanSection({ l, slug }: Props) {
 
                 <div className="flex justify-between items-center">
                   <Text variant="body-md-regular">{t("summary.type")}</Text>
-                  <Text variant="body-md-medium">{parsedData?.type_name}</Text>
+                  <Text variant="body-md-medium" className="text-end">
+                    {parsedData?.type_name}
+                  </Text>
                 </div>
 
                 <div className="flex justify-between items-center">

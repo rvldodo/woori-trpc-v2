@@ -48,7 +48,7 @@ export default function PersyaratanDokumenTabs() {
             return (
               <CarouselItem
                 key={idx.toString()}
-                className="md:basis-1/3 basis-1/1 flex justify-between items-center px-2"
+                className="md:basis-1/3 basis-1/2 flex justify-between items-center px-2"
               >
                 <PersyaratanCard
                   image={e.image}

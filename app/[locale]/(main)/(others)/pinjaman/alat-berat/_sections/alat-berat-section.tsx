@@ -24,18 +24,20 @@ export default function AlatBeratSection({ l }: Props) {
   });
 
   return (
-    <article className="py-8 w-full flex justify-center items-center flex-col gap-5 main-padding-x">
+    <article className="py-8 w-full flex justify-center items-center flex-col gap-5 md:main-padding-x">
       <Progressbar />
 
       <div className="w-full flex flex-col justify-center items-center">
-        <Text variant="display-md">{t("title")}</Text>
+        <Text variant="display-md" className="text-center">
+          {t("title")}
+        </Text>
         <Text as="div" variant="body-md-regular" className="text-center">
           {t.rich("subtitle", {
             br: (val) => (
-              <div className="flex justify-center items-center text-center p-0 m-0">
+              <>
                 <br className="p-0" />
                 {val}
-              </div>
+              </>
             ),
           })}
         </Text>

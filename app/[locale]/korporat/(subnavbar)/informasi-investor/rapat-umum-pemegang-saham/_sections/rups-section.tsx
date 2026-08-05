@@ -34,8 +34,8 @@ export default function RUPSSection({ l }: Props) {
   const { data, isLoading } = api.main.aboutUs.rups.useQuery(debounce);
 
   return (
-    <article className="main-padding-x grid grid-cols-6 gap-5 py-8">
-      <section className="col-span-2 flex flex-col gap-3">
+    <article className="main-padding-x grid md:grid-cols-6 grid-cols-1 gap-5 py-8">
+      <section className="md:col-span-2 flex flex-col gap-3">
         <div className="w-full flex bg-white items-center py-1 px-3 border rounded-lg">
           <Search className="w-4 h-4 text-gray-500" />
           <Input
@@ -74,7 +74,7 @@ export default function RUPSSection({ l }: Props) {
         )}
       </section>
 
-      <ScrollArea className="main-padding-x col-span-4 flex flex-col justify-between gap-3 max-h-125">
+      <ScrollArea className="main-padding-x md:col-span-4 flex flex-col justify-between gap-3 max-h-125">
         {isLoading ? (
           <div className="w-full h-full flex justify-center items-center">
             <Spinner />
@@ -83,7 +83,7 @@ export default function RUPSSection({ l }: Props) {
           data?.data.map((e) => (
             <a
               key={e.id}
-              href={e.fileUrl || "/"}
+              href={`/api/files${e.fileUrl || "/"}`}
               target="_blank"
               rel="noopener noreferrer"
               className="block py-2"

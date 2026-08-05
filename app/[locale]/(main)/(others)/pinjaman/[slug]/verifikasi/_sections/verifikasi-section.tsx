@@ -171,7 +171,9 @@ export default function VerifikasiSection({ l, slug }: Props) {
         <Progressbar progress={3} />
 
         <div className="w-full flex flex-col justify-center items-center">
-          <Text variant="display-md">{t("title")}</Text>
+          <Text variant="display-md" className="text-center">
+            {t("title")}
+          </Text>
           <Text variant="body-md-regular" className="text-center">
             {t.rich("subtitle", {
               br: (val) => (

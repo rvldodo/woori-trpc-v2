@@ -1,4 +1,3 @@
-// components/subnavbar-popover.tsx
 "use client";
 
 import { NEW_PATHS } from "@/app/urls";

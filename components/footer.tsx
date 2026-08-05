@@ -149,7 +149,7 @@ const Footer = (props: FooterProps) => {
 
       {isSimulasiPath[isSimulasiPath.length - 1] ===
         "pembiayaan-alat-berat" && (
-        <div className="bg-blue w-full flex justify-center items-center sticky bottom-0 py-2 gap-5 z-10 bg-primary">
+        <div className="bg-blue w-full flex justify-center items-center sticky bottom-0 py-2 gap-5 z-10 bg-primary px-3">
           <Text variant="body-md-medium" className="text-[#ffffff]">
             Ajukan Pembiayaan Alat Berat Sekarang
           </Text>
@@ -165,7 +165,7 @@ const Footer = (props: FooterProps) => {
       )}
 
       {isSimulasiPath[isSimulasiPath.length - 1] === "pembiayaan-mobil" && (
-        <div className="bg-blue w-full flex justify-center items-center sticky bottom-0 py-2 gap-5 z-10 bg-primary">
+        <div className="bg-blue w-full flex justify-center items-center sticky bottom-0 py-2 gap-5 z-10 bg-primary px-3">
           <Text variant="body-md-medium" className="text-[#ffffff]">
             Ajukan Pembiayaan Mobil Sekarang
           </Text>

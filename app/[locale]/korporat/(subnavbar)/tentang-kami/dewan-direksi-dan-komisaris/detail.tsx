@@ -21,14 +21,14 @@ export default function BoardDetail({ name, close, l }: Props) {
   return (
     <Dialog open={show} onOpenChange={close}>
       <DialogTitle></DialogTitle>
-      <DialogContent className="max-w-4xl max-h-3xl flex-col gap-5 justify-start items-center">
+      <DialogContent className="max-w-4xl md:max-h-3xl max-h-[65vh] flex-col gap-5 justify-start items-center overflow-y-auto">
         {isLoading || !data?.data ? (
           <div>
             <Spinner />
           </div>
         ) : (
           <>
-            <div className="flex items-center gap-6">
+            <div className="flex md:flex-row flex-col items-center gap-6">
               <Img
                 src={`/api/files${data?.data.imgUrl}`}
                 alt={data?.data.title?.[l] ?? ""}

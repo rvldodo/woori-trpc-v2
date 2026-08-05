@@ -91,8 +91,8 @@ export default function StrukturTataKelolaSection({ l }: Props) {
   ];
 
   return (
-    <article className="main-padding-x grid grid-cols-6 gap-5 py-8">
-      <section className="col-span-2 flex flex-col gap-3">
+    <article className="main-padding-x grid md:grid-cols-6 grid-cols-1 gap-5 py-8">
+      <section className="md:col-span-2 flex flex-col gap-3">
         <div className="w-full flex bg-white items-center py-1 px-3 border rounded-lg">
           <Search className="w-4 h-4 text-gray-500" />
           <Input
@@ -131,11 +131,11 @@ export default function StrukturTataKelolaSection({ l }: Props) {
         )}
       </section>
 
-      <ScrollArea className="main-padding-x col-span-4 flex flex-col justify-between gap-3 h-125 relative">
+      <ScrollArea className="main-padding-x md:col-span-4 flex flex-col justify-between gap-3 md:h-125 h-[85vh] relative">
         <div
           className={cn(
             filter.category === "" ? "flex" : "hidden",
-            "w-full flex-col gap-5 absolute main-padding-x",
+            "w-full flex-col gap-5 absolute md:main-padding-x",
           )}
         >
           <Text variant="display-md">{t("company_secretary_title")}</Text>

@@ -29,7 +29,9 @@ export default function FormSectionMainPage({ l, slug }: Props) {
       <Progressbar />
 
       <div className="w-full flex flex-col justify-center items-center">
-        <Text variant="display-md">{t("title")}</Text>
+        <Text variant="display-md" className="text-center">
+          {t("title")}
+        </Text>
         <Text variant="body-md-regular">{t("subtitle")}</Text>
       </div>
 

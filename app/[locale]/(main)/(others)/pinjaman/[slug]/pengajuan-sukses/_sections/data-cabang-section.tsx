@@ -101,7 +101,7 @@ export default function DataCabangSection({ l }: Props) {
           <Spinner />
         </div>
       ) : (
-        <div className="relative w-full h-auto">
+        <div className="relative w-full h-auto md:flex hidden">
           <CabangKamiMap
             locations={displayedLocations}
             zoom={selectedBranchId ? 15 : 4}
@@ -222,7 +222,7 @@ export default function DataCabangSection({ l }: Props) {
       </div>
 
       <ScrollArea className="w-full h-[600px] py-5 border rounded-lg p-5">
-        <div className="w-full grid grid-cols-3 gap-3">
+        <div className="w-full grid md:grid-cols-3 grid-cols-1 gap-3">
           {isLoadingBranches
             ? [1, 2, 3].map((e) => (
                 <Skeleton key={e.toString()} className="w-40 h-30" />

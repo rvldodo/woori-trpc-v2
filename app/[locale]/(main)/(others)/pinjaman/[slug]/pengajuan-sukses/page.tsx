@@ -25,7 +25,7 @@ export default async function PengjuanSuksesPage({
   const { locale, slug } = await params;
 
   return (
-    <article className="main-padding-x flex flex-col justify-center items-center w-full">
+    <article className="md:main-padding-x flex flex-col justify-center items-center w-full">
       <PengajuanSuksesSection l={locale} slug={slug} />
     </article>
   );

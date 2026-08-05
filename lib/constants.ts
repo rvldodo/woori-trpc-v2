@@ -22,6 +22,8 @@ export const LOAN_DATA_HE_LOCAL_STORAGE = "loan_he_form_data";
 
 export const SLUGS_TO_REMOVE = ["home"];
 
+export const IS_MOBILE_MENU_OPEN = "mobile_open";
+
 export const LOCALES: Record<
   Locale,
   { label: string; value: Locale; locale: `${string}-${string}` }
